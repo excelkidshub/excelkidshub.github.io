@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Successful | ExcelKidsHub Phonics Academy</title>
+<meta name="description" content="Payment successful. Your ExcelKidsHub digital reading subscription is now active.">
+<link rel="stylesheet" href="css/style.css?v=20260706">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+.success-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  text-align: center;
+}
+.success-icon {
+  font-size: 80px;
+  margin-bottom: 24px;
+}
+.success-page h1 {
+  font-size: 32px;
+  color: #2b3a57;
+  margin-bottom: 16px;
+}
+.success-page .subtitle {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 32px;
+}
+.details-box {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.details-row:last-child {
+  border-bottom: none;
+}
+.details-label {
+  font-size: 14px;
+  color: #667085;
+  font-weight: 500;
+}
+.details-value {
+  font-size: 14px;
+  color: #2b3a57;
+  font-weight: 600;
+}
+.cta-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #2f80ed 0%, #195fba 100%);
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 28px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(47, 128, 237, 0.3);
+}
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(47, 128, 237, 0.4);
+}
+.support-text {
+  font-size: 14px;
+  color: #667085;
+}
+.support-text a {
+  color: #2f80ed;
+  text-decoration: none;
+  font-weight: 600;
+}
+.support-text a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .success-page {
+    padding: 40px 16px;
+  }
+  .success-page h1 {
+    font-size: 26px;
+  }
+  .details-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cta-button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+  <div id="nav-placeholder"></div>
+</header>
+
+<main class="success-page">
+  <div class="success-icon">🎉</div>
+  <h1>Payment Successful</h1>
+  <p class="subtitle">Your subscription is now active!</p>
+
+  <div class="details-box">
+    <div class="details-row">
+      <span class="details-label">Plan</span>
+      <span class="details-value" id="success-plan">Loading...</span>
+    </div>
+    <div class="details-row">
+      <span class="details-label">Amount</span>
+      <span class="details-value" id="success-amount">Loading...</span>
+    </div>
+    <div class="details-row">
+      <span class="details-label">Order ID</span>
+      <span class="details-value" id="success-order-id">Loading...</span>
+    </div>
+    <div class="details-row">
+      <span class="details-label">Access Period</span>
+      <span class="details-value" id="success-duration">30 Days</span>
+    </div>
+    <div class="details-row">
+      <span class="details-label">Account Email</span>
+      <span class="details-value" id="success-email">Loading...</span>
+    </div>
+  </div>
+
+  <a href="https://read.excelkidshub.in/" target="_blank" class="cta-button">Start Reading →</a>
+
+  <p class="support-text">
+    Need help? <a href="/contact.html">Contact ExcelKidsHub Support</a>
+  </p>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/nav.js?v=20260706"></script>
+<script src="js/script.js?v=20260706"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get subscription data from localStorage
+  const subscriptionData = JSON.parse(localStorage.getItem('subscription_data') || '{}');
+  const userData = JSON.parse(localStorage.getItem('user_data') || '{}');
+
+  // Populate details
+  if (subscriptionData.planName) {
+    document.getElementById('success-plan').textContent = subscriptionData.planName;
+  }
+  if (subscriptionData.endDate) {
+    document.getElementById('success-duration').textContent = 'Until ' + subscriptionData.endDate;
+  }
+  if (userData.email) {
+    document.getElementById('success-email').textContent = userData.email;
+  }
+
+  // Get payment details from URL params if available
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('amount')) {
+    document.getElementById('success-amount').textContent = '₹' + urlParams.get('amount');
+  }
+  if (urlParams.get('order_id')) {
+    document.getElementById('success-order-id').textContent = urlParams.get('order_id');
+  }
+});
+</script>
+</body>
+</html>

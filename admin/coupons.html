@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Coupons | ExcelKidsHub Admin</title>
+<link rel="stylesheet" href="css/admin.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+
+<div id="admin-nav-placeholder"></div>
+
+<main class="admin-main">
+  <div class="page-header">
+    <h1>Coupons</h1>
+    <p>Create and manage discount codes for subscription plans.</p>
+  </div>
+
+  <div id="alert-error"   class="alert alert-error"></div>
+  <div id="alert-success" class="alert alert-success"></div>
+
+  <div class="toolbar">
+    <button class="btn btn-primary" id="new-coupon-btn">+ New Coupon</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Code</th>
+          <th>Discount</th>
+          <th>Uses</th>
+          <th>Valid From</th>
+          <th>Valid Until</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="coupons-body">
+        <tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Coupon Modal -->
+<div class="modal-backdrop" id="coupon-modal" style="display:none;">
+  <div class="modal">
+    <h2 id="modal-title">New Coupon</h2>
+
+    <div class="form-group">
+      <label>Coupon Code</label>
+      <input type="text" id="coupon-code" placeholder="e.g. WELCOME20" style="text-transform:uppercase;">
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group">
+        <label>Discount % (optional)</label>
+        <input type="number" id="coupon-percent" min="0" max="100" placeholder="e.g. 20">
+      </div>
+      <div class="form-group">
+        <label>Flat Discount ₹ (optional)</label>
+        <input type="number" id="coupon-amount" min="0" placeholder="e.g. 100">
+      </div>
+    </div>
+    <p style="font-size:11px;color:#888;margin-top:-8px;margin-bottom:12px;">Use either % OR flat amount — not both.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group">
+        <label>Valid From</label>
+        <input type="date" id="coupon-from">
+      </div>
+      <div class="form-group">
+        <label>Valid Until</label>
+        <input type="date" id="coupon-until">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Max Uses (blank = unlimited)</label>
+      <input type="number" id="coupon-max-uses" min="1" placeholder="e.g. 100">
+    </div>
+
+    <div class="form-group">
+      <label style="display:flex;align-items:center;gap:8px;text-transform:none;font-size:13px;">
+        <input type="checkbox" id="coupon-active" checked style="width:auto;">
+        Active (coupon can be used immediately)
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+      <button class="btn btn-primary" id="modal-save">Save Coupon</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { requireAdmin } from './js/admin-guard.js';
+  import { renderAdminNav } from './js/admin-nav.js';
+  import { adminApi } from './js/admin-api.js';
+
+  requireAdmin();
+  renderAdminNav();
+
+  const alertError   = document.getElementById('alert-error');
+  const alertSuccess = document.getElementById('alert-success');
+  const tbody        = document.getElementById('coupons-body');
+  const modal        = document.getElementById('coupon-modal');
+  let editingId = null;
+
+  function showAlert(type, msg) {
+    alertError.style.display = alertSuccess.style.display = 'none';
+    if (type === 'error') { alertError.textContent = msg; alertError.style.display = 'block'; }
+    else { alertSuccess.textContent = msg; alertSuccess.style.display = 'block'; }
+    setTimeout(() => { alertError.style.display = alertSuccess.style.display = 'none'; }, 5000);
+  }
+
+  function formatDate(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+  }
+
+  function discountLabel(c) {
+    if (c.discountPercent) return `<strong>${c.discountPercent}%</strong> off`;
+    if (c.discountAmount)  return `<strong>₹${c.discountAmount}</strong> off`;
+    return '—';
+  }
+
+  async function load() {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>';
+    try {
+      const res   = await adminApi.get('/admin/coupons?size=100');
+      const data  = res.data || res;
+      const rows  = data.content || data || [];
+
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">No coupons found. Create your first one.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = rows.map(c => `
+        <tr>
+          <td>${c.id}</td>
+          <td><code style="background:#f3f4f6;padding:3px 8px;border-radius:4px;font-size:13px;">${c.code}</code></td>
+          <td>${discountLabel(c)}</td>
+          <td>${c.usedCount ?? 0}${c.maxUses ? ' / ' + c.maxUses : ' / ∞'}</td>
+          <td>${formatDate(c.validFrom)}</td>
+          <td>${formatDate(c.validUntil)}</td>
+          <td>
+            ${c.active
+              ? '<span class="badge badge-green">Active</span>'
+              : '<span class="badge badge-red">Inactive</span>'}
+          </td>
+          <td style="display:flex;gap:6px;">
+            <button class="btn btn-sm btn-ghost" onclick="openEdit(${JSON.stringify(c).replace(/"/g,'&quot;')})">Edit</button>
+            <button class="btn btn-sm ${c.active ? 'btn-danger' : 'btn-success'}"
+              onclick="toggleActive(${c.id}, ${!c.active})">${c.active ? 'Deactivate' : 'Activate'}</button>
+          </td>
+        </tr>`).join('');
+    } catch (err) {
+      showAlert('error', 'Failed to load coupons: ' + err.message);
+    }
+  }
+
+  // ── Open modal ──────────────────────────────────────────────────────────────
+  function openModal(coupon) {
+    editingId = coupon ? coupon.id : null;
+    document.getElementById('modal-title').textContent = coupon ? 'Edit Coupon' : 'New Coupon';
+    document.getElementById('coupon-code').value      = coupon?.code           || '';
+    document.getElementById('coupon-code').disabled   = !!coupon;  // code is immutable after creation
+    document.getElementById('coupon-percent').value   = coupon?.discountPercent ?? '';
+    document.getElementById('coupon-amount').value    = coupon?.discountAmount  ?? '';
+    document.getElementById('coupon-from').value      = coupon?.validFrom       || '';
+    document.getElementById('coupon-until').value     = coupon?.validUntil      || '';
+    document.getElementById('coupon-max-uses').value  = coupon?.maxUses         ?? '';
+    document.getElementById('coupon-active').checked  = coupon ? coupon.active  : true;
+    modal.style.display = 'flex';
+  }
+
+  window.openEdit = function(c) { openModal(c); };
+  document.getElementById('new-coupon-btn').addEventListener('click', () => openModal(null));
+  document.getElementById('modal-cancel').addEventListener('click', () => { modal.style.display = 'none'; });
+
+  // ── Save ────────────────────────────────────────────────────────────────────
+  document.getElementById('modal-save').addEventListener('click', async () => {
+    const code    = document.getElementById('coupon-code').value.trim().toUpperCase();
+    const pct     = document.getElementById('coupon-percent').value;
+    const flat    = document.getElementById('coupon-amount').value;
+    const from    = document.getElementById('coupon-from').value;
+    const until   = document.getElementById('coupon-until').value;
+    const maxUses = document.getElementById('coupon-max-uses').value;
+    const active  = document.getElementById('coupon-active').checked;
+
+    if (!editingId && !code) { showAlert('error', 'Coupon code is required.'); return; }
+    if (!pct && !flat) { showAlert('error', 'Enter either a % discount or a flat ₹ discount.'); return; }
+    if (pct && flat)   { showAlert('error', 'Use either % OR flat amount — not both.'); return; }
+
+    const dto = {
+      code:            code || undefined,
+      discountPercent: pct   ? parseInt(pct, 10)   : null,
+      discountAmount:  flat  ? parseFloat(flat)     : null,
+      validFrom:       from  || null,
+      validUntil:      until || null,
+      maxUses:         maxUses ? parseInt(maxUses, 10) : null,
+      active,
+    };
+
+    try {
+      if (editingId) {
+        await adminApi.put(`/admin/coupons/${editingId}`, dto);
+        showAlert('success', 'Coupon updated.');
+      } else {
+        await adminApi.post('/admin/coupons', dto);
+        showAlert('success', `Coupon "${code}" created.`);
+      }
+      modal.style.display = 'none';
+      load();
+    } catch (err) { showAlert('error', err.message); }
+  });
+
+  // ── Toggle active ────────────────────────────────────────────────────────────
+  window.toggleActive = async function(id, active) {
+    try {
+      await adminApi.put(`/admin/coupons/${id}/status?active=${active}`);
+      showAlert('success', `Coupon ${active ? 'activated' : 'deactivated'}.`);
+      load();
+    } catch (err) { showAlert('error', err.message); }
+  };
+
+  load();
+</script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | ExcelKidsHub Phonics Academy</title>
+<meta name="description" content="Your ExcelKidsHub dashboard - manage your courses, subscription, and profile.">
+<link rel="stylesheet" href="../css/style.css?v=20260706">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<style>
+.dashboard-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.welcome-section {
+  background: linear-gradient(135deg, #fef9c3 0%, #fefce8 50%, #f0fdf4 100%);
+  color: #2b3a57;
+  padding: 32px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+}
+
+.welcome-section::before {
+  content: '🌟';
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  font-size: 60px;
+  opacity: 0.15;
+}
+
+.welcome-section h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-section p {
+  margin: 0;
+  opacity: 0.85;
+  position: relative;
+  z-index: 1;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.dashboard-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 2px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  border-color: #667eea;
+}
+
+.dashboard-card h2 {
+  margin: 0 0 20px 0;
+  color: #2b3a57;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-card h2::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.status-active {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  color: white;
+}
+
+.status-inactive {
+  background: #f8f9fa;
+  color: #667085;
+  border: 2px solid #e0e0e0;
+}
+
+.course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.course-item {
+  padding: 15px;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+  background: #fafbfc;
+}
+
+.course-item:hover {
+  border-color: #667eea;
+  background: white;
+  transform: translateX(4px);
+}
+
+.course-item:last-child {
+  margin-bottom: 0;
+}
+
+.course-name {
+  font-weight: 600;
+  color: #2b3a57;
+}
+
+.btn-course {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-course:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #667eea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.no-courses {
+  color: #666;
+  font-style: italic;
+}
+
+.profile-summary {
+  margin-bottom: 20px;
+}
+
+.profile-summary p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.profile-summary strong {
+  color: #2b3a57;
+}
+
+.cta-box {
+  background: linear-gradient(135deg, #fff9ed 0%, #fff0df 100%);
+  border: 2px solid #facc15;
+  padding: 24px;
+  border-radius: 16px;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-box::before {
+  content: '🎁';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 40px;
+  opacity: 0.2;
+}
+
+.cta-box h3 {
+  margin: 0 0 10px 0;
+  color: #2b3a57;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-box p {
+  margin: 0 0 15px 0;
+  color: #667085;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-cta {
+  background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%);
+  color: #2b3a57;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.btn-cta:hover {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(250, 204, 21, 0.4);
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error {
+  background: #fee;
+  color: #c33;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.progress-bar-wrap {
+  background: #e9ecef;
+  border-radius: 10px;
+  height: 12px;
+  margin: 10px 0 6px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  transition: width 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.progress-meta {
+  font-size: 13px;
+  color: #667085;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div id="nav-placeholder"></div>
+</header>
+
+<main>
+<div class="dashboard-container">
+  <div id="loading" class="loading">Loading your dashboard...</div>
+  <div id="error" class="error" style="display: none;"></div>
+  
+  <div id="dashboard-content" style="display: none;">
+      <!-- Email verification banner (hidden by default, shown when email not verified) -->
+      <div id="verify-banner" style="display:none; background:linear-gradient(135deg, #fff9ed 0%, #fff0df 100%); border:2px solid #facc15; padding:16px 24px; border-radius:12px; margin-bottom:20px; font-size:14px; color:#2b3a57; position:relative; overflow:hidden;">
+        <div style="position:relative; z-index:1;">
+          <strong>Please verify your email address.</strong>
+          Check your inbox for a verification link from ExcelKidsHub.
+          <a href="#" id="resend-verify" style="margin-left:10px; color:#2f80ed; font-weight:700; text-decoration:underline;">Resend email</a>
+        </div>
+      </div>
+
+    <div class="welcome-section">
+      <h1 id="welcome-message">🌟 Welcome back!</h1>
+      <p id="welcome-subtitle">Ready for today's reading adventure? Keep learning, practise your phonics, and discover something new.</p>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="dashboard-card" style="margin-bottom: 24px;">
+      <h2 style="margin: 0 0 20px 0; color: #2b3a57; font-size: 20px;">Quick Learning Activities</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px;">
+        <a href="https://read.excelkidshub.in/learn.html" target="_blank" style="text-decoration: none;">
+          <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 24px 20px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: 2px solid #93c5fd; cursor: pointer;">
+            <div style="font-size: 36px; margin-bottom: 12px;">📖</div>
+            <div style="font-weight: 700; color: #2b3a57; font-size: 15px; margin-bottom: 4px;">LEARN</div>
+            <div style="font-size: 12px; color: #667085;">Continue your phonics journey</div>
+          </div>
+        </a>
+        <a href="https://read.excelkidshub.in/phonics/practice/index.html" target="_blank" style="text-decoration: none;">
+          <div style="background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%); padding: 24px 20px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: 2px solid #fde047; cursor: pointer;">
+            <div style="font-size: 36px; margin-bottom: 12px;">�</div>
+            <div style="font-weight: 700; color: #2b3a57; font-size: 15px; margin-bottom: 4px;">PLAY</div>
+            <div style="font-size: 12px; color: #667085;">Learn through fun games</div>
+          </div>
+        </a>
+        <a href="https://read.excelkidshub.in/phonics/songs/index.html" target="_blank" style="text-decoration: none;">
+          <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 24px 20px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: 2px solid #86efac; cursor: pointer;">
+            <div style="font-size: 36px; margin-bottom: 12px;">🎵</div>
+            <div style="font-weight: 700; color: #2b3a57; font-size: 15px; margin-bottom: 4px;">SONGS</div>
+            <div style="font-size: 12px; color: #667085;">Sing and practise sounds</div>
+          </div>
+        </a>
+        <a href="https://read.excelkidshub.in/progress.html" target="_blank" style="text-decoration: none;">
+          <div style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); padding: 24px 20px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: 2px solid #f9a8d4; cursor: pointer;">
+            <div style="font-size: 36px; margin-bottom: 12px;">⭐</div>
+            <div style="font-weight: 700; color: #2b3a57; font-size: 15px; margin-bottom: 4px;">PROGRESS</div>
+            <div style="font-size: 12px; color: #667085;">See your achievements</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Profile Card -->
+      <div class="dashboard-card">
+        <h2>👤 Your Profile</h2>
+        <div class="profile-summary">
+          <p style="font-size:16px;font-weight:600;color:#2b3a57;margin:0 0 4px;" id="user-name">-</p>
+          <p style="font-size:14px;color:#667085;margin:0 0 12px;" id="user-email">-</p>
+        </div>
+        <a href="profile.html" class="btn-course">View Profile →</a>
+      </div>
+
+      <!-- Subscription Card -->
+      <div class="dashboard-card">
+        <h2>⭐ YOUR PLAN</h2>
+        <div id="subscription-status">
+          <span class="status-badge status-inactive">No Active Subscription</span>
+        </div>
+        <div id="subscription-details" style="margin-top: 16px;">
+          <p id="subscription-plan" style="font-size:16px;font-weight:600;color:#2b3a57;margin:0 0 4px;">No plan selected</p>
+          <p id="subscription-expiry" style="font-size:14px;color:#667085;margin:0;">-</p>
+        </div>
+        <div id="subscription-cta" class="cta-box">
+          <h3>Upgrade Your Learning</h3>
+          <p>Get access to all phonics courses and materials</p>
+          <a href="../pricing.html" class="btn-cta">View Plans</a>
+        </div>
+        
+        <!-- Refund Section -->
+        <div id="refund-section" style="display:none; margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0;">
+          <h3 style="font-size: 16px; margin-bottom: 12px; color: #2b3a57;">7-Day Refund Policy</h3>
+          <p style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+            Eligible digital purchases can be requested for a refund within 7 days of purchase.
+          </p>
+          <div id="refund-status-content"></div>
+          <div id="refund-request-form" style="display:none;">
+            <textarea id="refund-reason" placeholder="Reason for refund request (optional)" style="width:100%; padding:8px; border:1px solid #e2e8f0; border-radius:4px; font-family:inherit; margin-bottom:8px;" rows="2"></textarea>
+            <button id="request-refund-btn" class="btn-course" style="font-size:13px; padding:8px 16px;">Request Refund</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Courses Card -->
+      <div class="dashboard-card">
+        <h2>📚 My Courses</h2>
+        <ul id="course-list" class="course-list">
+          <li class="no-courses">No courses purchased yet</li>
+        </ul>
+      </div>
+
+      <!-- Continue Reading Card -->
+      <div class="dashboard-card" id="continue-reading-card" style="display:none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+        <h2 style="color: white; margin: 0 0 16px 0;">📖 Continue Your Reading Adventure</h2>
+        <div id="continue-reading-content">
+          <!-- populated by loadProgress() -->
+        </div>
+      </div>
+
+      <!-- Digital Learning Promotion -->
+      <div class="dashboard-card" style="background: linear-gradient(135deg, #fef9c3 0%, #fefce8 50%, #f0fdf4 100%); border: 2px solid #e5e7eb;">
+        <h2 style="margin: 0 0 12px 0;">🚀 Learn Beyond the Classroom</h2>
+        <p style="margin: 0 0 16px; color: #667085; line-height: 1.5;">Interactive phonics lessons, games, songs, and progress tracking.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;">
+          <span style="background: white; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #2b3a57;">🎮 Games</span>
+          <span style="background: white; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #2b3a57;">🎵 Jolly Phonics Songs</span>
+          <span style="background: white; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #2b3a57;">📖 Reading Practice</span>
+          <span style="background: white; padding: 6px 12px; border-radius: 8px; font-size: 13px; color: #2b3a57;">⭐ Progress Tracking</span>
+        </div>
+        <a href="https://read.excelkidshub.in" target="_blank" class="btn-course" style="display: inline-block;">Explore Digital Learning</a>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script type="module">
+  import { auth } from '../js/auth.js';
+  import { storage } from '../js/storage.js';
+  import { api } from '../js/api.js';
+  import { READ_BASE_URL } from '../config.js';
+
+  // Check authentication — redirects to login if no token
+  if (!auth.requireAuth()) {
+    throw new Error('Not authenticated');
+  }
+
+  const loading          = document.getElementById('loading');
+  const errorDiv         = document.getElementById('error');
+  const dashboardContent = document.getElementById('dashboard-content');
+  const verifyBanner     = document.getElementById('verify-banner');
+  const resendVerifyLink = document.getElementById('resend-verify');
+
+  function showError(message) {
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    loading.style.display = 'none';
+    dashboardContent.style.display = 'none';
+  }
+
+  function showDashboard() {
+    loading.style.display = 'none';
+    errorDiv.style.display = 'none';
+    dashboardContent.style.display = 'block';
+  }
+
+  // ── Profile ──────────────────────────────────────────────────────────────────
+  function updateProfile(user) {
+    // Use computed name from API; fall back to assembling from parts
+    const displayName = user.name
+      || ((user.firstName || '') + ' ' + (user.lastName || '')).trim()
+      || 'User';
+
+    document.getElementById('welcome-message').textContent = `Welcome, ${user.firstName || displayName}!`;
+    document.getElementById('user-name').textContent  = displayName;
+    document.getElementById('user-email').textContent = user.email || '-';
+
+    // Show email verification banner if not verified
+    if (user.emailVerified === false) {
+      verifyBanner.style.display = 'block';
+    }
+  }
+
+  // ── Subscription ─────────────────────────────────────────────────────────────
+  function updateSubscription(subscription) {
+    const statusEl = document.getElementById('subscription-status');
+    const planEl   = document.getElementById('subscription-plan');
+    const expiryEl = document.getElementById('subscription-expiry');
+    const ctaEl    = document.getElementById('subscription-cta');
+    const refundEl = document.getElementById('refund-section');
+
+    if (subscription && subscription.status === 'ACTIVE') {
+      statusEl.innerHTML = '<span class="status-badge status-active">● Active</span>';
+      planEl.textContent   = subscription.planName || 'Premium';
+      // Use endDate from SubscriptionDto
+      const expiry = subscription.endDate
+        ? new Date(subscription.endDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+        : 'N/A';
+      expiryEl.textContent = `Valid until ${expiry}`;
+      ctaEl.style.display  = 'none';
+      
+      // Show refund section if paymentId is available
+      if (subscription.paymentId) {
+        refundEl.style.display = 'block';
+        loadRefundStatus(subscription.paymentId);
+      } else {
+        refundEl.style.display = 'none';
+      }
+    } else {
+      statusEl.innerHTML   = '<span class="status-badge status-inactive">No Active Subscription</span>';
+      planEl.textContent   = 'No plan selected';
+      expiryEl.textContent = '-';
+      ctaEl.style.display  = 'block';
+      refundEl.style.display = 'none';
+    }
+  }
+
+  // ── Courses ───────────────────────────────────────────────────────────────────
+  function updateCourses(courses) {
+    const courseList = document.getElementById('course-list');
+
+    if (!courses || courses.length === 0) {
+      courseList.innerHTML = '<li class="no-courses">No courses available yet. <a href="../pricing.html">View plans</a></li>';
+      return;
+    }
+
+    courseList.innerHTML = courses.map(course => {
+      const progress = course.progress || 0;
+      return `
+      <li class="course-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+          <span class="course-name">${course.title || course.name}</span>
+          ${progress > 0 ? `<span style="font-size:12px;color:#667eea;font-weight:600;">${progress}%</span>` : ''}
+        </div>
+        ${progress > 0 ? `<div class="progress-bar-wrap" style="width:100%;margin:4px 0 0;"><div class="progress-bar-fill" style="width:${progress}%"></div></div>` : ''}
+        <button class="btn-course" onclick="openCourse('${course.id}', '${course.slug}')" style="align-self:flex-start;margin-top:4px;">▶ Open</button>
+      </li>
+    `;
+    }).join('');
+  }
+
+  // ── Progress / Continue Reading ───────────────────────────────────────────────
+  function updateProgress(progressList) {
+    const card    = document.getElementById('continue-reading-card');
+    const content = document.getElementById('continue-reading-content');
+    if (!progressList || progressList.length === 0) return;
+
+    // Show the most recently accessed in-progress course
+    const inProgress = progressList
+      .filter(p => p.status !== 'COMPLETED' && p.pageNumber > 0)
+      .sort((a, b) => new Date(b.lastAccessed || 0) - new Date(a.lastAccessed || 0));
+
+    if (inProgress.length === 0) return;
+
+    const prog = inProgress[0];
+    const pct  = prog.completionPercentage || 0;
+    const total = prog.totalLessons || 0;
+
+    content.innerHTML = `
+      <p style="font-weight:700;color:white;margin:0 0 8px;font-size:18px;">${prog.courseTitle || 'Level 1'}</p>
+      <div class="progress-bar-wrap" style="background:rgba(255,255,255,0.3);">
+        <div class="progress-bar-fill" style="width:${pct}%;background:white;" ></div>
+      </div>
+      <p class="progress-meta" style="color:rgba(255,255,255,0.9);">Page ${prog.pageNumber} of ${total} &nbsp;·&nbsp; ${pct}% complete</p>
+      <button class="btn-course" onclick="openCourse(${prog.courseId}, '${prog.courseSlug}')" style="background:white;color:#667eea;margin-top:12px;">
+        ▶ Continue Learning
+      </button>
+    `;
+    card.style.display = 'block';
+  }
+
+  // ── Open Course ───────────────────────────────────────────────────────────────
+  window.openCourse = async function(courseId, courseSlug) {
+    try {
+      const response = await api.post(`/courses/${courseId}/access`);
+      if (response.data && response.data.allowed) {
+        const token = response.data.redirectToken || storage.getToken();
+        window.location.href = `${READ_BASE_URL}/${courseSlug}/?token=${token}`;
+      } else {
+        alert('You do not have access to this course. Please subscribe to access.');
+        window.location.href = '../pricing.html';
+      }
+    } catch (err) {
+      alert(err.message || 'Failed to access course. Please try again.');
+    }
+  };
+
+  // ── Resend verification email ─────────────────────────────────────────────────
+  resendVerifyLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    resendVerifyLink.textContent = 'Sending...';
+    try {
+      await api.post('/auth/resend-verification', {});
+      resendVerifyLink.textContent = 'Sent! Check your inbox.';
+    } catch (err) {
+      resendVerifyLink.textContent = 'Failed — try again later.';
+    }
+  });
+
+  // ── Refund Status ─────────────────────────────────────────────────────────────
+  let currentPaymentId = null;
+
+  async function loadRefundStatus(paymentId) {
+    currentPaymentId = paymentId;
+    const statusContent = document.getElementById('refund-status-content');
+    const requestForm = document.getElementById('refund-request-form');
+    
+    try {
+      // Check eligibility first
+      const eligibility = await api.checkRefundEligibility(paymentId);
+      if (eligibility.data === false) {
+        statusContent.innerHTML = '<p style="font-size:13px;color:#666;">This payment is not eligible for refund (outside 7-day window or already processed).</p>';
+        requestForm.style.display = 'none';
+        return;
+      }
+
+      // Check existing refund status
+      const refundStatus = await api.getRefundStatus(paymentId);
+      if (refundStatus.data) {
+        const r = refundStatus.data;
+        const statusMap = {
+          'REQUESTED': '<span style="color:#f59e0b;font-weight:600;">Under Review</span>',
+          'APPROVED': '<span style="color:#2f80ed;font-weight:600;">Approved</span>',
+          'REJECTED': '<span style="color:#dc2626;font-weight:600;">Not Approved</span>',
+          'REFUNDED': '<span style="color:#27ae60;font-weight:600;">Refunded</span>'
+        };
+        
+        let message = '';
+        if (r.status === 'REQUESTED') {
+          message = `Your refund request is under review. Requested on: ${new Date(r.requestedAt).toLocaleDateString('en-IN')}.`;
+        } else if (r.status === 'APPROVED') {
+          message = `Your refund request has been approved. The refund will be processed to your original payment method.`;
+        } else if (r.status === 'REJECTED') {
+          message = `Your refund request was not approved. Please contact ExcelKidsHub Support if you have questions.`;
+        } else if (r.status === 'REFUNDED') {
+          message = `Your refund has been processed. Your digital subscription access has ended.`;
+        }
+
+        statusContent.innerHTML = `
+          <p style="font-size:13px;color:#667085;margin-bottom:8px;">Status: ${statusMap[r.status] || r.status}</p>
+          <p style="font-size:12px;color:#666;">${message}</p>
+        `;
+        requestForm.style.display = 'none';
+      } else {
+        // No existing refund, show request form
+        statusContent.innerHTML = '<p style="font-size:13px;color:#27ae60;">✓ Eligible for refund</p>';
+        requestForm.style.display = 'block';
+      }
+    } catch (err) {
+      console.log('Refund status check failed:', err.message);
+      statusContent.innerHTML = '<p style="font-size:13px;color:#666;">Unable to check refund eligibility.</p>';
+      requestForm.style.display = 'none';
+    }
+  }
+
+  // ── Request Refund ─────────────────────────────────────────────────────────────
+  document.getElementById('request-refund-btn').addEventListener('click', async () => {
+    if (!currentPaymentId) return;
+    
+    const reason = document.getElementById('refund-reason').value.trim();
+    const btn = document.getElementById('request-refund-btn');
+    
+    btn.textContent = 'Submitting...';
+    btn.disabled = true;
+    
+    try {
+      const response = await api.requestRefund(currentPaymentId, reason);
+      alert('Your refund request has been submitted. Our team will review it and contact you.');
+      loadRefundStatus(currentPaymentId);
+    } catch (err) {
+      alert(err.message || 'Failed to submit refund request. Please try again.');
+    } finally {
+      btn.textContent = 'Request Refund';
+      btn.disabled = false;
+    }
+  });
+
+  // ── Load Dashboard ────────────────────────────────────────────────────────────
+  async function loadDashboard() {
+    try {
+      // Show cached user immediately so there is no blank flash
+      const cachedUser = auth.getCurrentUser();
+      if (cachedUser) {
+        updateProfile(cachedUser);
+        showDashboard();
+      }
+
+      // Fetch fresh data from /auth/me (returns user + active subscription in one call)
+      const meResponse = await api.get('/auth/me');
+      const freshData  = meResponse.data || meResponse;
+
+      if (freshData.user) {
+        storage.setUser(freshData.user);
+        updateProfile(freshData.user);
+      }
+      if (freshData.subscription) {
+        storage.setSubscription(freshData.subscription);
+        updateSubscription(freshData.subscription);
+      } else {
+        updateSubscription(null);
+      }
+
+      // Fetch courses available to this user
+      try {
+        const coursesResponse = await api.get('/courses/my');
+        const courses = (coursesResponse.data || coursesResponse.courses || []);
+        storage.setCourses(courses);
+        updateCourses(courses);
+      } catch (coursesErr) {
+        console.log('Courses not loaded:', coursesErr.message);
+        updateCourses([]);
+      }
+
+      // Fetch progress summary for Continue Reading card
+      try {
+        const progressResponse = await api.get('/progress/summary');
+        const progressList = progressResponse.data || progressResponse.summary || [];
+        updateProgress(progressList);
+      } catch (progressErr) {
+        console.log('Progress not loaded:', progressErr.message);
+      }
+
+      showDashboard();
+    } catch (err) {
+      if (!auth.isLoggedIn()) {
+        window.location.href = '../login.html';
+      } else {
+        showError('Failed to load dashboard. Please refresh the page.');
+      }
+    }
+  }
+
+  loadDashboard();
+</script>
+
+<script src="../js/nav.js?v=20260706"></script>
+<script src="../js/script.js?v=20260706"></script>
+
+</body>
+</html>

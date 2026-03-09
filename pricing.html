@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Reading Plans | ExcelKidsHub Phonics Academy</title>
+<meta name="description" content="Help Your Child Practise Phonics, Read and Build Confidence — Anytime, Anywhere. Interactive phonics books, audio and reading practice designed for children aged 4–10.">
+<link rel="stylesheet" href="css/style.css?v=20260809c">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+.pc { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.sec { padding: 64px 0; }
+.sec-sm { padding: 40px 0; }
+.sec-title { font-size: 28px; font-weight: 700; color: #2b3a57; text-align: center; margin-bottom: 8px; }
+.sec-sub   { text-align: center; color: #555; font-size: 15px; margin-bottom: 36px; }
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(180deg, #f4fbff 0%, #fff9ed 100%);
+  color: #243142;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  padding: 48px 0 40px;
+}
+
+.hero-inner {
+  position: relative; z-index: 2; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  padding: 0;
+}
+.hero-left { text-align: left; }
+.hero-left h1 {
+  font-size: 36px; font-weight: 800; line-height: 1.2;
+  margin: 0 0 16px; color: #2b3a57;
+}
+.hero-left h1 em {
+  font-style: normal; color: #2f80ed;
+}
+.hero-left p {
+  font-size: 16px; color: #667085; margin: 0 0 12px;
+  line-height: 1.6; max-width: 480px;
+}
+.hero-subtext {
+  font-size: 14px; color: #888; margin: 0 0 24px;
+}
+.hero-note { font-size: 13px; color: #667085; margin-top: 16px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Right panel — product screenshot */
+.hero-right {
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  border: 2px solid #e8edf2;
+}
+.hero-right img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 24px; padding: 40px 0 32px; }
+  .hero-left h1 { font-size: 26px; text-align: center; }
+  .hero-left p  { text-align: center; margin: 0 auto 22px; }
+  .hero-btns    { justify-content: center; }
+  .hero-right   { order: 2; }
+}
+
+@media (max-width: 430px) {
+  .hero { padding: 32px 0 28px; }
+  .hero-inner { gap: 20px; padding: 32px 0 24px; }
+  .hero-left h1 { font-size: 24px; }
+  .hero-left p { font-size: 15px; }
+  .hero-subtext { font-size: 13px; }
+  .hero-note { font-size: 12px; }
+}
+
+@media (max-width: 390px) {
+  .hero-left h1 { font-size: 22px; }
+  .hero-left p { font-size: 14px; }
+}
+
+@media (max-width: 360px) {
+  .hero-left h1 { font-size: 20px; }
+  .hero-left p { font-size: 13px; }
+  .hero-btns button { width: 100%; }
+}
+
+/* ── Experience Section ───────────────────────────────────────────────────────── */
+.experience-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px; margin-top: 32px;
+}
+.experience-item {
+  background: #fff; border-radius: 16px; padding: 32px 24px;
+  text-align: center; border: 2px solid #f0f0f0;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.experience-item:hover {
+  transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  border-color: #667eea;
+}
+.experience-icon {
+  font-size: 48px; margin-bottom: 16px; display: block;
+}
+.experience-title {
+  font-size: 18px; font-weight: 700; color: #2b3a57; margin: 0 0 8px;
+}
+.experience-desc {
+  font-size: 14px; color: #667085; margin: 0; line-height: 1.5;
+}
+</style>
+
+<style>
+/* ── Pricing ──────────────────────────────────────────────────────────────── */
+.pricing-sec { background: linear-gradient(180deg, #f7fff5 0%, #f4fbff 100%); }
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 24px; margin-bottom: 36px;
+}
+.plan-card {
+  background: #fff; border-radius: 16px; padding: 32px 28px;
+  box-shadow: 0 2px 14px rgba(0,0,0,.08);
+  border: 2px solid transparent; text-align: center;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+  position: relative; overflow: hidden; cursor: pointer;
+}
+.plan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.12); }
+
+/* Starter - Soft green */
+.plan-card[data-plan="free"] {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #86efac;
+}
+.plan-card[data-plan="free"]:hover {
+  border-color: #22c55e;
+  box-shadow: 0 8px 28px rgba(34, 197, 94, .2);
+}
+
+/* Level 1 - Soft blue */
+.plan-card[data-plan="level1"] {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-color: #93c5fd;
+}
+.plan-card[data-plan="level1"]:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 28px rgba(59, 130, 246, .2);
+}
+
+/* Complete - Warm yellow/orange */
+.plan-card[data-plan="bundle"] {
+  background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+  border-color: #fde047;
+}
+.plan-card[data-plan="bundle"]:hover {
+  border-color: #eab308;
+  box-shadow: 0 8px 28px rgba(234, 179, 8, .2);
+}
+
+.plan-card.best-value { border-color: #facc15; }
+.plan-card.selected   { border-color: #2f80ed; box-shadow: 0 8px 28px rgba(47,128,237,.18); }
+.plan-ribbon {
+  position: absolute; top: 18px; right: -28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; font-size: 11px; font-weight: 700;
+  padding: 4px 38px; transform: rotate(45deg); letter-spacing: .3px;
+}
+.plan-badge {
+  display: inline-block; border-radius: 12px; padding: 4px 14px;
+  font-size: 12px; font-weight: 700; margin-bottom: 12px; letter-spacing: .3px;
+}
+.badge-free   { background: #dcfce7; color: #15803d; }
+.badge-paid   { background: #dbeafe; color: #1d4ed8; }
+.badge-bundle { background: #fef9c3; color: #854d0e; }
+.plan-name  { font-size: 22px; font-weight: 800; color: #2b3a57; margin: 0 0 10px; }
+.plan-price { font-size: 48px; font-weight: 800; color: #2b3a57; line-height: 1; margin: 0 0 4px; }
+.plan-price sub { font-size: 14px; font-weight: 500; color: #888; vertical-align: middle; }
+.plan-period { font-size: 13px; color: #888; margin: 0 0 20px; }
+.plan-features {
+  list-style: none; padding: 0; margin: 0 0 24px; text-align: left;
+}
+.plan-features li {
+  padding: 9px 0; border-bottom: 1px solid #f0f0f0;
+  font-size: 14px; color: #444; display: flex; align-items: center; gap: 8px;
+}
+.plan-features li:last-child { border-bottom: none; }
+.plan-features li::before { content: '✓'; color: #28a745; font-weight: 700; flex-shrink: 0; }
+.btn-plan {
+  width: 100%; padding: 16px 20px; border-radius: 28px; border: none;
+  font-size: 16px; font-weight: 800; cursor: pointer; transition: all .3s ease;
+  position: relative; overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,.15);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-plan::before {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+  transition: left .5s ease;
+}
+.btn-plan:hover::before { left: 100%; }
+.btn-plan:hover:not(:disabled) { 
+  transform: translateY(-3px) scale(1.02); 
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+.btn-plan:active:not(:disabled) { transform: translateY(-1px) scale(1); }
+.btn-plan:disabled { opacity: .55; cursor: not-allowed; }
+
+.btn-free { 
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); 
+  color: #fff; 
+  box-shadow: 0 6px 20px rgba(39, 174, 96, .3);
+}
+.btn-free:hover:not(:disabled) { 
+  background: linear-gradient(135deg, #219a52 0%, #27ae60 100%); 
+  box-shadow: 0 10px 30px rgba(39, 174, 96, .4);
+}
+.btn-free::after { content: '🎉'; font-size: 18px; }
+
+.btn-paid { 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+  color: #fff; 
+  box-shadow: 0 6px 20px rgba(102, 126, 234, .3);
+}
+.btn-paid:hover:not(:disabled) { 
+  background: linear-gradient(135deg, #5a67d8 0%, #667eea 100%); 
+  box-shadow: 0 10px 30px rgba(102, 126, 234, .4);
+}
+.btn-paid::after { content: '⭐'; font-size: 18px; }
+
+.btn-bundle { 
+  background: linear-gradient(135deg, #2f80ed 0%, #195fba 100%); 
+  color: #fff; 
+  box-shadow: 0 6px 20px rgba(47, 128, 237, .3);
+}
+.btn-bundle:hover:not(:disabled) { 
+  background: linear-gradient(135deg, #195fba 0%, #0d4a8a 100%); 
+  box-shadow: 0 10px 30px rgba(47, 128, 237, .4);
+}
+.btn-bundle::after { content: '🎁'; font-size: 18px; }
+</style>
+
+<style>
+/* ── Coupon ───────────────────────────────────────────────────────────────── */
+.coupon-box {
+  background: #fff; border-radius: 12px; padding: 28px 32px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07); max-width: 560px; margin: 0 auto;
+}
+.coupon-box h3 { font-size: 17px; font-weight: 700; color: #2b3a57; margin: 0 0 16px; text-align: center; }
+.coupon-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.coupon-row input {
+  flex: 1; min-width: 0; padding: 11px 14px; border: 1px solid #ddd;
+  border-radius: 8px; font-size: 14px; text-transform: uppercase; outline: none;
+  transition: border-color .2s;
+}
+.coupon-row input:focus { border-color: #2b3a57; }
+.btn-apply {
+  background: #2b3a57; color: #fff; border: none; border-radius: 8px;
+  padding: 11px 22px; font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: background .2s; white-space: nowrap;
+}
+.btn-apply:hover:not(:disabled) { background: #1a253a; }
+.btn-apply:disabled { opacity: .55; cursor: not-allowed; }
+#coupon-result {
+  margin-top: 12px; font-size: 13px; min-height: 18px;
+  text-align: center; line-height: 1.5;
+}
+
+/* ── Decision Section ───────────────────────────────────────────────────────── */
+.decision-section {
+  background: #fff; border-radius: 16px; padding: 32px 28px;
+  margin-top: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.decision-title {
+  font-size: 20px; font-weight: 700; color: #2b3a57;
+  text-align: center; margin: 0 0 24px;
+}
+.decision-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.decision-item {
+  background: #f8fafc; border-radius: 12px; padding: 20px 16px;
+  text-align: center; border: 2px solid #e8edf2;
+  transition: transform .2s, border-color .2s;
+}
+.decision-item:hover {
+  transform: translateY(-2px); border-color: #667eea;
+}
+.decision-icon {
+  font-size: 32px; margin-bottom: 12px; display: block;
+}
+.decision-heading {
+  font-size: 14px; font-weight: 700; color: #2b3a57;
+  margin: 0 0 6px;
+}
+.decision-text {
+  font-size: 13px; color: #667085; margin: 0; line-height: 1.4;
+}
+
+/* ── Try Before Section ───────────────────────────────────────────────────────── */
+.try-before-box {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-radius: 16px; padding: 32px 28px;
+  border: 2px solid #86efac; text-align: center;
+}
+.try-before-title {
+  font-size: 22px; font-weight: 700; color: #2b3a57;
+  margin: 0 0 12px;
+}
+.try-before-text {
+  font-size: 15px; color: #667085; margin: 0; line-height: 1.6;
+  max-width: 600px; margin-left: auto; margin-right: auto;
+}
+
+/* ── Digital Clarification Section ─────────────────────────────────────────────── */
+.digital-clarification {
+  background: #fff; border-radius: 16px; padding: 32px 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06); text-align: center;
+}
+.digital-title {
+  font-size: 22px; font-weight: 700; color: #2b3a57;
+  margin: 0 0 12px;
+}
+.digital-text {
+  font-size: 15px; color: #667085; margin: 0 0 20px; line-height: 1.6;
+  max-width: 600px; margin-left: auto; margin-right: auto;
+}
+.digital-cta {
+  padding-top: 20px; border-top: 2px solid #f0f0f0;
+}
+.digital-cta-text {
+  font-size: 14px; color: #2b3a57; margin: 0 0 8px;
+}
+.digital-cta-link {
+  display: inline-block; color: #2f80ed; font-weight: 700;
+  text-decoration: none; font-size: 15px;
+  transition: color .2s;
+}
+.digital-cta-link:hover { color: #195fba; }
+
+/* ── Compare Table ────────────────────────────────────────────────────────── */
+.compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.compare-table {
+  width: 100%; border-collapse: collapse; background: #fff;
+  border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  min-width: 480px;
+}
+.compare-table th, .compare-table td {
+  padding: 14px 18px; border-bottom: 1px solid #f0f0f0;
+  text-align: center; font-size: 14px;
+}
+.compare-table th {
+  background: linear-gradient(135deg, #2f80ed 0%, #195fba 100%); color: #fff; font-weight: 600; font-size: 13px;
+}
+.compare-table th:first-child { text-align: left; background: #f8f9fa; color: #2b3a57; }
+.compare-table td:first-child { text-align: left; font-weight: 600; color: #2b3a57; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: #f8fafc; }
+.ck { color: #22c55e; font-size: 18px; font-weight: 700; }
+.na { color: #aaa; font-size: 14px; }
+
+/* ── How It Works ─────────────────────────────────────────────────────────── */
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px; margin-top: 8px;
+}
+.step {
+  background: #fff; border-radius: 10px; padding: 24px 18px; text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.step-num {
+  width: 44px; height: 44px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; margin: 0 auto 12px;
+}
+.step h4 { font-size: 14px; font-weight: 700; color: #2b3a57; margin: 0 0 5px; }
+.step p  { font-size: 12px; color: #666; margin: 0; line-height: 1.4; }
+
+/* ── FAQ ──────────────────────────────────────────────────────────────────── */
+.faq-wrap { max-width: 720px; margin: 0 auto; }
+.faq-item {
+  background: #fff; border-radius: 12px; margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06); overflow: hidden;
+  border: 2px solid #f0f0f0; transition: border-color .2s;
+}
+.faq-item:hover { border-color: #667eea; }
+.faq-q {
+  padding: 18px 22px; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  font-weight: 700; color: #2b3a57; font-size: 15px;
+  transition: background .2s; user-select: none;
+}
+.faq-q:hover { background: #f8f9fa; }
+.faq-icon { font-size: 22px; color: #667eea; font-weight: 700;
+  transition: transform .25s; flex-shrink: 0; margin-left: 12px; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 22px; }
+.faq-item.open .faq-a { max-height: 300px; padding: 0 22px 18px; }
+.faq-a p { font-size: 14px; color: #555; line-height: 1.7; margin: 0; padding-top: 10px; }
+
+/* ── Final CTA ────────────────────────────────────────────────────────────── */
+.final-cta {
+  background: linear-gradient(135deg, #2f80ed 0%, #195fba 100%);
+  color: #fff; text-align: center; padding: 52px 0;
+}
+.final-cta h2 { font-size: 26px; font-weight: 700; margin: 0 0 10px; }
+.final-cta p  { font-size: 15px; opacity: .85; max-width: 480px; margin: 0 auto 24px; }
+.final-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 26px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .plan-card.best-value { border-color: #facc15; }
+  .sec-title { font-size: 22px; }
+  .coupon-box { padding: 20px 16px; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .experience-grid { grid-template-columns: 1fr 1fr; }
+  .decision-grid { grid-template-columns: 1fr; }
+  .try-before-box { padding: 24px 20px; }
+  .digital-clarification { padding: 24px 20px; }
+  .final-cta h2 { font-size: 22px; }
+  .final-cta-btns { flex-direction: column; }
+  .final-cta-btns .btn-outline { width: 100%; text-align: center; }
+}
+
+@media (max-width: 400px) {
+  .hero h1 { font-size: 22px; }
+  .experience-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+<body>
+<header><div id="nav-placeholder"></div></header>
+
+<!-- ══ 1. PRODUCT EXPERIENCE ═══════════════════════════════════════════════════ -->
+<section class="sec" style="background:#fff;">
+  <div class="pc">
+    <h2 class="sec-title">Everything Your Child Needs to Practise Reading</h2>
+    <p class="sec-sub">Four key skills that build strong reading foundations</p>
+    
+    <div class="experience-grid">
+      <div class="experience-item">
+        <div class="experience-icon">📖</div>
+        <h3 class="experience-title">Read</h3>
+        <p class="experience-desc">Interactive digital phonics books</p>
+      </div>
+      <div class="experience-item">
+        <div class="experience-icon">🔊</div>
+        <h3 class="experience-title">Hear</h3>
+        <p class="experience-desc">Jolly Phonics sounds and pronunciation</p>
+      </div>
+      <div class="experience-item">
+        <div class="experience-icon">✏️</div>
+        <h3 class="experience-title">Practise</h3>
+        <p class="experience-desc">Interactive reading activities</p>
+      </div>
+      <div class="experience-item">
+        <div class="experience-icon">📈</div>
+        <h3 class="experience-title">Grow</h3>
+        <p class="experience-desc">Reading progress and practice</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Welcome banner placeholder (injected by JS when ?welcome=1) -->
+<div id="welcome-banner-slot"></div>
+
+<!-- ══ 3. CHOOSE YOUR PLAN ═══════════════════════════════════════════════════ -->
+<section class="sec pricing-sec" id="plans">
+  <div class="pc">
+    <h2 class="sec-title">Choose the Right Reading Plan</h2>
+    <p class="sec-sub">Start free, or unlock more reading content when your child is ready.</p>
+
+    <div class="pricing-grid">
+
+      <!-- Starter (Free) -->
+      <div class="plan-card" data-plan="free" onclick="selectPlan('free')">
+        <span class="plan-badge badge-free">🌱 FREE</span>
+        <h3 class="plan-name">Starter</h3>
+        <div class="plan-price">₹0</div>
+        <p class="plan-period">Forever</p>
+        <ul class="plan-features">
+          <li>Sample Reading Book</li>
+          <li>Sample Activities</li>
+          <li>Audio Support</li>
+          <li>Limited Practice</li>
+        </ul>
+        <button class="btn-plan btn-free" id="btn-free"
+                onclick="handleBuyClick('free', event)">Start Learning</button>
+      </div>
+
+      <!-- Digital Reading Level 1 -->
+      <!-- Price updated dynamically by updatePricingCards() from GET /api/plans -->
+      <div class="plan-card" data-plan="level1" onclick="selectPlan('level1')">
+        <span class="plan-badge badge-paid">🔤 LEVEL 1</span>
+        <h3 class="plan-name" id="name-level1">Digital Reading Level 1</h3>
+        <div class="plan-price" id="price-level1">
+          <span style="font-size:16px;color:#888;">Loading…</span>
+        </div>
+        <p class="plan-period" id="period-level1">30 Days</p>
+        <ul class="plan-features">
+          <li>Complete Level 1 Interactive Book</li>
+          <li>Audio Support</li>
+          <li>Reading Practice</li>
+          <li>Progress Tracking</li>
+        </ul>
+        <button class="btn-plan btn-paid" id="btn-level1"
+                onclick="handleBuyClick('level1', event)">Start Learning</button>
+      </div>
+
+      <!-- Complete Reading Bundle -->
+      <!-- Price updated dynamically by updatePricingCards() from GET /api/plans -->
+      <div class="plan-card best-value" data-plan="bundle" onclick="selectPlan('bundle')">
+        <div class="plan-ribbon">⭐ BEST VALUE</div>
+        <span class="plan-badge badge-bundle">⭐ BUNDLE</span>
+        <h3 class="plan-name" id="name-bundle">Complete Reading Bundle</h3>
+        <div class="plan-price" id="price-bundle">
+          <span style="font-size:16px;color:#888;">Loading…</span>
+        </div>
+        <p class="plan-period" id="period-bundle">30 Days</p>
+        <ul class="plan-features">
+          <li>📘 Phonics Level 1 — full workbook (71 pages)</li>
+          <li>📘 Phonics Level 2 — full workbook (60 pages)</li>
+          <li>Stories</li>
+          <li>Reading Practice</li>
+          <li>Audio Support</li>
+          <li>Progress Tracking</li>
+          <li>Future Bundle Content</li>
+        </ul>
+        <button class="btn-plan btn-bundle" id="btn-bundle"
+                onclick="handleBuyClick('bundle', event)">Start Learning</button>
+      </div>
+
+    </div><!-- /pricing-grid -->
+
+    <!-- ══ PAYMENT CONSENT ═════════════════════════════════════════════════════ -->
+    <div class="coupon-box" id="consent-box" style="margin-top:32px;">
+      <div style="margin-bottom:16px;">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+          <input type="checkbox" id="terms-checkbox" style="margin-top:4px;flex-shrink:0;">
+          <span style="font-size:14px;color:#555;line-height:1.5;">
+            I agree to the <a href="/terms-and-conditions.html" target="_blank" style="color:#2f80ed;">Terms & Conditions</a> and <a href="/privacy-policy.html" target="_blank" style="color:#2f80ed;">Privacy Policy</a>
+          </span>
+        </label>
+      </div>
+      <div style="font-size:13px;color:#888;background:#f8fafc;padding:12px;border-radius:8px;">
+        <strong>What you are purchasing:</strong><br>
+        <span id="purchase-plan-name">Select a plan above</span> – <span id="purchase-plan-price">₹0</span><br>
+        Access period: <span id="purchase-plan-duration">30 days</span><br>
+        <span style="color:#dc2626;">Digital Reading access only. Live phonics classes are not included unless specifically stated in the plan.</span>
+      </div>
+    </div>
+
+    <!-- ══ TRUST MESSAGE ═══════════════════════════════════════════════════════ -->
+    <div style="text-align:center;margin:32px 0;padding:20px;background:#f0fdf4;border-radius:12px;border:2px solid #86efac;">
+      <p style="margin:0 0 8px;font-size:18px;font-weight:700;color:#2b3a57;">💚 Try With Confidence</p>
+      <p style="margin:0;font-size:15px;color:#555;">7-day refund policy on eligible digital purchases.</p>
+      <div style="margin-top:12px;font-size:13px;color:#667085;">
+        <a href="/terms-and-conditions.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Terms & Conditions</a>
+        <span style="color:#ccc;">·</span>
+        <a href="/privacy-policy.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Privacy Policy</a>
+        <span style="color:#ccc;">·</span>
+        <a href="/refund-policy.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Refund Policy</a>
+      </div>
+    </div>
+
+    <!-- ══ WHICH PLAN IS RIGHT? ═════════════════════════════════════════════════ -->
+    <div class="decision-section">
+      <h3 class="decision-title">Which Plan Is Right for Your Child?</h3>
+      <div class="decision-grid">
+        <div class="decision-item">
+          <div class="decision-icon">🌱</div>
+          <h4 class="decision-heading">Just exploring?</h4>
+          <p class="decision-text">Start with <strong>Starter</strong></p>
+        </div>
+        <div class="decision-item">
+          <div class="decision-icon">🔤</div>
+          <h4 class="decision-heading">Beginning phonics and early reading?</h4>
+          <p class="decision-text">Choose <strong>Level 1</strong></p>
+        </div>
+        <div class="decision-item">
+          <div class="decision-icon">📚</div>
+          <h4 class="decision-heading">Want the complete reading experience?</h4>
+          <p class="decision-text">Choose <strong>Complete</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 4. COUPON ══════════════════════════════════════════════════════════ -->
+    <div class="coupon-box">
+      <h3>🎁 Have a coupon code?</h3>
+      <div class="coupon-row">
+        <input type="text" id="coupon-input" placeholder="Enter coupon code">
+        <button class="btn-apply" id="coupon-btn" onclick="validateCoupon()">Apply</button>
+      </div>
+      <div id="coupon-result"></div>
+    </div>
+
+    <!-- ══ PAYMENT CONSENT ═════════════════════════════════════════════════════ -->
+    <div class="coupon-box" id="consent-box" style="display:none;">
+      <div style="margin-bottom:16px;">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+          <input type="checkbox" id="terms-checkbox" style="margin-top:4px;flex-shrink:0;">
+          <span style="font-size:14px;color:#555;line-height:1.5;">
+            I agree to the <a href="/terms-and-conditions.html" target="_blank" style="color:#2f80ed;">Terms & Conditions</a> and <a href="/privacy-policy.html" target="_blank" style="color:#2f80ed;">Privacy Policy</a>
+          </span>
+        </label>
+      </div>
+      <div style="font-size:13px;color:#888;background:#f8fafc;padding:12px;border-radius:8px;">
+        <strong>What you are purchasing:</strong><br>
+        <span id="purchase-plan-name">Plan name</span> – <span id="purchase-plan-price">₹0</span><br>
+        Access period: <span id="purchase-plan-duration">30 days</span><br>
+        <span style="color:#dc2626;">Digital Reading access only. Live phonics classes are not included unless specifically stated in the plan.</span>
+      </div>
+    </div>
+
+  </div><!-- /pc -->
+</section>
+
+<!-- ══ TRY BEFORE YOU SUBSCRIBE ═════════════════════════════════════════════════ -->
+<section class="sec" style="background:#fff;">
+  <div class="pc">
+    <div class="try-before-box">
+      <h2 class="try-before-title">Try Before You Subscribe</h2>
+      <p class="try-before-text">Let your child explore ExcelKidsHub Reading Studio before choosing a paid plan. The Starter plan gives you access to sample books and activities so you can see if it's right for your child.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DIGITAL PRODUCT CLARIFICATION ══════════════════════════════════════════ -->
+<section class="sec" style="background:linear-gradient(180deg, #f4fbff 0%, #fff9ed 100%);">
+  <div class="pc">
+    <div class="digital-clarification">
+      <h2 class="digital-title">Digital Reading Platform</h2>
+      <p class="digital-text">This subscription provides access to interactive digital books, phonics audio, self-paced practice, reading activities, and progress features.</p>
+      
+      <div class="digital-cta">
+        <p class="digital-cta-text"><strong>Looking for live phonics classes?</strong></p>
+        <a href="/courses.html" class="digital-cta-link">Explore our teacher-led programs →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 5. COMPARE PLANS ══════════════════════════════════════════════════════ -->
+<section class="sec" style="background:linear-gradient(180deg, #f4fbff 0%, #fff9ed 100%);">
+  <div class="pc">
+    <h2 class="sec-title">Compare Plans</h2>
+    <p class="sec-sub" style="margin-bottom:24px;"></p>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Starter</th>
+            <th id="th-level1">Level 1</th>
+            <th id="th-bundle">Complete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Access</td>
+            <td>Forever</td>
+            <td>30 Days</td>
+            <td>30 Days</td>
+          </tr>
+          <tr>
+            <td>Sample Book</td>
+            <td class="ck">✓</td><td class="ck">✓</td><td class="ck">✓</td>
+          </tr>
+          <tr>
+            <td>Level 1 Content</td>
+            <td class="na">—</td><td class="ck">✓</td><td class="ck">✓</td>
+          </tr>
+          <tr>
+            <td>Level 2 Content</td>
+            <td class="na">—</td><td class="na">—</td><td class="ck">✓</td>
+          </tr>
+          <tr>
+            <td>Stories</td>
+            <td class="na">—</td><td class="na">—</td><td class="ck">✓</td>
+          </tr>
+          <tr>
+            <td>Audio Support</td>
+            <td>Limited</td><td class="ck">✓</td><td class="ck">✓</td>
+          </tr>
+          <tr>
+            <td>Practice Activities</td>
+            <td>Limited</td><td class="ck">✓</td><td class="ck">✓</td>
+          </tr>
+          <tr>
+            <td>Progress Tracking</td>
+            <td>Basic</td><td class="ck">✓</td><td class="ck">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 6. HOW IT WORKS ═══════════════════════════════════════════════════════ -->
+<section class="sec">
+  <div class="pc">
+    <h2 class="sec-title">How ExcelKidsHub Works</h2>
+    <p class="sec-sub">From sign-up to reading confidence in 5 simple steps</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Choose a plan</h4>
+        <p>Select the reading access you need</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Get access</h4>
+        <p>Sign up and start exploring</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Explore books & activities</h4>
+        <p>Access your digital content</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Practise regularly</h4>
+        <p>Build skills at your child's pace</p>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <h4>Build reading confidence</h4>
+        <p>Watch progress grow over time</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 7. FAQ ═════════════════════════════════════════════════════════════════ -->
+<section class="sec" style="background:linear-gradient(180deg, #fff9ed 0%, #f7fff5 100%);">
+  <div class="pc">
+    <h2 class="sec-title">Frequently Asked Questions</h2>
+    <p class="sec-sub" style="margin-bottom:24px;"></p>
+    <div class="faq-wrap">
+
+      <div class="faq-item">
+        <div class="faq-q">What is the Digital Reading Platform?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><p>An online system where your child can access interactive phonics books, audio support, and practice activities — designed to build reading confidence through self-paced practice.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Does this include live phonics classes?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><p>No. These subscriptions are for the Digital Reading Platform only. Live teacher-led classes are offered separately through ExcelKidsHub Phonics Academy.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can my child use it on mobile?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><p>Yes. The platform works on smartphones, tablets, and desktop computers. Your child can learn anywhere with an internet connection.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is internet required?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><p>Yes, an active internet connection is required to use the Digital Reading Platform.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How long does the subscription last?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><p>Paid subscriptions are valid for 30 days from activation. Your child's progress is always saved — even if the subscription expires, progress resumes from where you left off when you renew.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I upgrade later?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><p>Yes. You can switch to a higher plan at any time from the pricing page. Contact support if you need assistance.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can multiple children use one account?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><p>Each subscription is for one child to ensure accurate progress tracking. For multiple children we recommend separate accounts.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ 8. FINAL CTA ══════════════════════════════════════════════════════════ -->
+<section class="final-cta">
+  <div class="pc">
+    <h2>Ready to Make Reading Practice a Daily Habit?</h2>
+    <p>Start free and let your child explore ExcelKidsHub Reading Studio.</p>
+    <div class="final-cta-btns">
+      <button class="btn-y" onclick="handleStartFree()">Start Free</button>
+      <a href="/courses.html" class="btn-outline" style="display:inline-block;padding:12px 24px;border-radius:24px;text-decoration:none;font-weight:600;color:#2b3a57;border:2px solid rgba(255,255,255,0.3);transition:all .3s;">Explore Live Phonics Classes</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script type="module">
+  import { api } from './js/api.js';
+  import { storage } from './js/storage.js';
+
+  // ── Plan data ─────────────────────────────────────────────────────────────
+  // planSlug → PlanDto from GET /api/plans.
+  // Slugs assigned by DB id order: id=1 → free, id=2 → level1, id=3 → bundle.
+  let planData = {};
+  let selectedPlanSlug = null;
+
+  // ── Welcome banner (?welcome=1 after registration) ────────────────────────
+  (function showWelcomeBanner() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('welcome') === '1') {
+      const banner = document.createElement('div');
+      banner.style.cssText = [
+        'background:#d4edda','color:#155724','border:1px solid #c3e6cb',
+        'padding:14px 20px','border-radius:8px','text-align:center',
+        'font-size:15px','margin:16px auto','max-width:700px'
+      ].join(';');
+      banner.innerHTML = '🎉 <strong>Welcome to ExcelKidsHub!</strong> Choose a plan to start your child\'s reading journey.';
+      const slot = document.getElementById('welcome-banner-slot');
+      if (slot) slot.appendChild(banner);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  })();
+
+  // ── Load plans from backend ───────────────────────────────────────────────
+  async function loadPlans() {
+    try {
+      const apiBase = location.hostname.includes('localhost')
+        ? 'http://localhost:8080'
+        : 'https://api.excelkidshub.in';
+
+      const response = await fetch(`${apiBase}/api/plans`);
+      if (!response.ok) return;
+
+      const json  = await response.json();
+      const plans = (json.data || []).filter(p => p.id != null);
+      if (!plans.length) return;
+
+      // Sort ascending by id so order is always Starter → Level1 → Bundle
+      plans.sort((a, b) => a.id - b.id);
+
+      const SLOT_SLUGS = ['free', 'level1', 'bundle'];
+      plans.forEach((plan, i) => {
+        const slug = SLOT_SLUGS[i];
+        if (slug) planData[slug] = plan;
+      });
+
+      console.log('Plans loaded:', Object.entries(planData)
+        .map(([k, v]) => `${k}→id:${v.id} ₹${v.price}`).join(', '));
+
+      updatePricingCards();
+    } catch (e) {
+      console.warn('Could not load plans from API:', e.message);
+    }
+  }
+
+  // ── Update card prices from backend data ──────────────────────────────────
+  // Format: ₹99 / 30 days  (not ₹99/month + "Valid for 30 Days" separately)
+  function updatePricingCards() {
+    const fmt = n => Number(n).toLocaleString('en-IN');
+
+    const p1 = planData['level1'];
+    if (p1) {
+      const priceEl = document.getElementById('price-level1');
+      if (priceEl) priceEl.innerHTML = `₹${fmt(p1.price)}<sub> / 30 days</sub>`;
+      const nameEl = document.getElementById('name-level1');
+      if (nameEl) nameEl.textContent = p1.name;
+      // Comparison table header
+      const th1 = document.getElementById('th-level1');
+      if (th1) th1.innerHTML = `Level 1<br><small style="font-weight:400;font-size:11px;">₹${fmt(p1.price)}</small>`;
+    }
+
+    const p2 = planData['bundle'];
+    if (p2) {
+      const priceEl = document.getElementById('price-bundle');
+      if (priceEl) priceEl.innerHTML = `₹${fmt(p2.price)}<sub> / 30 days</sub>`;
+      const nameEl = document.getElementById('name-bundle');
+      if (nameEl) nameEl.textContent = p2.name;
+      const th2 = document.getElementById('th-bundle');
+      if (th2) th2.innerHTML = `Complete<br><small style="font-weight:400;font-size:11px;">₹${fmt(p2.price)}</small>`;
+    }
+  }
+
+  loadPlans();
+
+  // ── Auth helper ───────────────────────────────────────────────────────────
+  function isLoggedIn() {
+    return localStorage.getItem('jwt_token') !== null;
+  }
+
+  // ── Plan card selection ───────────────────────────────────────────────────
+  window.selectPlan = function(plan) {
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.btn-plan').forEach(btn => {
+      btn.classList.remove('selected');
+      if (!btn.disabled) {
+        // Preserve original button text based on button class
+        if (btn.classList.contains('btn-free')) {
+          btn.textContent = 'Start Free';
+        } else if (btn.classList.contains('btn-paid')) {
+          btn.textContent = 'Choose Level 1';
+        } else if (btn.classList.contains('btn-bundle')) {
+          btn.textContent = 'Get Complete Bundle';
+        } else {
+          btn.textContent = 'Subscribe Now';
+        }
+      }
+    });
+    const card = document.querySelector(`[data-plan="${plan}"]`);
+    if (card) card.classList.add('selected');
+    const btn = document.getElementById(`btn-${plan}`);
+    if (btn && !btn.disabled) {
+      btn.classList.add('selected');
+      btn.textContent = '✓ Selected';
+    }
+    selectedPlanSlug = plan;
+
+    // Update purchase details in consent box
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    if (termsCheckbox) {
+      const selectedPlan = planData[plan];
+      if (selectedPlan) {
+        document.getElementById('purchase-plan-name').textContent = selectedPlan.name || plan;
+        document.getElementById('purchase-plan-price').textContent = '₹' + Number(selectedPlan.price).toLocaleString('en-IN');
+        document.getElementById('purchase-plan-duration').textContent = '30 days';
+      }
+      // Reset checkbox when plan changes
+      termsCheckbox.checked = false;
+    }
+  };
+
+  // ── Free plan ─────────────────────────────────────────────────────────────
+  window.handleStartFree = function() {
+    window.location.href = isLoggedIn() ? 'dashboard/index.html' : 'register.html';
+  };
+
+  // ── Subscribe click ───────────────────────────────────────────────────────
+  window.handleBuyClick = function(plan, event) {
+    event.stopPropagation();
+    window.selectPlan(plan);
+    if (plan === 'free') {
+      window.handleStartFree();
+    } else {
+      // Check consent checkbox before initiating payment
+      const termsCheckbox = document.getElementById('terms-checkbox');
+      if (!termsCheckbox || !termsCheckbox.checked) {
+        alert('Please agree to the Terms & Conditions and Privacy Policy to continue.');
+        // Scroll to consent box to make it visible
+        const consentBox = document.getElementById('consent-box');
+        if (consentBox) {
+          consentBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Highlight the checkbox briefly
+          if (termsCheckbox) {
+            termsCheckbox.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.5)';
+            setTimeout(() => {
+              termsCheckbox.style.boxShadow = '';
+            }, 2000);
+          }
+        }
+        return;
+      }
+      initiatePayment(plan);
+    }
+  };
+
+  window.handleBuySubscription = function() {
+    if (selectedPlanSlug && selectedPlanSlug !== 'free') {
+      initiatePayment(selectedPlanSlug);
+    } else {
+      window.location.href = isLoggedIn() ? 'dashboard/index.html' : 'login.html';
+    }
+  };
+
+  // ── Coupon state ──────────────────────────────────────────────────────────
+  let appliedCoupon = null;
+
+  // ── Razorpay checkout flow ────────────────────────────────────────────────
+  async function initiatePayment(planSlug) {
+    if (!isLoggedIn()) {
+      window.location.href = 'login.html?redirect=' + encodeURIComponent('pricing.html');
+      return;
+    }
+
+    let plan = planData[planSlug];
+    if (!plan) {
+      plan = Object.values(planData).find(p =>
+        p.name.toLowerCase().includes(planSlug.replace(/-/g,' ').toLowerCase())
+        || planSlug.includes(p.name.toLowerCase().replace(/\s+/g,'-'))
+      );
+    }
+    if (!plan) {
+      alert('Plan not found. Please refresh the page and try again.');
+      return;
+    }
+
+    const btn = document.getElementById(`btn-${planSlug}`);
+    if (btn) { btn.disabled = true; btn.textContent = 'Processing…'; }
+
+    try {
+      // 100% coupon — bypass Razorpay
+      if (appliedCoupon && appliedCoupon.planId === plan.id
+          && Number(appliedCoupon.finalAmount) === 0) {
+        const couponRes = await api.post('/payments/apply-coupon', {
+          planId: plan.id, couponCode: appliedCoupon.code,
+        });
+        const subData = couponRes.data || couponRes;
+        storage.setSubscription({ status: subData.status, planName: subData.planName,
+          endDate: subData.endDate, startDate: subData.startDate });
+        // Redirect to payment success page
+        window.location.href = `payment-success.html?amount=0&order_id=COUPON-${appliedCoupon.code}`;
+        return;
+      }
+
+      // Normal Razorpay flow
+      const orderPayload = { planId: plan.id };
+      if (appliedCoupon && appliedCoupon.planId === plan.id) {
+        orderPayload.couponCode = appliedCoupon.code;
+      }
+
+      const orderRes  = await api.post('/payments/create-order', orderPayload);
+      const orderData = orderRes.data || orderRes;
+      const user      = storage.getUser() || {};
+
+      const rzp = new window.Razorpay({
+        key:         orderData.razorpayKeyId,
+        amount:      Math.round(orderData.amount * 100),
+        currency:    orderData.currency || 'INR',
+        order_id:    orderData.orderId,
+        name:        'ExcelKidsHub',
+        description: `${orderData.planName} — 30 Days`,
+        image:       '/images/logo.svg',
+        prefill: {
+          name:  user.name || (user.firstName ? `${user.firstName} ${user.lastName}` : ''),
+          email: user.email || '',
+        },
+        theme: { color: '#2b3a57' },
+        handler: async function(response) {
+          try {
+            const verifyRes = await api.post('/payments/verify', {
+              razorpayOrderId:   response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+              planId:            plan.id,
+            });
+            const subData = verifyRes.data || verifyRes;
+            storage.setSubscription({ status: subData.status, planName: subData.planName,
+              endDate: subData.endDate, startDate: subData.startDate });
+            // Redirect to payment success page with details
+            window.location.href = `payment-success.html?amount=${orderData.amount}&order_id=${response.razorpay_order_id}`;
+          } catch (err) {
+            // Redirect to payment failure page
+            window.location.href = `payment-failed.html?order_id=${response.razorpay_order_id}`;
+          }
+        },
+        modal: { ondismiss: function() {
+          if (btn) { btn.disabled = false; btn.textContent = 'Subscribe Now'; }
+        }}
+      });
+
+      rzp.on('payment.failed', function(response) {
+        // Redirect to payment failure page
+        window.location.href = `payment-failed.html?order_id=${response.error.metadata ? response.error.metadata.order_id : ''}`;
+      });
+
+      rzp.open();
+
+    } catch (err) {
+      alert(err.message || 'Could not initiate payment. Please try again.');
+      if (btn) { btn.disabled = false; btn.textContent = 'Subscribe Now'; }
+    }
+  }
+
+  // ── Coupon validation ─────────────────────────────────────────────────────
+  window.validateCoupon = async function() {
+    if (!isLoggedIn()) {
+      window.location.href = 'login.html?redirect=' + encodeURIComponent('pricing.html');
+      return;
+    }
+
+    const code      = document.getElementById('coupon-input').value.trim().toUpperCase();
+    const resultEl  = document.getElementById('coupon-result');
+    const couponBtn = document.getElementById('coupon-btn');
+
+    if (!code) {
+      resultEl.textContent  = 'Please enter a coupon code.';
+      resultEl.style.color  = '#dc2626';
+      return;
+    }
+
+    let plan = selectedPlanSlug ? planData[selectedPlanSlug] : null;
+    if (!plan || selectedPlanSlug === 'free') {
+      plan = Object.values(planData).find(p => p.price > 0);
+    }
+    if (!plan) {
+      resultEl.textContent = 'Please select a plan first.';
+      resultEl.style.color = '#dc2626';
+      return;
+    }
+
+    couponBtn.disabled    = true;
+    couponBtn.textContent = 'Checking…';
+    resultEl.textContent  = '';
+
+    try {
+      const res  = await api.post('/coupons/validate', { code, planId: plan.id });
+      const data = res.data || res;
+
+      if (data.valid) {
+        const fmt    = n => Number(n).toLocaleString('en-IN');
+        const isFull = Number(data.finalAmount) === 0;
+
+        appliedCoupon = {
+          code,
+          planId:         plan.id,
+          finalAmount:    data.finalAmount,
+          originalAmount: data.originalAmount,
+          discountAmount: data.discountAmount,
+          discountPercent:data.discountPercent,
+        };
+
+        if (isFull) {
+          resultEl.innerHTML   = `✅ <strong>100% discount applied!</strong> This plan is now FREE. Click Subscribe to activate.`;
+          resultEl.style.color = '#15803d';
+          const planBtn = document.getElementById(`btn-${selectedPlanSlug || 'level1'}`);
+          if (planBtn) planBtn.textContent = '🎁 Activate Free';
+        } else {
+          resultEl.innerHTML = `
+            ✅ <strong>${data.message}</strong><br>
+            <span style="color:#888;text-decoration:line-through;">₹${fmt(data.originalAmount)}</span>
+            &nbsp;→&nbsp;
+            <strong style="color:#15803d;font-size:16px;">₹${fmt(data.finalAmount)}</strong>
+            &nbsp;<span style="color:#888;font-size:12px;">(saving ₹${fmt(data.discountAmount)})</span>`;
+          resultEl.style.color = '#15803d';
+        }
+      } else {
+        appliedCoupon        = null;
+        resultEl.textContent = '❌ ' + (data.message || 'Invalid coupon code.');
+        resultEl.style.color = '#dc2626';
+      }
+    } catch (err) {
+      appliedCoupon        = null;
+      resultEl.textContent = '❌ ' + (err.message || 'Could not validate coupon.');
+      resultEl.style.color = '#dc2626';
+    } finally {
+      couponBtn.disabled    = false;
+      couponBtn.textContent = 'Apply';
+    }
+  };
+
+  // Enter key in coupon input
+  document.addEventListener('DOMContentLoaded', () => {
+    const inp = document.getElementById('coupon-input');
+    if (inp) inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') window.validateCoupon();
+    });
+  });
+
+  // ── Scroll to plans ───────────────────────────────────────────────────────
+  window.scrollToPlans = function() {
+    document.getElementById('plans').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // ── FAQ accordion ─────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          const ic = i.querySelector('.faq-icon');
+          if (ic) ic.textContent = '+';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          const ic = item.querySelector('.faq-icon');
+          if (ic) ic.textContent = '×';
+        }
+      });
+    });
+  });
+</script>
+
+<script src="js/nav.js?v=20260706"></script>
+<script src="js/script.js?v=20260706"></script>
+</body>
+</html>
