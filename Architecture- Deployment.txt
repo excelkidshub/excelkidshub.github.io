@@ -1,0 +1,172 @@
+# ExcelKidsHub Platform Architecture & System Flow
+
+## 1. Domain & Hosting Overview
+
+Primary Domain:
+
+* excelkidshub.in (Purchased from GoDaddy)
+
+Subdomains:
+
+* api.excelkidshub.in → Backend APIs (Oracle Cloud VM)
+* admin.excelkidshub.in → Admin Panel (React Build on Oracle VM)
+* app.excelkidshub.in → Student Learning App (React Build on Oracle VM)
+
+Public Website Hosting:
+
+* Hosted on Vercel
+* Source Repository: excelkidshub.github.io
+* Connected to domain excelkidshub.in
+
+Purpose:
+
+* Marketing website
+* SEO pages
+* Registration & enquiry forms
+* Batch schedule listing
+
+---
+
+## 2. Source Code Workspace Structure
+
+Root Workspace:
+excelkidshub-workspace
+
+Modules:
+
+1. website
+
+   * Static + dynamic frontend pages
+   * Hosted on Vercel
+   * Calls backend APIs for dynamic data
+
+2. admin-ui
+
+   * React SaaS dashboard
+   * Manages centers, batches, students, fees, leads
+
+3. phonics-app
+
+   * Student learning interface
+   * Practice modules (alphabet, blending, CVs etc.)
+   * Progress tracking
+
+4. phonics-backend
+
+   * Spring Boot Application
+   * REST APIs for website, admin-ui and phonics-app
+   * Authentication, data processing, cron jobs
+
+Database:
+
+* PostgreSQL hosted on Oracle Cloud VM
+
+---
+
+## 3. Infrastructure Architecture
+
+Frontend Layer:
+
+* Vercel CDN serves website globally
+
+Application Layer:
+
+* Oracle Cloud Always Free ARM VM
+* Nginx reverse proxy handles routing
+* Multiple services running:
+
+  * Spring Boot API (Port 8080)
+  * Admin UI static build (Port 3000 or Nginx static)
+  * Phonics App static build (Port 4000 or Nginx static)
+
+Data Layer:
+
+* PostgreSQL database on same VM initially
+
+Storage:
+
+* Local disk / Object storage (future)
+* Audio files / student recordings
+
+---
+
+## 4. System Flow (Lead Registration Example)
+
+1. Parent opens website: excelkidshub.in/register
+2. Website sends POST request to:
+   https://api.excelkidshub.in/api/registrations
+3. Spring Boot validates & stores data in PostgreSQL
+4. Admin dashboard shows new lead
+5. Center owner converts lead to admission
+
+---
+
+## 5. Batch Schedule Flow
+
+1. Website page: /batches
+2. Calls GET:
+   https://api.excelkidshub.in/api/batches/public
+3. API returns center-wise batch data
+4. UI displays available seats / timing
+
+---
+
+## 6. Future Scalability Plan
+
+Phase 1:
+
+* Single Oracle VM hosting all services
+
+Phase 2:
+
+* Separate Database VM
+* Object Storage for media
+* Load Balancer
+
+Phase 3:
+
+* CDN caching for app
+* Microservice separation
+* Multi-region deployment
+
+---
+
+## 7. DevOps & Deployment Strategy
+
+* Code hosted on GitHub
+* Manual deployment initially (git pull + build)
+* Later CI/CD using GitHub Actions
+* Nginx SSL using Let’s Encrypt
+* Daily database backup cron job
+
+---
+
+## 8. Security Basics
+
+* JWT authentication
+* HTTPS only
+* Firewall restrict DB port
+* Role-based access (Admin / Franchise / Parent)
+
+---
+
+## 9. Business System Coverage
+
+* Lead Management
+* Admission lifecycle
+* Batch scheduling
+* Fee tracking
+* Student progress analytics
+* Franchise performance dashboard
+* Parent practice engagement
+
+---
+
+## 10. Architecture Goal
+
+Build ExcelKidsHub as:
+
+* EdTech Learning Platform
+* Franchise Management SaaS
+* Marketing Automation System
+* Analytics-driven growth engine
