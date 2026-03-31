@@ -1,5 +1,5 @@
 const ADMISSIONS_ENDPOINT =
-  "https://script.google.com/macros/s/AKfycbzFyRzQ1FRe1Vnj6NViY8tlYQQtZRLphQkgbeLHZRz_gyRDJCn2O-QXWTJCeEvAvNPMDQ/exec";
+  "/api/register";
 
 function setAdmissionMessage(message, type) {
   const messageBox = document.getElementById("admissionMessage");
