@@ -5,14 +5,41 @@ export default async function handler(req, res) {
   }
 
   try {
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzFyRzQ1FRe1Vnj6NViY8tlYQQtZRLphQkgbeLHZRz_gyRDJCn2O-QXWTJCeEvAvNPMDQ/exec";
+    const GOOGLE_SCRIPT_URL =
+      process.env.GOOGLE_SCRIPT_URL ||
+      "https://script.google.com/macros/s/AKfycbz-mcfyCnIOdIrHW4cDaowoYDbXosOeNPvNtjn9lkqa8yCZRBnCqH3ACCrWSmW3OH5rxw/exec";
 
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(req.body),
     });
 
     const text = await response.text();
+    let payload;
+
+    try {
+      payload = JSON.parse(text);
+    } catch {
+      payload = null;
+    }
+
+    if (!response.ok) {
+      return res.status(response.status).json(
+        payload && typeof payload === "object"
+          ? payload
+          : {
+              success: false,
+              message: text || "Unable to save admission",
+            }
+      );
+    }
+
+    if (payload && typeof payload === "object") {
+      return res.status(200).json(payload);
+    }
 
     return res.status(200).json({
       success: true,
