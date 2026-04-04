@@ -138,10 +138,7 @@ async function submitAdmissionForm(event) {
     }
 
     form.reset();
-    setAdmissionMessage(
-      `Admission submitted successfully. Reference ID: ${result.admissionId || "Created"}`,
-      "success"
-    );
+    setAdmissionMessage("Registration completed successfully.", "success");
   } catch (error) {
     setAdmissionMessage(
       error.message || "Something went wrong. Please try again or contact us on WhatsApp.",
