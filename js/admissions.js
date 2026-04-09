@@ -12,16 +12,31 @@ function showSuccessPanel(message) {
   const form = document.getElementById("admissionForm");
   const successPanel = document.getElementById("admissionSuccessPanel");
   const successMessage = document.getElementById("admissionSuccessMessage");
+  const messageBox = document.getElementById("admissionMessage");
 
   if (form) {
-    form.hidden = true;
+    form.style.display = "none";
   }
   if (successPanel) {
     successPanel.hidden = false;
+    successPanel.style.display = "block";
   }
   if (successMessage) {
     successMessage.textContent = message;
   }
+  if (messageBox) {
+    messageBox.textContent = "";
+    messageBox.className = "admission-message";
+  }
+}
+
+function setLoadingOverlay(isVisible) {
+  const overlay = document.getElementById("admissionLoadingOverlay");
+  if (!overlay) return;
+
+  overlay.hidden = !isVisible;
+  overlay.setAttribute("aria-hidden", String(!isVisible));
+  overlay.classList.toggle("is-visible", isVisible);
 }
 
 function setFieldError(fieldName, message) {
@@ -142,6 +157,7 @@ async function submitAdmissionForm(event) {
 
   submitButton.disabled = true;
   submitButton.textContent = "Processing...";
+  setLoadingOverlay(true);
   setAdmissionMessage("Processing your registration...", "loading");
 
   try {
@@ -166,6 +182,7 @@ async function submitAdmissionForm(event) {
       "error"
     );
   } finally {
+    setLoadingOverlay(false);
     submitButton.disabled = false;
     submitButton.textContent = "Submit Admission";
   }
