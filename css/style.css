@@ -1823,6 +1823,221 @@ margin-top: 10px;
   font-weight:600;
 }
 
+/* styles for register.html */
+.registration-shell{
+  position:relative;
+  padding:26px 0 34px;
+  background:
+    radial-gradient(circle at top left, rgba(250, 214, 165, 0.36), transparent 32%),
+    radial-gradient(circle at top right, rgba(113, 194, 128, 0.18), transparent 28%),
+    linear-gradient(180deg, #f6fbf6 0%, #fffaf4 100%);
+}
+
+.registration-shell__inner{
+  display:flex;
+  justify-content:center;
+}
+
+.registration-card{
+  width:100%;
+  max-width:860px;
+  background:rgba(255,255,255,0.94);
+  border:1px solid rgba(218, 228, 221, 0.95);
+  border-radius:24px;
+  box-shadow:0 14px 34px rgba(24, 48, 65, 0.07);
+  overflow:hidden;
+  backdrop-filter:blur(8px);
+}
+
+.registration-card__header{
+  padding:16px 24px 15px;
+  text-align:center;
+  background:linear-gradient(180deg, rgba(243, 250, 244, 0.96) 0%, rgba(255, 248, 240, 0.92) 100%);
+  border-bottom:1px solid #e8efea;
+}
+
+.registration-card__header h1{
+  margin:0;
+  font-size:24px;
+  line-height:1.25;
+  color:#183041;
+}
+
+.registration-form{
+  padding:18px 22px 22px;
+}
+
+.registration-section + .registration-section{
+  margin-top:18px;
+}
+
+.registration-section h2{
+  margin:0 0 10px;
+  font-size:15px;
+  font-weight:700;
+  color:#1c3b4d;
+}
+
+.form-grid--register{
+  gap:10px 12px;
+}
+
+.registration-form .field{
+  gap:5px;
+}
+
+.registration-form .field label{
+  font-size:12px;
+  font-weight:700;
+  color:#314557;
+}
+
+.registration-form .field input,
+.registration-form .field select,
+.registration-form .field textarea{
+  padding:10px 12px;
+  border:1px solid #d6dfd9;
+  border-radius:12px;
+  font-size:13px;
+  background:#fdfefd;
+}
+
+.registration-form .field input::placeholder,
+.registration-form .field textarea::placeholder{
+  color:#97a4af;
+}
+
+.registration-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid #edf1ee;
+}
+
+.registration-required{
+  margin:0;
+  font-size:12px;
+  color:#6a7682;
+}
+
+.registration-form .admission-actions{
+  margin-top:0;
+}
+
+.registration-form .admission-submit{
+  min-width:190px;
+  padding:11px 18px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:700;
+}
+
+.registration-form .admission-message{
+  margin-top:12px;
+}
+
+.admission-success-panel{
+  padding:26px 22px 28px;
+}
+
+.admission-success-panel__inner{
+  max-width:420px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.admission-success-panel .admission-message{
+  display:block;
+  margin:0;
+}
+
+.admission-success-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:14px;
+  padding:11px 18px;
+  border-radius:12px;
+  background:#2e7d32;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:700;
+  transition:background 0.2s ease, transform 0.2s ease;
+}
+
+.admission-success-link:hover{
+  background:#256728;
+  transform:translateY(-1px);
+}
+
+.admission-message.is-loading{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.admission-message.is-loading::before{
+  content:"";
+  width:15px;
+  height:15px;
+  border:2px solid rgba(36, 87, 166, 0.2);
+  border-top-color:#2457a6;
+  border-radius:50%;
+  flex:0 0 auto;
+  animation:admission-spin 0.8s linear infinite;
+}
+
+@keyframes admission-spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .registration-shell{
+    padding:14px 0 22px;
+  }
+
+  .registration-card{
+    border-radius:18px;
+  }
+
+  .registration-card__header{
+    padding:14px 12px 13px;
+  }
+
+  .registration-card__header h1{
+    font-size:18px;
+  }
+
+  .registration-form{
+    padding:14px 12px 18px;
+  }
+
+  .admission-success-panel{
+    padding:20px 12px 22px;
+  }
+
+  .registration-section + .registration-section{
+    margin-top:16px;
+  }
+
+  .registration-footer{
+    flex-direction:column;
+    align-items:stretch;
+    padding-top:12px;
+  }
+
+  .registration-form .admission-submit{
+    width:100%;
+    min-width:0;
+  }
+}
+
 /* styles originally in gallery.html */
 .hero-alt {
   padding: 70px 0;

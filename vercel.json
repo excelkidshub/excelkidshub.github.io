@@ -3,6 +3,15 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/book/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/(.*).(css|js|png|jpg|jpeg|gif|svg|webp)",
       "headers": [
         {

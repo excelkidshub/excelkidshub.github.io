@@ -37,119 +37,126 @@
   <div id="nav-placeholder"></div>
 </header>
 
-<section class="admission-hero">
-  <div class="container admission-hero__inner">
-    <div class="admission-panel">
-      <div class="admission-panel__top">
-        <h2>Parent Admission Form</h2>
-        <p>Fill this form to register your child for ExcelKidsHub batches.</p>
+<section class="registration-shell">
+  <div class="container registration-shell__inner">
+    <div class="registration-card">
+      <div class="registration-card__header">
+        <h1>Admission Form for Phonics Batches</h1>
       </div>
 
-      <form id="admissionForm" class="admission-form" novalidate>
-        <div class="form-grid">
-          <div class="field">
-            <label for="parentName">Parent Name *</label>
-            <input id="parentName" name="parentName" type="text" required>
-            <p class="field-error"></p>
-          </div>
+      <form id="admissionForm" class="registration-form" novalidate>
+        <div class="registration-section">
+          <h2>Parent Details</h2>
+          <div class="form-grid form-grid--register">
+            <div class="field">
+              <label for="parentName">Parent Name *</label>
+              <input id="parentName" name="parentName" type="text" required>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="mobile">Mobile *</label>
-            <input id="mobile" name="mobile" type="tel" inputmode="numeric" required>
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="mobile">Mobile *</label>
+              <input id="mobile" name="mobile" type="tel" inputmode="numeric" required>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email">
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" required>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="city">City</label>
-            <input id="city" name="city" type="text">
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="city">City *</label>
+              <input id="city" name="city" type="text" value="Pune" required>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field field--wide">
-            <label for="address">Address</label>
-            <input id="address" name="address" type="text">
-            <p class="field-error"></p>
+            <div class="field field--full">
+              <label for="address">Address</label>
+              <input id="address" name="address" type="text">
+              <p class="field-error"></p>
+            </div>
           </div>
+        </div>
 
-          <div class="field">
-            <label for="studentName">Student Name *</label>
-            <input id="studentName" name="studentName" type="text" required>
-            <p class="field-error"></p>
-          </div>
+        <div class="registration-section">
+          <h2>Student Details</h2>
+          <div class="form-grid form-grid--register">
+            <div class="field">
+              <label for="studentName">Student Name *</label>
+              <input id="studentName" name="studentName" type="text" required>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="age">Age</label>
-            <input id="age" name="age" type="number" min="2" max="18">
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="age">Age</label>
+              <input id="age" name="age" type="number" min="2" max="18">
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="gender">Gender</label>
-            <select id="gender" name="gender">
-              <option value="">Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="gender">Gender</label>
+              <select id="gender" name="gender">
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="school">School</label>
-            <input id="school" name="school" type="text">
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="school">School</label>
+              <input id="school" name="school" type="text">
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="grade">Grade</label>
-            <input id="grade" name="grade" type="text">
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="grade">Grade</label>
+              <input id="grade" name="grade" type="text">
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="level">Level *</label>
-            <select id="level" name="level" required>
-              <option value="">Select</option>
-              <option value="Basic">Basic</option>
-              <option value="Advanced">Advanced</option>
-              <option value="Proficient">Proficient</option>
-            </select>
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="level">Level *</label>
+              <select id="level" name="level" required>
+                <option value="">Select</option>
+                <option value="Basic" selected>Basic</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Proficient">Proficient</option>
+              </select>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="mode">Mode *</label>
-            <select id="mode" name="mode" required>
-              <option value="">Select</option>
-              <option value="Online">Online</option>
-              <option value="Offline">Offline</option>
-            </select>
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="mode">Mode *</label>
+              <select id="mode" name="mode" required>
+                <option value="">Select</option>
+                <option value="Online" selected>Online</option>
+                <option value="Offline">Offline</option>
+              </select>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field">
-            <label for="admissionSource">How Did You Hear About Us?</label>
-            <select id="admissionSource" name="admissionSource">
-              <option value="Website">Website</option>
-              <option value="Google">Google</option>
-              <option value="Friend Referral">Friend Referral</option>
-              <option value="Social Media">Social Media</option>
-              <option value="Poster/Hoarding">Poster/Hoarding</option>
-              <option value="WhatsApp">WhatsApp</option>
-            </select>
-            <p class="field-error"></p>
-          </div>
+            <div class="field">
+              <label for="admissionSource">How Did You Hear About Us?</label>
+              <select id="admissionSource" name="admissionSource">
+                <option value="Website">Website</option>
+                <option value="Google">Google</option>
+                <option value="Friend Referral">Friend Referral</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Poster/Hoarding">Poster/Hoarding</option>
+                <option value="WhatsApp">WhatsApp</option>
+              </select>
+              <p class="field-error"></p>
+            </div>
 
-          <div class="field field--wide">
-            <label for="notes">Notes</label>
-            <input id="notes" name="notes" type="text" placeholder="Preferred timing or learning concern">
-            <p class="field-error"></p>
+            <div class="field field--full">
+              <label for="notes">Notes</label>
+              <input id="notes" name="notes" type="text" placeholder="Preferred timing or learning concern">
+              <p class="field-error"></p>
+            </div>
           </div>
         </div>
 
@@ -158,47 +165,22 @@
           <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
         </div>
 
-        <div class="admission-actions">
-          <button type="submit" class="btn admission-submit" id="admissionSubmit">Submit Admission</button>
-          <p class="admission-note">Fields marked * are required.</p>
+        <div class="registration-footer">
+          <p class="registration-required">Fields marked * are required.</p>
+          <div class="admission-actions">
+            <button type="submit" class="btn admission-submit" id="admissionSubmit">Submit Admission</button>
+          </div>
         </div>
 
         <div id="admissionMessage" class="admission-message" role="status" aria-live="polite"></div>
       </form>
-    </div>
 
-    <div class="admission-copy">
-      <span class="admission-kicker">Admissions Open</span>
-      <h1>Admission Form For ExcelKidsHub Phonics Batches</h1>
-      <p>
-        This is a direct admission form for parents who want to enroll their child in ExcelKidsHub. Once you submit this form, our team will review the details and contact you for the most suitable batch.
-      </p>
-      <div class="admission-warm-tags">
-        <span>Reading Confidence</span>
-        <span>Small Batch Guidance</span>
-        <span>Parent Support</span>
+      <div id="admissionSuccessPanel" class="admission-success-panel" hidden>
+        <div class="admission-success-panel__inner">
+          <div id="admissionSuccessMessage" class="admission-message is-success"></div>
+          <a href="register.html" class="admission-success-link">Register another student</a>
+        </div>
       </div>
-      <div class="admission-mini-card">
-        <h3>What Happens After You Submit?</h3>
-        <p>We review the student details, match the right level and mode, then contact you for batch confirmation and next steps.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="admission-support">
-  <div class="container admission-support__grid">
-    <div class="admission-support__card">
-      <h3>Before You Submit</h3>
-      <p>Please keep the student name, age, school, level preference, and mobile number ready for faster processing.</p>
-    </div>
-    <div class="admission-support__card">
-      <h3>After Submission</h3>
-      <p>Your details will be saved in our admissions sheet and our team will contact you for schedule confirmation and fee discussion.</p>
-    </div>
-    <div class="admission-support__card">
-      <h3>Need Immediate Help?</h3>
-      <p>If you want quick support for batch timing or demo discussion, use the WhatsApp button after submitting the form.</p>
     </div>
   </div>
 </section>

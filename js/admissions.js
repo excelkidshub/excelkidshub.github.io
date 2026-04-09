@@ -8,6 +8,22 @@ function setAdmissionMessage(message, type) {
   messageBox.className = `admission-message is-${type}`;
 }
 
+function showSuccessPanel(message) {
+  const form = document.getElementById("admissionForm");
+  const successPanel = document.getElementById("admissionSuccessPanel");
+  const successMessage = document.getElementById("admissionSuccessMessage");
+
+  if (form) {
+    form.hidden = true;
+  }
+  if (successPanel) {
+    successPanel.hidden = false;
+  }
+  if (successMessage) {
+    successMessage.textContent = message;
+  }
+}
+
 function setFieldError(fieldName, message) {
   const field = document.querySelector(`.field [name="${fieldName}"]`);
   if (!field) return;
@@ -17,7 +33,7 @@ function setFieldError(fieldName, message) {
     wrapper.classList.add("is-invalid");
   }
   if (errorBox) {
-    errorBox.textContent = "";
+    errorBox.textContent = message;
   }
 }
 
@@ -79,6 +95,11 @@ function validateAdmissionPayload(payload) {
   }
   if (payload.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
     errors.email = "Please enter a valid email address.";
+  } else if (!payload.email) {
+    errors.email = "Email is required.";
+  }
+  if (!payload.city) {
+    errors.city = "City is required.";
   }
   if (!payload.studentName) {
     errors.studentName = "Student Name is required.";
@@ -120,8 +141,8 @@ async function submitAdmissionForm(event) {
   }
 
   submitButton.disabled = true;
-  submitButton.textContent = "Submitting...";
-  setAdmissionMessage("Submitting your admission...", "loading");
+  submitButton.textContent = "Processing...";
+  setAdmissionMessage("Processing your registration...", "loading");
 
   try {
     const response = await fetch(ADMISSIONS_ENDPOINT, {
@@ -138,7 +159,7 @@ async function submitAdmissionForm(event) {
     }
 
     form.reset();
-    setAdmissionMessage("Registration completed successfully.", "success");
+    showSuccessPanel("Registration completed successfully.");
   } catch (error) {
     setAdmissionMessage(
       error.message || "Something went wrong. Please try again or contact us on WhatsApp.",
