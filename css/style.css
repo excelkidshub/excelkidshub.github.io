@@ -683,6 +683,29 @@ color:#ff7a00;
 @media(max-width:768px){
     .call-button {
         display: flex;
+        margin-left: 0;
+    }
+
+    .container{
+      width:92%;
+    }
+
+    .nav-container{
+      justify-content:flex-start;
+      gap:10px;
+    }
+
+    .logo-area{
+      margin-right:auto;
+    }
+
+    .logo-area img{
+      height:48px;
+    }
+
+    .call-icon-img{
+      width:22px;
+      height:22px;
     }
 }
 
@@ -1035,6 +1058,180 @@ display:flex !important;
 display:none;
 }
 
+}
+
+.site-footer{
+background:#182334;
+color:#edf2f7;
+margin-top:28px;
+}
+
+.site-footer__inner{
+max-width:1200px;
+margin:0 auto;
+padding:0 22px;
+}
+
+.site-footer__top{
+display:grid;
+grid-template-columns:minmax(240px, 1.15fr) minmax(320px, 1fr);
+gap:28px;
+padding:24px 0 18px;
+align-items:start;
+}
+
+.site-footer__brand{
+max-width:420px;
+}
+
+.site-footer__logo{
+height:44px;
+width:auto;
+background:#fff;
+padding:6px 16px;
+border-radius:10px;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+.site-footer__tagline{
+margin:12px 0 0;
+font-size:14px;
+line-height:1.6;
+color:rgba(237, 242, 247, 0.82);
+}
+
+.site-footer__trust{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+align-items:center;
+margin-top:14px;
+}
+
+.site-footer__review{
+display:inline-flex;
+align-items:center;
+padding:4px 8px;
+border-radius:10px;
+background:rgba(255,255,255,0.08);
+}
+
+.site-footer__review img{
+height:32px;
+width:auto;
+}
+
+.site-footer__badge{
+display:inline-flex;
+align-items:center;
+padding:7px 10px;
+border-radius:999px;
+background:rgba(255,255,255,0.08);
+font-size:12px;
+font-weight:600;
+color:#fff;
+}
+
+.site-footer__meta{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:24px;
+}
+
+.site-footer__links h3,
+.site-footer__contact h3{
+margin:0 0 10px;
+font-size:16px;
+color:#facc15;
+}
+
+.site-footer__link-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px 18px;
+}
+
+.site-footer__link-grid a,
+.site-footer__contact a{
+color:#fff;
+text-decoration:none;
+font-weight:500;
+}
+
+.site-footer__contact p{
+margin:0 0 8px;
+font-size:14px;
+color:rgba(237, 242, 247, 0.88);
+}
+
+.site-footer__social{
+display:flex;
+gap:10px;
+margin-top:12px;
+}
+
+.site-footer__social a{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:38px;
+height:38px;
+border-radius:50%;
+background:rgba(255,255,255,0.12);
+}
+
+.site-footer__social img{
+width:18px;
+height:18px;
+}
+
+.site-footer__bottom{
+padding:14px 0 16px;
+border-top:1px solid rgba(255,255,255,0.1);
+font-size:13px;
+text-align:center;
+color:rgba(237, 242, 247, 0.72);
+}
+
+@media(max-width:768px){
+  .site-footer__inner{
+    padding:0 16px;
+  }
+
+  .site-footer__top{
+    grid-template-columns:1fr;
+    gap:18px;
+    padding:20px 0 16px;
+  }
+
+  .site-footer__meta{
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .site-footer__logo{
+    height:40px;
+    padding:6px 14px;
+  }
+
+  .site-footer__tagline{
+    font-size:13px;
+  }
+
+  .site-footer__link-grid{
+    gap:6px 12px;
+  }
+
+  .site-footer__contact p{
+    font-size:13px;
+    margin-bottom:6px;
+  }
+}
+
+@media(max-width:520px){
+  .site-footer__meta{
+    grid-template-columns:1fr;
+  }
 }
 
 /* Parallel Contact Blocks */
@@ -1976,15 +2173,15 @@ margin-top: 10px;
 }
 
 .admission-loading-overlay{
-  position:absolute;
+  position:fixed;
   inset:0;
   display:none;
   align-items:center;
   justify-content:center;
-  padding:20px;
-  background:rgba(255, 255, 255, 0.78);
-  backdrop-filter:blur(4px);
-  z-index:5;
+  padding:24px;
+  background:rgba(24, 38, 54, 0.26);
+  backdrop-filter:blur(6px);
+  z-index:9999;
 }
 
 .admission-loading-overlay.is-visible{
@@ -1992,18 +2189,18 @@ margin-top: 10px;
 }
 
 .admission-loading-card{
-  min-width:220px;
-  padding:18px 20px;
-  border-radius:18px;
+  width:min(320px, calc(100vw - 32px));
+  padding:22px 22px;
+  border-radius:20px;
   background:#ffffff;
   border:1px solid #e3ece5;
-  box-shadow:0 16px 34px rgba(24, 48, 65, 0.14);
+  box-shadow:0 24px 54px rgba(24, 48, 65, 0.2);
   text-align:center;
 }
 
 .admission-loading-card p{
-  margin:10px 0 0;
-  font-size:14px;
+  margin:12px 0 0;
+  font-size:15px;
   font-weight:700;
   color:#2457a6;
 }
@@ -2016,6 +2213,10 @@ margin-top: 10px;
   border-top-color:#2457a6;
   border-radius:50%;
   animation:admission-spin 0.8s linear infinite;
+}
+
+body.is-loading{
+  overflow:hidden;
 }
 
 .admission-message.is-loading{

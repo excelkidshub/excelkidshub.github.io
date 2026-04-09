@@ -37,6 +37,7 @@ function setLoadingOverlay(isVisible) {
   overlay.hidden = !isVisible;
   overlay.setAttribute("aria-hidden", String(!isVisible));
   overlay.classList.toggle("is-visible", isVisible);
+  document.body.classList.toggle("is-loading", isVisible);
 }
 
 function setFieldError(fieldName, message) {
