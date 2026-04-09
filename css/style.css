@@ -1074,21 +1074,22 @@ padding:0 22px;
 
 .site-footer__top{
 display:grid;
-grid-template-columns:minmax(240px, 1.15fr) minmax(320px, 1fr);
-gap:28px;
+grid-template-columns:minmax(240px, 1fr) minmax(360px, 1.05fr);
+gap:24px;
 padding:24px 0 18px;
 align-items:start;
 }
 
 .site-footer__brand{
-max-width:420px;
+max-width:360px;
 }
 
 .site-footer__logo{
-height:44px;
+display:block;
+height:34px;
 width:auto;
 background:#fff;
-padding:6px 16px;
+padding:6px 12px;
 border-radius:10px;
 box-shadow:0 6px 18px rgba(0,0,0,0.12);
 }
@@ -1135,7 +1136,8 @@ color:#fff;
 .site-footer__meta{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:24px;
+gap:22px;
+align-items:start;
 }
 
 .site-footer__links h3,
@@ -1162,6 +1164,11 @@ font-weight:500;
 margin:0 0 8px;
 font-size:14px;
 color:rgba(237, 242, 247, 0.88);
+}
+
+.site-footer__links,
+.site-footer__contact{
+  min-width:0;
 }
 
 .site-footer__social{
@@ -1210,8 +1217,8 @@ color:rgba(237, 242, 247, 0.72);
   }
 
   .site-footer__logo{
-    height:40px;
-    padding:6px 14px;
+    height:32px;
+    padding:6px 10px;
   }
 
   .site-footer__tagline{
@@ -1542,6 +1549,39 @@ margin-top: 10px;
   text-align: center;
 }
 
+.testimonial-widget-block{
+  margin:0 0 28px;
+  padding:22px 20px;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 12px 28px rgba(15, 23, 42, 0.06);
+  border:1px solid #e6edf2;
+}
+
+.testimonial-widget-block__head{
+  max-width:700px;
+  margin:0 auto 18px;
+  text-align:center;
+}
+
+.testimonial-widget-block__head h3{
+  margin:0 0 8px;
+  font-size:24px;
+  color:#183041;
+}
+
+.testimonial-widget-block__head p{
+  margin:0;
+  color:#64707d;
+}
+
+.testimonial-widget-frame{
+  padding:14px;
+  border-radius:18px;
+  background:linear-gradient(180deg, #f8fbff 0%, #f5fbf7 100%);
+  overflow:hidden;
+}
+
 .testimonial-gallery {
   display: flex;
   gap: 20px;
@@ -1635,6 +1675,25 @@ margin-top: 10px;
 
 /* Responsive */
 @media(max-width:768px){
+  .testimonial-widget-block{
+    padding:18px 14px;
+    border-radius:18px;
+    margin-bottom:22px;
+  }
+
+  .testimonial-widget-block__head{
+    margin-bottom:14px;
+  }
+
+  .testimonial-widget-block__head h3{
+    font-size:20px;
+  }
+
+  .testimonial-widget-frame{
+    padding:10px;
+    border-radius:14px;
+  }
+
   .testimonial-gallery {
     gap: 15px;
   }
