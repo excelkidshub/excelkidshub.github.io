@@ -178,14 +178,18 @@
       <div id="admissionSuccessPanel" class="admission-success-panel" hidden>
         <div class="admission-success-panel__inner">
           <div id="admissionSuccessMessage" class="admission-message is-success"></div>
-          <a href="register.html" class="admission-success-link">Register another student</a>
+          <div class="admission-success-actions">
+            <a href="admissions.html" class="admission-success-link">Register another student</a>
+            <a href="index.html" class="admission-success-link admission-success-link--secondary">Back to home</a>
+          </div>
         </div>
       </div>
 
       <div id="admissionLoadingOverlay" class="admission-loading-overlay" hidden aria-hidden="true">
         <div class="admission-loading-card" role="status" aria-live="polite" aria-label="Processing registration">
           <span class="admission-loading-spinner"></span>
-          <p>Processing...</p>
+          <strong class="admission-loading-title">Processing your admission</strong>
+          <p>Please wait. Do not close this page while we save your details.</p>
         </div>
       </div>
     </div>

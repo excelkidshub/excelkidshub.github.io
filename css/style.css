@@ -2206,6 +2206,14 @@ margin-top: 10px;
   text-align:center;
 }
 
+.admission-success-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  margin-top:14px;
+}
+
 .admission-success-panel .admission-message{
   display:block;
   margin:0;
@@ -2226,9 +2234,17 @@ margin-top: 10px;
   transition:background 0.2s ease, transform 0.2s ease;
 }
 
+.admission-success-link--secondary{
+  background:#2457a6;
+}
+
 .admission-success-link:hover{
   background:#256728;
   transform:translateY(-1px);
+}
+
+.admission-success-link--secondary:hover{
+  background:#1d4582;
 }
 
 .admission-loading-overlay{
@@ -2248,8 +2264,14 @@ margin-top: 10px;
 }
 
 .admission-loading-card{
-  width:min(320px, calc(100vw - 32px));
-  padding:22px 22px;
+  width:min(360px, calc(100vw - 32px));
+  min-height:190px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:24px 22px;
   border-radius:20px;
   background:#ffffff;
   border:1px solid #e3ece5;
@@ -2257,10 +2279,18 @@ margin-top: 10px;
   text-align:center;
 }
 
+.admission-loading-title{
+  display:block;
+  font-size:19px;
+  line-height:1.3;
+  color:#183041;
+}
+
 .admission-loading-card p{
-  margin:12px 0 0;
+  margin:0;
   font-size:15px;
-  font-weight:700;
+  font-weight:600;
+  line-height:1.5;
   color:#2457a6;
 }
 
@@ -2276,6 +2306,10 @@ margin-top: 10px;
 
 body.is-loading{
   overflow:hidden;
+}
+
+body.is-admission-submitting .registration-card{
+  pointer-events:none;
 }
 
 .admission-message.is-loading{
@@ -2326,6 +2360,14 @@ body.is-loading{
     padding:20px 12px 22px;
   }
 
+  .admission-success-actions{
+    flex-direction:column;
+  }
+
+  .admission-success-link{
+    width:100%;
+  }
+
   .registration-section + .registration-section{
     margin-top:16px;
   }
@@ -2339,6 +2381,17 @@ body.is-loading{
   .registration-form .admission-submit{
     width:100%;
     min-width:0;
+  }
+
+  .admission-loading-card{
+    width:min(100%, calc(100vw - 28px));
+    min-height:170px;
+    padding:20px 16px;
+    border-radius:18px;
+  }
+
+  .admission-loading-title{
+    font-size:17px;
   }
 }
 

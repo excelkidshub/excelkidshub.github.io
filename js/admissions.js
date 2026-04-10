@@ -20,6 +20,7 @@ function showSuccessPanel(message) {
   if (successPanel) {
     successPanel.hidden = false;
     successPanel.style.display = "block";
+    successPanel.scrollIntoView({ behavior: "smooth", block: "start" });
   }
   if (successMessage) {
     successMessage.textContent = message;
@@ -38,6 +39,7 @@ function setLoadingOverlay(isVisible) {
   overlay.setAttribute("aria-hidden", String(!isVisible));
   overlay.classList.toggle("is-visible", isVisible);
   document.body.classList.toggle("is-loading", isVisible);
+  document.body.classList.toggle("is-admission-submitting", isVisible);
 }
 
 function setFieldError(fieldName, message) {
@@ -74,6 +76,14 @@ function clearAllFieldErrors(form) {
       errorBox.textContent = "";
     }
   });
+}
+
+function revealMessage(message, type) {
+  setAdmissionMessage(message, type);
+  const messageBox = document.getElementById("admissionMessage");
+  if (messageBox) {
+    messageBox.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 }
 
 function collectAdmissionPayload(form) {
@@ -152,7 +162,7 @@ async function submitAdmissionForm(event) {
       firstInvalid.focus();
       firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-    setAdmissionMessage("Please fill the highlighted fields.", "error");
+    revealMessage("Please fill the highlighted fields.", "error");
     return;
   }
 
@@ -178,7 +188,7 @@ async function submitAdmissionForm(event) {
     form.reset();
     showSuccessPanel("Registration completed successfully.");
   } catch (error) {
-    setAdmissionMessage(
+    revealMessage(
       error.message || "Something went wrong. Please try again or contact us on WhatsApp.",
       "error"
     );
