@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher Training Admission | ExcelKidsHub Phonics Academy</title>
+
+<meta name="description" content="Register for ExcelKidsHub parent and teacher phonics training. Submit your basic details for online or offline phonics training.">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+
+<header>
+  <div id="nav-placeholder"></div>
+</header>
+
+<section class="registration-shell">
+  <div class="container registration-shell__inner">
+    <div class="registration-card">
+      <div class="registration-card__header">
+        <h1>Parent Teacher Phonics Training</h1>
+      </div>
+
+      <form id="teacherTrainingForm" class="registration-form" novalidate>
+        <div class="registration-section">
+          <h2>Applicant Details</h2>
+          <div class="form-grid form-grid--register">
+            <div class="field">
+              <label for="fullName">Full Name *</label>
+              <input id="fullName" name="fullName" type="text" required>
+              <p class="field-error"></p>
+            </div>
+
+            <div class="field">
+              <label for="mobile">Mobile *</label>
+              <input id="mobile" name="mobile" type="tel" inputmode="numeric" required>
+              <p class="field-error"></p>
+            </div>
+
+            <div class="field">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" required>
+              <p class="field-error"></p>
+            </div>
+
+            <div class="field">
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" value="Pune">
+              <p class="field-error"></p>
+            </div>
+
+            <div class="field">
+              <label for="profession">Profession</label>
+              <select id="profession" name="profession">
+                <option value="">Select</option>
+                <option value="Parent">Parent</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Preschool Owner">Preschool Owner</option>
+                <option value="Tutor">Tutor</option>
+                <option value="Student">Student</option>
+                <option value="Homemaker">Homemaker</option>
+                <option value="Other">Other</option>
+              </select>
+              <p class="field-error"></p>
+            </div>
+
+            <div class="field">
+              <label for="education">Education / Qualification</label>
+              <input id="education" name="education" type="text" placeholder="Graduate, B.Ed, M.A., Diploma">
+              <p class="field-error"></p>
+            </div>
+
+            <div class="field">
+              <label for="trainingType">Training Type *</label>
+              <select id="trainingType" name="trainingType" required>
+                <option value="Parent Teacher Phonics Training" selected>Parent Teacher Phonics Training</option>
+              </select>
+              <p class="field-error"></p>
+            </div>
+
+            <div class="field">
+              <label for="mode">Mode *</label>
+              <select id="mode" name="mode" required>
+                <option value="">Select</option>
+                <option value="Online" selected>Online</option>
+                <option value="Offline">Offline</option>
+              </select>
+              <p class="field-error"></p>
+            </div>
+
+            <div class="field field--full">
+              <label for="notes">Notes</label>
+              <input id="notes" name="notes" type="text" placeholder="Any background or question you want to share">
+              <p class="field-error"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="honeypot-field" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="registration-footer">
+          <p class="registration-required">Fields marked * are required.</p>
+          <div class="admission-actions">
+            <button type="submit" class="btn admission-submit" id="teacherTrainingSubmit">Submit Registration</button>
+          </div>
+        </div>
+
+        <div id="teacherTrainingMessage" class="admission-message" role="status" aria-live="polite"></div>
+      </form>
+
+      <div id="teacherTrainingSuccessPanel" class="admission-success-panel" hidden>
+        <div class="admission-success-panel__inner">
+          <div id="teacherTrainingSuccessMessage" class="admission-message is-success"></div>
+          <div class="admission-success-actions">
+            <a href="teacher-training-admission.html" class="admission-success-link">Register another applicant</a>
+            <a href="index.html" class="admission-success-link admission-success-link--secondary">Back to home</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="teacherTrainingLoadingOverlay" class="admission-loading-overlay" hidden aria-hidden="true">
+        <div class="admission-loading-card" role="status" aria-live="polite" aria-label="Processing registration">
+          <span class="admission-loading-spinner"></span>
+          <strong class="admission-loading-title">Processing your registration</strong>
+          <p>Please wait. Do not close this page while we save your details.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/nav.js"></script>
+<script src="js/teacher-training-admission.js"></script>
+
+</body>
+</html>

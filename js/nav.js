@@ -22,6 +22,7 @@ const navigationHTML = `
         <a href="/">Home</a>
         <a href="schedule">Schedule</a>
         <a href="admissions">Admissions</a>
+        <a href="teacher-training-admission">Teacher Training</a>
         <a href="courses">Courses</a>
         <a href="gallery">Gallery</a>
         <a href="contact">Contact</a>
@@ -53,6 +54,7 @@ const footerHTML = `
                         <a href="about">About Us</a>
                         <a href="courses">Courses</a>
                         <a href="schedule">Schedule</a>
+                        <a href="teacher-training-admission">Teacher Training</a>
                         <a href="gallery">Gallery</a>
                         <a href="contact">Contact</a>
                     </div>
