@@ -32,49 +32,71 @@ const navigationHTML = `
 `;
 
 const footerHTML = `
-<footer class="site-footer">
-    <div class="site-footer__inner">
-        <div class="site-footer__top">
-            <div class="site-footer__brand">
-                <img loading="lazy" decoding="async" src="images/logo.svg" alt="ExcelKidsHub Logo" class="site-footer__logo">
-                <p class="site-footer__tagline">Structured phonics classes for children in Dhanori, Pune.</p>
-                <div class="site-footer__trust">
-                    <a href="https://www.google.com/search?q=excelkidshub+phonics+academy+dhanori+pune+reviews" target="_blank" rel="noreferrer" class="site-footer__review">
-                        <img width="160" height="38" src="images/icon/Five-Star-Review-Google-Business-Rating-PNG.png" alt="Google reviews 5 star" loading="lazy" decoding="async">
-                    </a>
-                    <span class="site-footer__badge">Govt. Registered</span>
-                    <span class="site-footer__badge">ISO 9001:2015</span>
-                </div>
+<footer class="ekh-footer" aria-label="ExcelKidsHub footer">
+    <div class="ekh-footer__cta">
+        <div>
+            <span class="ekh-footer__eyebrow">Admissions open</span>
+            <strong>Book a free phonics demo for your child.</strong>
+        </div>
+        <a href="contact" class="ekh-footer__cta-link">Book Free Demo</a>
+    </div>
+
+    <div class="ekh-footer__inner">
+        <div class="ekh-footer__brand-card">
+            <a href="/" class="ekh-footer__logo-link" aria-label="ExcelKidsHub home">
+                <img loading="lazy" decoding="async" src="images/logo.svg" alt="ExcelKidsHub Phonics Academy" class="ekh-footer__logo">
+            </a>
+            <p>Structured phonics, reading, grammar, and teacher training programs from Dhanori, Pune.</p>
+            <div class="ekh-footer__badges" aria-label="Trust badges">
+                <span>Govt. Registered</span>
+                <span>ISO 9001:2015</span>
             </div>
-            <div class="site-footer__meta">
-                <div class="site-footer__links">
-                    <h3>Quick Links</h3>
-                    <div class="site-footer__link-grid">
-                        <a href="/">Home</a>
-                        <a href="about">About Us</a>
-                        <a href="courses">Courses</a>
-                        <a href="schedule">Schedule</a>
-                        <a href="teacher-training-admission">Teacher Training</a>
-                        <a href="gallery">Gallery</a>
-                        <a href="contact">Contact</a>
-                    </div>
-                </div>
-                <div class="site-footer__contact">
-                    <h3>Contact & Follow</h3>
-                    <p><a href="tel:+918793135679">+91 8793135679</a></p>
-                    <p><a href="mailto:excelkidshub.edu@gmail.com">excelkidshub.edu@gmail.com</a></p>
-                    <p>Inside Lakewood Preschool, Dhanori, Pune</p>
-                    <div class="site-footer__social">
-                        <a href="https://www.facebook.com/excelkidshubphonics/" target="_blank" aria-label="Facebook"><img width="32" height="32" loading="lazy" decoding="async" src="images/icon/icon-facebook.svg" alt="Facebook"></a>
-                        <a href="https://www.instagram.com/excelkidshub/" target="_blank" aria-label="Instagram"><img width="32" height="32" loading="lazy" decoding="async" src="images/icon/instagram.svg" alt="Instagram"></a>
-                        <a href="https://www.pinterest.com/excelkidshub/" target="_blank" aria-label="Pinterest"><img width="32" height="32" loading="lazy" decoding="async" src="images/icon/pinterest.svg" alt="Pinterest"></a>
-                    </div>
-                </div>
+            <a href="https://www.google.com/search?q=excelkidshub+phonics+academy+dhanori+pune+reviews" target="_blank" rel="noreferrer" class="ekh-footer__review">
+                <img width="160" height="38" src="images/icon/Five-Star-Review-Google-Business-Rating-PNG.png" alt="Google 5 star reviews" loading="lazy" decoding="async">
+            </a>
+        </div>
+
+        <nav class="ekh-footer__col" aria-label="Footer navigation">
+            <h2>Explore</h2>
+            <a href="/">Home</a>
+            <a href="about">About Us</a>
+            <a href="schedule">Schedule</a>
+            <a href="admissions">Admissions</a>
+            <a href="gallery">Gallery</a>
+            <a href="contact">Contact</a>
+        </nav>
+
+        <nav class="ekh-footer__col" aria-label="Programs">
+            <h2>Programs</h2>
+            <a href="courses">Phonics Courses</a>
+            <a href="teacher-training-admission">Teacher Training</a>
+            <a href="english-grammar-classes-dhanori">English Grammar</a>
+            <a href="phonics-classes-dhanori-pune">Dhanori Classes</a>
+            <a href="phonics-classes-vishrantwadi">Vishrantwadi Classes</a>
+        </nav>
+
+        <div class="ekh-footer__col ekh-footer__contact">
+            <h2>Visit & Contact</h2>
+            <a href="tel:+918793135679">+91 8793135679</a>
+            <a href="mailto:excelkidshub.edu@gmail.com">excelkidshub.edu@gmail.com</a>
+            <p>Inside Lakewood Preschool, Dhanori, Pune 411015</p>
+            <div class="ekh-footer__social" aria-label="Social links">
+                <a href="https://www.facebook.com/excelkidshubphonics/" target="_blank" rel="noreferrer" aria-label="Facebook">
+                    <img width="22" height="22" loading="lazy" decoding="async" src="images/icon/icon-facebook.svg" alt="">
+                </a>
+                <a href="https://www.instagram.com/excelkidshub/" target="_blank" rel="noreferrer" aria-label="Instagram">
+                    <img width="22" height="22" loading="lazy" decoding="async" src="images/icon/instagram.svg" alt="">
+                </a>
+                <a href="https://www.pinterest.com/excelkidshub/" target="_blank" rel="noreferrer" aria-label="Pinterest">
+                    <img width="22" height="22" loading="lazy" decoding="async" src="images/icon/pinterest.svg" alt="">
+                </a>
             </div>
         </div>
-        <div class="site-footer__bottom">
-            © 2026 ExcelKidsHub Phonics Academy | Dhanori Pune
-        </div>
+    </div>
+
+    <div class="ekh-footer__bottom">
+        <span>&copy; 2026 ExcelKidsHub Phonics Academy</span>
+        <span>Dhanori, Pune</span>
     </div>
 </footer>
 `;
