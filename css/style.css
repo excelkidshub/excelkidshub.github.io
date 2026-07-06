@@ -1151,7 +1151,7 @@ padding:40px 0;
 .whatsapp-float{
 position:fixed;
 bottom:20px;
-right:20px;
+left:20px;
 background:#25D366;
 color:white;
 padding:12px 18px;
@@ -1159,7 +1159,7 @@ border-radius:50px;
 text-decoration:none;
 font-weight:600;
 box-shadow:0 6px 15px rgba(0,0,0,0.2);
-z-index:9999;
+z-index:9998;
 transition:0.3s ease;
 }
 
@@ -1170,6 +1170,13 @@ transform:scale(1.05);
 
 /* ================= RESPONSIVE ================= */
 @media(max-width:768px){
+
+.whatsapp-float{
+left:14px;
+bottom:14px;
+padding:10px 14px;
+font-size:14px;
+}
 
 .hero{
 height:420px;
