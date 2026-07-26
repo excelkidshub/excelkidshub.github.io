@@ -28,7 +28,7 @@ function authHeaders() {
 async function handleResponse(res) {
     if (res.status === 401) {
         localStorage.removeItem('jwt_token');
-        window.location.replace('/login.html');
+        window.location.replace('/login');
         throw new Error('Session expired');
     }
     if (res.status === 403) {

@@ -52,11 +52,11 @@
   </div>
 
   <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
-    <a href="users"         class="btn btn-ghost">Manage Users →</a>
-    <a href="subscriptions" class="btn btn-ghost">Manage Subscriptions →</a>
-    <a href="payments"      class="btn btn-ghost">View Payments →</a>
-    <a href="plans"         class="btn btn-ghost">Manage Plans →</a>
-    <a href="courses"       class="btn btn-ghost">Manage Courses →</a>
+    <a href="/admin/users"         class="btn btn-ghost">Manage Users →</a>
+    <a href="/admin/subscriptions" class="btn btn-ghost">Manage Subscriptions →</a>
+    <a href="/admin/payments"      class="btn btn-ghost">View Payments →</a>
+    <a href="/admin/plans"         class="btn btn-ghost">Manage Plans →</a>
+    <a href="/admin/courses"       class="btn btn-ghost">Manage Courses →</a>
   </div>
 </main>
 
@@ -87,8 +87,9 @@
       document.getElementById('stat-courses').textContent      = fmt(s.totalCourses);
       document.getElementById('stat-plans').textContent        = fmt(s.totalPlans);
     } catch (err) {
-      alertEl.textContent     = 'Failed to load stats: ' + err.message;
-      alertEl.style.display   = 'block';
+      alertEl.textContent   = '⚠ Failed to load stats: ' + err.message + ' — please ensure you are logged in as an Admin and refresh.';
+      alertEl.style.display = 'block';
+      alertEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 

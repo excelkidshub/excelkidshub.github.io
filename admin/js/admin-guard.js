@@ -12,8 +12,8 @@
  *   requireAdmin();
  */
 
-const HOME = '/';
-const LOGIN = '/login.html';
+const HOME  = '/';
+const LOGIN = '/login';
 
 /**
  * Decode the JWT payload without verifying signature (client-side only).
@@ -82,3 +82,4 @@ export function adminLogout() {
     localStorage.removeItem('courses_data');
     window.location.replace(LOGIN);
 }
+
