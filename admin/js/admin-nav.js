@@ -9,16 +9,19 @@ export function renderAdminNav() {
 
     const links = [
         { href: '/admin/',                label: 'Dashboard'     },
-        { href: '/admin/users.html',      label: 'Users'         },
-        { href: '/admin/subscriptions.html', label: 'Subscriptions' },
-        { href: '/admin/payments.html',   label: 'Payments'      },
-        { href: '/admin/plans.html',      label: 'Plans'         },
-        { href: '/admin/courses.html',    label: 'Courses'       },
+        { href: '/admin/users',           label: 'Users'         },
+        { href: '/admin/subscriptions',   label: 'Subscriptions' },
+        { href: '/admin/payments',        label: 'Payments'      },
+        { href: '/admin/plans',           label: 'Plans'         },
+        { href: '/admin/courses',         label: 'Courses'       },
     ];
 
-    const navHtml = links.map(l =>
-        `<a href="${l.href}" class="${current.endsWith(l.href) || current === l.href ? 'active' : ''}">${l.label}</a>`
-    ).join('');
+    const navHtml = links.map(l => {
+        // Normalize both sides: strip trailing slash for comparison
+        const norm = (s) => s.replace(/\/$/, '');
+        const isActive = norm(current) === norm(l.href);
+        return `<a href="${l.href}" class="${isActive ? 'active' : ''}">${l.label}</a>`;
+    }).join('');
 
     document.getElementById('admin-nav-placeholder').innerHTML = `
       <div class="admin-topbar">

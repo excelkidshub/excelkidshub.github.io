@@ -309,6 +309,7 @@ Certification program for preschool teachers, tutors & homeschooling parents in 
 <script type="module">
   import { auth } from './js/auth.js';
   import { storage } from './js/storage.js';
+  import { storage } from './js/storage.js';
   import { api } from './js/api.js';
   import { READ_BASE_URL } from './config.js';
 
@@ -390,12 +391,15 @@ Certification program for preschool teachers, tutors & homeschooling parents in 
   window.openCourse = async function(courseId, courseSlug) {
     try {
       const response = await api.post(`/courses/${courseId}/access`);
-      
-      if (response.allowed) {
-        const redirectUrl = `${READ_BASE_URL}/${courseSlug}/`;
-        window.location.href = redirectUrl;
+      // Server wraps response in ApiResponse<CourseAccessResponse>
+      const data = response.data || response;
+
+      if (data.allowed) {
+        const token = data.redirectToken || storage.getToken();
+        window.location.href = `${READ_BASE_URL}/${courseSlug}/?token=${token}`;
       } else {
         alert('You do not have access to this course. Please subscribe to access.');
+        window.location.href = 'pricing.html';
       }
     } catch (error) {
       alert(error.message || 'Failed to access course');

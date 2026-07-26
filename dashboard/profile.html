@@ -242,113 +242,100 @@
 
   // Check authentication
   if (!auth.requireAuth()) {
-    return;
+    throw new Error('Not authenticated');
   }
 
-  const loading = document.getElementById('loading');
-  const error = document.getElementById('error');
-  const success = document.getElementById('success');
-  const profileContent = document.getElementById('profile-content');
-  const profileForm = document.getElementById('profile-form');
+  const loading         = document.getElementById('loading');
+  const errorDiv        = document.getElementById('error');
+  const successDiv      = document.getElementById('success');
+  const profileContent  = document.getElementById('profile-content');
+  const profileForm     = document.getElementById('profile-form');
 
   function showError(message) {
-    error.textContent = message;
-    error.style.display = 'block';
-    success.style.display = 'none';
-    loading.style.display = 'none';
-    profileContent.style.display = 'none';
+    errorDiv.textContent          = message;
+    errorDiv.style.display        = 'block';
+    successDiv.style.display      = 'none';
+    loading.style.display         = 'none';
+    profileContent.style.display  = 'none';
   }
 
   function showSuccess(message) {
-    success.textContent = message;
-    success.style.display = 'block';
-    error.style.display = 'none';
-  }
-
-  function hideMessages() {
-    error.style.display = 'none';
-    success.style.display = 'none';
+    successDiv.textContent   = message;
+    successDiv.style.display = 'block';
+    errorDiv.style.display   = 'none';
   }
 
   function showProfile() {
-    loading.style.display = 'none';
-    error.style.display = 'none';
+    loading.style.display        = 'none';
+    errorDiv.style.display       = 'none';
     profileContent.style.display = 'block';
+  }
+
+  function populateUser(user) {
+    const displayName = user.name
+      || ((user.firstName || '') + ' ' + (user.lastName || '')).trim()
+      || '';
+    document.getElementById('name').value              = displayName;
+    document.getElementById('email-display').textContent = user.email || '-';
+    document.getElementById('role-display').textContent  = user.role  || 'Student';
+  }
+
+  function updateSubscription(subscription) {
+    const statusEl = document.getElementById('subscription-status');
+    const planEl   = document.getElementById('plan-display');
+    const expiryEl = document.getElementById('expiry-display');
+
+    if (subscription && subscription.status === 'ACTIVE') {
+      statusEl.innerHTML   = '<span class="subscription-badge subscription-active">Active Subscription</span>';
+      planEl.textContent   = subscription.planName || 'Premium';
+      const expiry = subscription.endDate
+        ? new Date(subscription.endDate).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })
+        : 'N/A';
+      expiryEl.textContent = expiry;
+    } else {
+      statusEl.innerHTML   = '<span class="subscription-badge subscription-inactive">No Active Subscription</span>';
+      planEl.textContent   = 'No plan selected';
+      expiryEl.textContent = '-';
+    }
   }
 
   async function loadProfile() {
     try {
-      let user = auth.getCurrentUser();
-      
-      if (!user) {
-        // Try to get fresh user data
-        const response = await api.get('/auth/me');
-        if (response.user) {
-          storage.setUser(response.user);
-          user = response.user;
-        }
+      // Show cached data immediately to avoid blank flash
+      const cachedUser = auth.getCurrentUser();
+      if (cachedUser) {
+        populateUser(cachedUser);
+        showProfile();
       }
 
-      if (user) {
-        document.getElementById('name').value = user.name || '';
-        document.getElementById('email-display').textContent = user.email || '-';
-        document.getElementById('role-display').textContent = user.role || 'Student';
+      // Fetch fresh data from /auth/me — returns user + subscription in one call
+      const response = await api.get('/auth/me');
+      const payload  = response.data || response;
+
+      if (payload.user) {
+        storage.setUser(payload.user);
+        populateUser(payload.user);
       }
 
-      // Load subscription data
-      try {
-        const subscriptionResponse = await api.get('/subscription');
-        if (subscriptionResponse.subscription) {
-          storage.setSubscription(subscriptionResponse.subscription);
-          updateSubscription(subscriptionResponse.subscription);
-        }
-      } catch (subError) {
-        console.log('No subscription found:', subError.message);
-        updateSubscription(null);
-      }
-
+      updateSubscription(payload.subscription || null);
       showProfile();
+
     } catch (err) {
-      showError(err.message || 'Failed to load profile');
+      if (!auth.isLoggedIn()) {
+        window.location.href = '/login.html';
+      } else {
+        showError(err.message || 'Failed to load profile. Please refresh the page.');
+      }
     }
   }
 
-  function updateSubscription(subscription) {
-    const statusElement = document.getElementById('subscription-status');
-    const planElement = document.getElementById('plan-display');
-    const expiryElement = document.getElementById('expiry-display');
-
-    if (subscription && subscription.active) {
-      statusElement.innerHTML = '<span class="subscription-badge subscription-active">Active Subscription</span>';
-      planElement.textContent = subscription.planName || 'Premium';
-      expiryElement.textContent = subscription.expiryDate || 'N/A';
-    } else {
-      statusElement.innerHTML = '<span class="subscription-badge subscription-inactive">No Active Subscription</span>';
-      planElement.textContent = 'No plan selected';
-      expiryElement.textContent = '-';
-    }
-  }
-
-  // Handle profile update
+  // Profile name update — PUT /auth/me is not yet implemented on the server.
+  // Show a friendly message instead of a silent failure.
   profileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    hideMessages();
-
-    const name = document.getElementById('name').value;
-
-    try {
-      const response = await api.put('/auth/profile', { name });
-      
-      if (response.user) {
-        storage.setUser(response.user);
-        showSuccess('Profile updated successfully!');
-      }
-    } catch (err) {
-      showError(err.message || 'Failed to update profile');
-    }
+    showSuccess('Profile display is read-only at this time. Contact support to update your details.');
   });
 
-  // Load profile data
   loadProfile();
 </script>
 
