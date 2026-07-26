@@ -10,15 +10,19 @@ export const auth = {
     try {
       const response = await api.post('/auth/login', { email, password });
       
-      if (response.token) {
-        storage.setToken(response.token);
+      // Server wraps the payload in ApiResponse<AuthResponse>,
+      // so the actual data lives under response.data
+      const payload = response.data || response;
+
+      if (payload.token) {
+        storage.setToken(payload.token);
       }
       
-      if (response.user) {
-        storage.setUser(response.user);
+      if (payload.user) {
+        storage.setUser(payload.user);
       }
       
-      return response;
+      return payload;
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -32,16 +36,19 @@ export const auth = {
     try {
       const response = await api.post('/auth/register', userData);
       
+      // Server wraps the payload in ApiResponse<AuthResponse>
+      const payload = response.data || response;
+
       // Auto-login after successful registration
-      if (response.token) {
-        storage.setToken(response.token);
+      if (payload.token) {
+        storage.setToken(payload.token);
       }
       
-      if (response.user) {
-        storage.setUser(response.user);
+      if (payload.user) {
+        storage.setUser(payload.user);
       }
       
-      return response;
+      return payload;
     } catch (error) {
       console.error('Registration error:', error);
       throw error;
@@ -96,8 +103,10 @@ export const auth = {
     try {
       // Verify token validity by calling a protected endpoint
       const response = await api.get('/auth/me');
-      if (response.user) {
-        storage.setUser(response.user);
+      // Unwrap ApiResponse wrapper
+      const payload = response.data || response;
+      if (payload.user) {
+        storage.setUser(payload.user);
         return true;
       }
       return false;

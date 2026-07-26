@@ -1087,6 +1087,11 @@
   })();
 
   // ── Load plans from backend ─────────────────────────────────────────────────
+  // data-plan values on pricing cards: "free", "level1", "bundle"
+  // Map them to DB plans by price: 0 → free, 499 → level1, 999 → bundle.
+  // This avoids fragile slug matching against DB plan names.
+  const PRICE_TO_SLUG = { 0: 'free', 499: 'level1', 999: 'bundle' };
+
   async function loadPlans() {
     try {
       const response = await fetch(
@@ -1096,10 +1101,13 @@
         const json = await response.json();
         const plans = json.data || [];
         plans.forEach(plan => {
-          // Map by lowercase name slug for matching pricing cards
-          const slug = plan.name.toLowerCase().replace(/\s+/g, '-');
-          planData[slug] = plan;
+          const price = Math.round(Number(plan.price));
+          const slug  = PRICE_TO_SLUG[price];
+          if (slug) {
+            planData[slug] = plan;
+          }
         });
+        console.log('Plans loaded:', Object.entries(planData).map(([k,v]) => `${k}→id:${v.id}`).join(', '));
       }
     } catch (e) {
       console.warn('Could not load plans from API:', e.message);
@@ -1159,7 +1167,7 @@
   // ── Razorpay checkout flow ──────────────────────────────────────────────────
   async function initiatePayment(planSlug) {
     if (!isLoggedIn()) {
-      window.location.href = 'login.html?redirect=pricing';
+      window.location.href = 'login.html?redirect=' + encodeURIComponent('pricing.html');
       return;
     }
 
@@ -1275,7 +1283,7 @@
         if (!isActive) {
           item.classList.add('active');
           const toggle = item.querySelector('.faq-toggle');
-          if (toggle) toggle.textContent = '+';
+          if (toggle) toggle.textContent = '×';
         }
       });
     });
