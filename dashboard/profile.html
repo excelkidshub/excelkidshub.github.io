@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile | ExcelKidsHub Phonics Academy</title>
+<meta name="description" content="View and manage your ExcelKidsHub profile information.">
+<link rel="stylesheet" href="../css/style.css?v=20260706">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<style>
+.profile-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.profile-header {
+  background: linear-gradient(135deg, #2b3a57 0%, #1a253a 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.profile-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 32px;
+}
+
+.profile-header p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.profile-card {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.profile-section {
+  margin-bottom: 30px;
+}
+
+.profile-section h2 {
+  margin: 0 0 20px 0;
+  color: #2b3a57;
+  font-size: 24px;
+  border-bottom: 2px solid #facc15;
+  padding-bottom: 10px;
+}
+
+.profile-field {
+  margin-bottom: 20px;
+}
+
+.profile-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 500;
+}
+
+.profile-field .value {
+  font-size: 18px;
+  color: #2b3a57;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.profile-field input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.profile-field input:focus {
+  outline: none;
+  border-color: #facc15;
+}
+
+.btn-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background: #facc15;
+  color: #2b3a57;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: #e5b800;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+.subscription-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.subscription-active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.subscription-inactive {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error {
+  background: #fee;
+  color: #c33;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.success {
+  background: #efe;
+  color: #3c3;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div id="nav-placeholder"></div>
+</header>
+
+<main>
+<div class="profile-container">
+  <div id="loading" class="loading">Loading profile...</div>
+  <div id="error" class="error" style="display: none;"></div>
+  <div id="success" class="success" style="display: none;"></div>
+  
+  <div id="profile-content" style="display: none;">
+    <div class="profile-header">
+      <h1>My Profile</h1>
+      <p>Manage your account information and preferences</p>
+    </div>
+
+    <div class="profile-card">
+      <form id="profile-form">
+        <div class="profile-section">
+          <h2>Personal Information</h2>
+          
+          <div class="profile-field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          
+          <div class="profile-field">
+            <label for="email">Email Address</label>
+            <div class="value" id="email-display">-</div>
+          </div>
+          
+          <div class="profile-field">
+            <label for="role">Role</label>
+            <div class="value" id="role-display">-</div>
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <h2>Subscription Information</h2>
+          
+          <div class="profile-field">
+            <label>Subscription Status</label>
+            <div id="subscription-status">
+              <span class="subscription-badge subscription-inactive">No Active Subscription</span>
+            </div>
+          </div>
+          
+          <div class="profile-field">
+            <label>Current Plan</label>
+            <div class="value" id="plan-display">No plan selected</div>
+          </div>
+          
+          <div class="profile-field">
+            <label>Subscription Expiry</label>
+            <div class="value" id="expiry-display">-</div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn-primary">Update Profile</button>
+          <a href="index.html" class="btn-secondary" style="text-decoration: none; display: inline-block;">Back to Dashboard</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script type="module">
+  import { auth } from '../js/auth.js';
+  import { storage } from '../js/storage.js';
+  import { api } from '../js/api.js';
+
+  // Check authentication
+  if (!auth.requireAuth()) {
+    return;
+  }
+
+  const loading = document.getElementById('loading');
+  const error = document.getElementById('error');
+  const success = document.getElementById('success');
+  const profileContent = document.getElementById('profile-content');
+  const profileForm = document.getElementById('profile-form');
+
+  function showError(message) {
+    error.textContent = message;
+    error.style.display = 'block';
+    success.style.display = 'none';
+    loading.style.display = 'none';
+    profileContent.style.display = 'none';
+  }
+
+  function showSuccess(message) {
+    success.textContent = message;
+    success.style.display = 'block';
+    error.style.display = 'none';
+  }
+
+  function hideMessages() {
+    error.style.display = 'none';
+    success.style.display = 'none';
+  }
+
+  function showProfile() {
+    loading.style.display = 'none';
+    error.style.display = 'none';
+    profileContent.style.display = 'block';
+  }
+
+  async function loadProfile() {
+    try {
+      let user = auth.getCurrentUser();
+      
+      if (!user) {
+        // Try to get fresh user data
+        const response = await api.get('/auth/me');
+        if (response.user) {
+          storage.setUser(response.user);
+          user = response.user;
+        }
+      }
+
+      if (user) {
+        document.getElementById('name').value = user.name || '';
+        document.getElementById('email-display').textContent = user.email || '-';
+        document.getElementById('role-display').textContent = user.role || 'Student';
+      }
+
+      // Load subscription data
+      try {
+        const subscriptionResponse = await api.get('/subscription');
+        if (subscriptionResponse.subscription) {
+          storage.setSubscription(subscriptionResponse.subscription);
+          updateSubscription(subscriptionResponse.subscription);
+        }
+      } catch (subError) {
+        console.log('No subscription found:', subError.message);
+        updateSubscription(null);
+      }
+
+      showProfile();
+    } catch (err) {
+      showError(err.message || 'Failed to load profile');
+    }
+  }
+
+  function updateSubscription(subscription) {
+    const statusElement = document.getElementById('subscription-status');
+    const planElement = document.getElementById('plan-display');
+    const expiryElement = document.getElementById('expiry-display');
+
+    if (subscription && subscription.active) {
+      statusElement.innerHTML = '<span class="subscription-badge subscription-active">Active Subscription</span>';
+      planElement.textContent = subscription.planName || 'Premium';
+      expiryElement.textContent = subscription.expiryDate || 'N/A';
+    } else {
+      statusElement.innerHTML = '<span class="subscription-badge subscription-inactive">No Active Subscription</span>';
+      planElement.textContent = 'No plan selected';
+      expiryElement.textContent = '-';
+    }
+  }
+
+  // Handle profile update
+  profileForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideMessages();
+
+    const name = document.getElementById('name').value;
+
+    try {
+      const response = await api.put('/auth/profile', { name });
+      
+      if (response.user) {
+        storage.setUser(response.user);
+        showSuccess('Profile updated successfully!');
+      }
+    } catch (err) {
+      showError(err.message || 'Failed to update profile');
+    }
+  });
+
+  // Load profile data
+  loadProfile();
+</script>
+
+<script src="../js/nav.js?v=20260706"></script>
+<script src="../js/script.js?v=20260706"></script>
+
+</body>
+</html>

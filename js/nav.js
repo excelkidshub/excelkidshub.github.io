@@ -1,4 +1,7 @@
-const navigationHTML = `
+// Dynamic navigation based on authentication status
+function getNavigationHTML(isLoggedIn) {
+  if (isLoggedIn) {
+    return `
 <div class="container nav-container">
 
     <div class="logo-area">
@@ -20,16 +23,59 @@ const navigationHTML = `
 
     <nav class="nav-links" id="navLinks">
         <a href="/">Home</a>
-        <a href="schedule">Schedule</a>
-        <a href="admissions">Admissions</a>
-        <a href="teacher-training-admission">Teacher Training</a>
-        <a href="courses">Courses</a>
-        <a href="gallery">Gallery</a>
-        <a href="contact">Contact</a>
+        <a href="courses.html">Courses</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <div class="dropdown">
+            <a href="dashboard/index.html" class="dropdown-toggle">Dashboard ▼</a>
+            <div class="dropdown-menu">
+                <a href="dashboard/index.html">Dashboard</a>
+                <a href="dashboard/index.html#courses">My Courses</a>
+                <a href="dashboard/index.html#subscription">Subscription</a>
+                <a href="dashboard/profile.html">Profile</a>
+                <a href="#" id="logout-link">Logout</a>
+            </div>
+        </div>
     </nav>
 
 </div>
 `;
+  } else {
+    return `
+<div class="container nav-container">
+
+    <div class="logo-area">
+        <a href="/">
+            <img width="180" height="48" loading="lazy" decoding="async" src="images/logo.svg" alt="ExcelKidsHub Phonics Academy Logo">
+        </a>
+    </div>
+
+    <div class="call-button">
+        <a href="tel:+918793135679" aria-label="Call us">
+            <img width="40" height="40" loading="lazy" decoding="async" src="images/icon/icon-phone-round.svg" alt="Call ExcelKidsHub" class="call-icon-img">
+        </a>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+        <span id="hamburger-icon">☰</span>
+        <span id="close-icon" style="display:none">&#10005;</span>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="btn-nav-login">Login</a>
+        <a href="register.html" class="btn-nav-register">Register</a>
+    </nav>
+
+</div>
+`;
+  }
+}
 
 const footerHTML = `
 <footer class="ekh-footer" aria-label="ExcelKidsHub footer">
@@ -38,7 +84,7 @@ const footerHTML = `
             <span class="ekh-footer__eyebrow">Admissions open</span>
             <strong>Book a free phonics demo for your child.</strong>
         </div>
-        <a href="contact" class="ekh-footer__cta-link">Book Free Demo</a>
+        <a href="contact.html" class="ekh-footer__cta-link">Book Free Demo</a>
     </div>
 
     <div class="ekh-footer__inner">
@@ -59,20 +105,20 @@ const footerHTML = `
         <nav class="ekh-footer__col" aria-label="Footer navigation">
             <h2>Explore</h2>
             <a href="/">Home</a>
-            <a href="about">About Us</a>
-            <a href="schedule">Schedule</a>
-            <a href="admissions">Admissions</a>
-            <a href="gallery">Gallery</a>
-            <a href="contact">Contact</a>
+            <a href="about.html">About Us</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
         </nav>
 
         <nav class="ekh-footer__col" aria-label="Programs">
             <h2>Programs</h2>
-            <a href="courses">Phonics Courses</a>
-            <a href="teacher-training-admission">Teacher Training</a>
-            <a href="english-grammar-classes-dhanori">English Grammar</a>
-            <a href="phonics-classes-dhanori-pune">Dhanori Classes</a>
-            <a href="phonics-classes-vishrantwadi">Vishrantwadi Classes</a>
+            <a href="courses.html">Phonics Courses</a>
+            <a href="teacher-training-admission.html">Teacher Training</a>
+            <a href="english-grammar-classes-dhanori.html">English Grammar</a>
+            <a href="phonics-classes-dhanori-pune.html">Dhanori Classes</a>
+            <a href="phonics-classes-vishrantwadi.html">Vishrantwadi Classes</a>
         </nav>
 
         <div class="ekh-footer__col ekh-footer__contact">
@@ -102,9 +148,27 @@ const footerHTML = `
 `;
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("nav-placeholder").innerHTML = navigationHTML;
+    // Check authentication status
+    const isLoggedIn = localStorage.getItem('jwt_token') !== null;
+    
+    // Render appropriate navigation
+    document.getElementById("nav-placeholder").innerHTML = getNavigationHTML(isLoggedIn);
+    
     if (document.getElementById("footer-placeholder")) {
         document.getElementById("footer-placeholder").innerHTML = footerHTML;
+    }
+
+    // Handle logout link
+    const logoutLink = document.getElementById("logout-link");
+    if (logoutLink) {
+        logoutLink.addEventListener("click", function(e) {
+            e.preventDefault();
+            localStorage.removeItem('jwt_token');
+            localStorage.removeItem('user_data');
+            localStorage.removeItem('subscription_data');
+            localStorage.removeItem('courses_data');
+            window.location.href = '/';
+        });
     }
 
     // Active Menu Highlight
@@ -124,16 +188,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const hamburgerIcon = document.getElementById("hamburger-icon");
     const closeIcon = document.getElementById("close-icon");
 
-    hamburger.addEventListener("click", () => {
-        nav.classList.toggle("show-menu");
-        if(nav.classList.contains("show-menu")) {
-            hamburgerIcon.style.display = "none";
-            closeIcon.style.display = "inline";
-        } else {
-            hamburgerIcon.style.display = "inline";
-            closeIcon.style.display = "none";
-        }
-    });
+    if (hamburger) {
+        hamburger.addEventListener("click", () => {
+            nav.classList.toggle("show-menu");
+            if(nav.classList.contains("show-menu")) {
+                hamburgerIcon.style.display = "none";
+                closeIcon.style.display = "inline";
+            } else {
+                hamburgerIcon.style.display = "inline";
+                closeIcon.style.display = "none";
+            }
+        });
+    }
 
     // Close menu when clicking a link (mobile UX)
     navLinks.forEach(link => {

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | ExcelKidsHub Phonics Academy</title>
+<meta name="description" content="Your ExcelKidsHub dashboard - manage your courses, subscription, and profile.">
+<link rel="stylesheet" href="../css/style.css?v=20260706">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<style>
+.dashboard-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.welcome-section {
+  background: linear-gradient(135deg, #2b3a57 0%, #1a253a 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.welcome-section h1 {
+  margin: 0 0 10px 0;
+  font-size: 32px;
+}
+
+.welcome-section p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.dashboard-card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dashboard-card h2 {
+  margin: 0 0 20px 0;
+  color: #2b3a57;
+  font-size: 24px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.status-active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-inactive {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.course-item {
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-item:last-child {
+  margin-bottom: 0;
+}
+
+.course-name {
+  font-weight: 600;
+  color: #2b3a57;
+}
+
+.btn-course {
+  background: #facc15;
+  color: #2b3a57;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.btn-course:hover {
+  background: #e5b800;
+}
+
+.no-courses {
+  color: #666;
+  font-style: italic;
+}
+
+.profile-summary {
+  margin-bottom: 20px;
+}
+
+.profile-summary p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.profile-summary strong {
+  color: #2b3a57;
+}
+
+.cta-box {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.cta-box h3 {
+  margin: 0 0 10px 0;
+  color: #856404;
+}
+
+.cta-box p {
+  margin: 0 0 15px 0;
+  color: #856404;
+}
+
+.btn-cta {
+  background: #ffc107;
+  color: #2b3a57;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-cta:hover {
+  background: #e0a800;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error {
+  background: #fee;
+  color: #c33;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.progress-bar-wrap {
+  background: #e9ecef;
+  border-radius: 10px;
+  height: 10px;
+  margin: 10px 0 6px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: #facc15;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+.progress-meta {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 14px;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div id="nav-placeholder"></div>
+</header>
+
+<main>
+<div class="dashboard-container">
+  <div id="loading" class="loading">Loading your dashboard...</div>
+  <div id="error" class="error" style="display: none;"></div>
+  
+  <div id="dashboard-content" style="display: none;">
+      <!-- Email verification banner (hidden by default, shown when email not verified) -->
+      <div id="verify-banner" style="display:none; background:#fff3cd; border:1px solid #ffc107; padding:14px 20px; border-radius:8px; margin-bottom:20px; font-size:14px; color:#856404;">
+        <strong>Please verify your email address.</strong>
+        Check your inbox for a verification link from ExcelKidsHub.
+        <a href="#" id="resend-verify" style="margin-left:10px; color:#2b3a57; font-weight:600; text-decoration:underline;">Resend email</a>
+      </div>
+
+    <div class="welcome-section">
+      <h1 id="welcome-message">Welcome back!</h1>
+      <p id="welcome-subtitle">Manage your courses and subscription</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Profile Card -->
+      <div class="dashboard-card">
+        <h2>Profile Summary</h2>
+        <div class="profile-summary">
+          <p><strong>Name:</strong> <span id="user-name">-</span></p>
+          <p><strong>Email:</strong> <span id="user-email">-</span></p>
+          <p><strong>Role:</strong> <span id="user-role">-</span></p>
+        </div>
+        <a href="profile.html" class="btn-course">View Full Profile</a>
+      </div>
+
+      <!-- Subscription Card -->
+      <div class="dashboard-card">
+        <h2>Subscription Status</h2>
+        <div id="subscription-status">
+          <span class="status-badge status-inactive">No Active Subscription</span>
+        </div>
+        <div id="subscription-details" style="margin-top: 15px;">
+          <p id="subscription-plan">No plan selected</p>
+          <p id="subscription-expiry">-</p>
+        </div>
+        <div id="subscription-cta" class="cta-box">
+          <h3>Upgrade Your Learning</h3>
+          <p>Get access to all phonics courses and materials</p>
+          <a href="../pricing.html" class="btn-cta">View Plans</a>
+        </div>
+      </div>
+
+      <!-- Courses Card -->
+      <div class="dashboard-card">
+        <h2>My Courses</h2>
+        <ul id="course-list" class="course-list">
+          <li class="no-courses">No courses purchased yet</li>
+        </ul>
+      </div>
+
+      <!-- Continue Reading Card -->
+      <div class="dashboard-card" id="continue-reading-card" style="display:none;">
+        <h2>Continue Reading</h2>
+        <div id="continue-reading-content">
+          <!-- populated by loadProgress() -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script type="module">
+  import { auth } from '../js/auth.js';
+  import { storage } from '../js/storage.js';
+  import { api } from '../js/api.js';
+  import { READ_BASE_URL } from '../config.js';
+
+  // Check authentication — redirects to login if no token
+  if (!auth.requireAuth()) {
+    throw new Error('Not authenticated');
+  }
+
+  const loading          = document.getElementById('loading');
+  const errorDiv         = document.getElementById('error');
+  const dashboardContent = document.getElementById('dashboard-content');
+  const verifyBanner     = document.getElementById('verify-banner');
+  const resendVerifyLink = document.getElementById('resend-verify');
+
+  function showError(message) {
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    loading.style.display = 'none';
+    dashboardContent.style.display = 'none';
+  }
+
+  function showDashboard() {
+    loading.style.display = 'none';
+    errorDiv.style.display = 'none';
+    dashboardContent.style.display = 'block';
+  }
+
+  // ── Profile ──────────────────────────────────────────────────────────────────
+  function updateProfile(user) {
+    // Use computed name from API; fall back to assembling from parts
+    const displayName = user.name
+      || ((user.firstName || '') + ' ' + (user.lastName || '')).trim()
+      || 'User';
+
+    document.getElementById('welcome-message').textContent = `Welcome back, ${user.firstName || displayName}!`;
+    document.getElementById('user-name').textContent  = displayName;
+    document.getElementById('user-email').textContent = user.email || '-';
+    document.getElementById('user-role').textContent  = user.role  || 'Student';
+
+    // Show email verification banner if not verified
+    if (user.emailVerified === false) {
+      verifyBanner.style.display = 'block';
+    }
+  }
+
+  // ── Subscription ─────────────────────────────────────────────────────────────
+  function updateSubscription(subscription) {
+    const statusEl = document.getElementById('subscription-status');
+    const planEl   = document.getElementById('subscription-plan');
+    const expiryEl = document.getElementById('subscription-expiry');
+    const ctaEl    = document.getElementById('subscription-cta');
+
+    if (subscription && subscription.status === 'ACTIVE') {
+      statusEl.innerHTML = '<span class="status-badge status-active">Active Subscription</span>';
+      planEl.textContent   = `Plan: ${subscription.planName || 'Premium'}`;
+      // Use endDate from SubscriptionDto
+      const expiry = subscription.endDate
+        ? new Date(subscription.endDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+        : 'N/A';
+      expiryEl.textContent = `Expires: ${expiry}`;
+      ctaEl.style.display  = 'none';
+    } else {
+      statusEl.innerHTML   = '<span class="status-badge status-inactive">No Active Subscription</span>';
+      planEl.textContent   = 'No plan selected';
+      expiryEl.textContent = '-';
+      ctaEl.style.display  = 'block';
+    }
+  }
+
+  // ── Courses ───────────────────────────────────────────────────────────────────
+  function updateCourses(courses) {
+    const courseList = document.getElementById('course-list');
+
+    if (!courses || courses.length === 0) {
+      courseList.innerHTML = '<li class="no-courses">No courses available yet. <a href="../pricing.html">View plans</a></li>';
+      return;
+    }
+
+    courseList.innerHTML = courses.map(course => `
+      <li class="course-item">
+        <span class="course-name">${course.title || course.name}</span>
+        <button class="btn-course" onclick="openCourse('${course.id}', '${course.slug}')">Open Course</button>
+      </li>
+    `).join('');
+  }
+
+  // ── Progress / Continue Reading ───────────────────────────────────────────────
+  function updateProgress(progressList) {
+    const card    = document.getElementById('continue-reading-card');
+    const content = document.getElementById('continue-reading-content');
+    if (!progressList || progressList.length === 0) return;
+
+    // Show the most recently accessed in-progress course
+    const inProgress = progressList
+      .filter(p => p.status !== 'COMPLETED' && p.pageNumber > 0)
+      .sort((a, b) => new Date(b.lastAccessed || 0) - new Date(a.lastAccessed || 0));
+
+    if (inProgress.length === 0) return;
+
+    const prog = inProgress[0];
+    const pct  = prog.completionPercentage || 0;
+    const total = prog.totalLessons || 0;
+
+    content.innerHTML = `
+      <p style="font-weight:600;color:#2b3a57;margin:0 0 6px;">${prog.courseTitle || 'Level 1'}</p>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width:${pct}%"></div>
+      </div>
+      <p class="progress-meta">Page ${prog.pageNumber} of ${total} &nbsp;·&nbsp; ${pct}% complete</p>
+      <button class="btn-course" onclick="openCourse(${prog.courseId}, '${prog.courseSlug}')">
+        Continue Reading
+      </button>
+    `;
+    card.style.display = 'block';
+  }
+
+  // ── Open Course ───────────────────────────────────────────────────────────────
+  window.openCourse = async function(courseId, courseSlug) {
+    try {
+      const response = await api.post(`/courses/${courseId}/access`);
+      if (response.data && response.data.allowed) {
+        const token = response.data.redirectToken || storage.getToken();
+        window.location.href = `${READ_BASE_URL}/${courseSlug}/?token=${token}`;
+      } else {
+        alert('You do not have access to this course. Please subscribe to access.');
+        window.location.href = '../pricing.html';
+      }
+    } catch (err) {
+      alert(err.message || 'Failed to access course. Please try again.');
+    }
+  };
+
+  // ── Resend verification email ─────────────────────────────────────────────────
+  resendVerifyLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    resendVerifyLink.textContent = 'Sending...';
+    try {
+      await api.post('/auth/resend-verification', {});
+      resendVerifyLink.textContent = 'Sent! Check your inbox.';
+    } catch (err) {
+      resendVerifyLink.textContent = 'Failed — try again later.';
+    }
+  });
+
+  // ── Load Dashboard ────────────────────────────────────────────────────────────
+  async function loadDashboard() {
+    try {
+      // Show cached user immediately so there is no blank flash
+      const cachedUser = auth.getCurrentUser();
+      if (cachedUser) {
+        updateProfile(cachedUser);
+        showDashboard();
+      }
+
+      // Fetch fresh data from /auth/me (returns user + active subscription in one call)
+      const meResponse = await api.get('/auth/me');
+      const freshData  = meResponse.data || meResponse;
+
+      if (freshData.user) {
+        storage.setUser(freshData.user);
+        updateProfile(freshData.user);
+      }
+      if (freshData.subscription) {
+        storage.setSubscription(freshData.subscription);
+        updateSubscription(freshData.subscription);
+      } else {
+        updateSubscription(null);
+      }
+
+      // Fetch courses available to this user
+      try {
+        const coursesResponse = await api.get('/courses/my');
+        const courses = (coursesResponse.data || coursesResponse.courses || []);
+        storage.setCourses(courses);
+        updateCourses(courses);
+      } catch (coursesErr) {
+        console.log('Courses not loaded:', coursesErr.message);
+        updateCourses([]);
+      }
+
+      // Fetch progress summary for Continue Reading card
+      try {
+        const progressResponse = await api.get('/progress/summary');
+        const progressList = progressResponse.data || progressResponse.summary || [];
+        updateProgress(progressList);
+      } catch (progressErr) {
+        console.log('Progress not loaded:', progressErr.message);
+      }
+
+      showDashboard();
+    } catch (err) {
+      if (!auth.isLoggedIn()) {
+        window.location.href = '../login.html';
+      } else {
+        showError('Failed to load dashboard. Please refresh the page.');
+      }
+    }
+  }
+
+  loadDashboard();
+</script>
+
+<script src="../js/nav.js?v=20260706"></script>
+<script src="../js/script.js?v=20260706"></script>
+
+</body>
+</html>

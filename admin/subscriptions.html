@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Subscriptions | ExcelKidsHub Admin</title>
+<link rel="stylesheet" href="css/admin.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+
+<div id="admin-nav-placeholder"></div>
+
+<main class="admin-main">
+  <div class="page-header">
+    <h1>Subscriptions</h1>
+    <p>View and manage user subscriptions. Manually activate or expire as needed.</p>
+  </div>
+
+  <div id="alert-error"   class="alert alert-error"></div>
+  <div id="alert-success" class="alert alert-success"></div>
+
+  <div class="toolbar">
+    <select id="status-filter">
+      <option value="">All Statuses</option>
+      <option value="ACTIVE">Active</option>
+      <option value="EXPIRED">Expired</option>
+      <option value="PENDING">Pending</option>
+      <option value="CANCELLED">Cancelled</option>
+    </select>
+    <button class="btn btn-primary" id="filter-btn">Filter</button>
+    <span id="result-count" style="color:#888;font-size:12px;margin-left:4px;"></span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Plan</th>
+          <th>Status</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="subs-body">
+        <tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination" id="pagination"></div>
+</main>
+
+<script type="module">
+  import { requireAdmin } from './js/admin-guard.js';
+  import { renderAdminNav } from './js/admin-nav.js';
+  import { adminGetSubs, adminSetSubStatus } from './js/admin-api.js';
+
+  requireAdmin();
+  renderAdminNav();
+
+  const alertError   = document.getElementById('alert-error');
+  const alertSuccess = document.getElementById('alert-success');
+  const tbody        = document.getElementById('subs-body');
+  const countEl      = document.getElementById('result-count');
+  const paginationEl = document.getElementById('pagination');
+
+  let currentPage = 0;
+  let currentStatus = '';
+
+  function showAlert(type, msg) {
+    alertError.style.display = alertSuccess.style.display = 'none';
+    if (type === 'error') { alertError.textContent = msg; alertError.style.display = 'block'; }
+    else { alertSuccess.textContent = msg; alertSuccess.style.display = 'block'; }
+    setTimeout(() => { alertError.style.display = alertSuccess.style.display = 'none'; }, 4000);
+  }
+
+  function statusBadge(s) {
+    const map = { ACTIVE: 'badge-green', EXPIRED: 'badge-red', PENDING: 'badge-yellow', CANCELLED: 'badge-gray' };
+    return `<span class="badge ${map[s] || 'badge-gray'}">${s}</span>`;
+  }
+
+  function formatDate(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+  }
+
+  async function load() {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>';
+    try {
+      const res  = await adminGetSubs(currentStatus, currentPage);
+      const data = res.data || res;
+      const rows = data.content || [];
+      const total = data.totalElements || rows.length;
+
+      countEl.textContent = `${total} subscription${total !== 1 ? 's' : ''}`;
+
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">No subscriptions found.</td></tr>';
+        paginationEl.innerHTML = '';
+        return;
+      }
+
+      tbody.innerHTML = rows.map(s => `
+        <tr>
+          <td>${s.id}</td>
+          <td><small>${s.userEmail || '—'}</small><br><span style="color:#888;font-size:11px;">${s.userName || ''}</span></td>
+          <td>${s.planName || '—'}</td>
+          <td>${statusBadge(s.status)}</td>
+          <td>${formatDate(s.startDate)}</td>
+          <td>${formatDate(s.endDate)}</td>
+          <td>${formatDate(s.createdAt)}</td>
+          <td style="display:flex;gap:6px;flex-wrap:wrap;">
+            ${s.status !== 'ACTIVE'
+              ? `<button class="btn btn-sm btn-success" onclick="setStatus(${s.id},'ACTIVE')">Activate</button>`
+              : ''}
+            ${s.status !== 'EXPIRED'
+              ? `<button class="btn btn-sm btn-danger" onclick="setStatus(${s.id},'EXPIRED')">Expire</button>`
+              : ''}
+          </td>
+        </tr>`).join('');
+
+      const totalPages = data.totalPages || 1;
+      let pg = '';
+      if (totalPages > 1) {
+        pg += `<button ${currentPage===0?'disabled':''} onclick="goPage(${currentPage-1})">‹ Prev</button>`;
+        for (let i = 0; i < Math.min(totalPages,7); i++) {
+          pg += `<button class="${i===currentPage?'active':''}" onclick="goPage(${i})">${i+1}</button>`;
+        }
+        pg += `<button ${currentPage>=totalPages-1?'disabled':''} onclick="goPage(${currentPage+1})">Next ›</button>`;
+        pg += `<span class="pagination-info">Page ${currentPage+1} of ${totalPages}</span>`;
+      }
+      paginationEl.innerHTML = pg;
+
+    } catch (err) {
+      showAlert('error', err.message);
+    }
+  }
+
+  window.setStatus = async function(id, status) {
+    if (!confirm(`Set subscription ${id} to ${status}?`)) return;
+    try {
+      await adminSetSubStatus(id, status);
+      showAlert('success', `Subscription status updated to ${status}.`);
+      load();
+    } catch (err) { showAlert('error', err.message); }
+  };
+
+  window.goPage = function(p) { currentPage = p; load(); };
+
+  document.getElementById('filter-btn').addEventListener('click', () => {
+    currentStatus = document.getElementById('status-filter').value;
+    currentPage = 0;
+    load();
+  });
+
+  load();
+</script>
+</body>
+</html>

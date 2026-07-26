@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Dashboard | ExcelKidsHub</title>
+<link rel="stylesheet" href="css/admin.css">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+
+<div id="admin-nav-placeholder"></div>
+
+<main class="admin-main">
+  <div class="page-header">
+    <h1>Dashboard</h1>
+    <p>Platform overview — ExcelKidsHub Digital</p>
+  </div>
+
+  <div id="alert-error" class="alert alert-error"></div>
+
+  <div class="stat-grid" id="stat-grid">
+    <div class="stat-card">
+      <div class="stat-card__label">Total Users</div>
+      <div class="stat-card__value" id="stat-users">—</div>
+    </div>
+    <div class="stat-card stat-card--green">
+      <div class="stat-card__label">Active Subscriptions</div>
+      <div class="stat-card__value" id="stat-active-subs">—</div>
+    </div>
+    <div class="stat-card stat-card--red">
+      <div class="stat-card__label">Expired Subscriptions</div>
+      <div class="stat-card__value" id="stat-expired-subs">—</div>
+    </div>
+    <div class="stat-card stat-card--blue">
+      <div class="stat-card__label">Total Payments</div>
+      <div class="stat-card__value" id="stat-payments">—</div>
+    </div>
+    <div class="stat-card stat-card--purple">
+      <div class="stat-card__label">Total Revenue</div>
+      <div class="stat-card__value" id="stat-revenue">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__label">Active Courses</div>
+      <div class="stat-card__value" id="stat-courses">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__label">Plans</div>
+      <div class="stat-card__value" id="stat-plans">—</div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
+    <a href="users.html"         class="btn btn-ghost">Manage Users →</a>
+    <a href="subscriptions.html" class="btn btn-ghost">Manage Subscriptions →</a>
+    <a href="payments.html"      class="btn btn-ghost">View Payments →</a>
+    <a href="plans.html"         class="btn btn-ghost">Manage Plans →</a>
+    <a href="courses.html"       class="btn btn-ghost">Manage Courses →</a>
+  </div>
+</main>
+
+<script type="module">
+  import { requireAdmin } from './js/admin-guard.js';
+  import { renderAdminNav } from './js/admin-nav.js';
+  import { adminStats } from './js/admin-api.js';
+
+  requireAdmin();
+  renderAdminNav();
+
+  const alertEl = document.getElementById('alert-error');
+
+  function fmt(n) { return n != null ? n.toLocaleString('en-IN') : '—'; }
+  function fmtCurrency(n) {
+    return n != null ? '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 }) : '—';
+  }
+
+  async function load() {
+    try {
+      const res = await adminStats();
+      const s   = res.data || res;
+      document.getElementById('stat-users').textContent        = fmt(s.totalUsers);
+      document.getElementById('stat-active-subs').textContent  = fmt(s.activeSubscriptions);
+      document.getElementById('stat-expired-subs').textContent = fmt(s.expiredSubscriptions);
+      document.getElementById('stat-payments').textContent     = fmt(s.totalPayments);
+      document.getElementById('stat-revenue').textContent      = fmtCurrency(s.totalRevenue);
+      document.getElementById('stat-courses').textContent      = fmt(s.totalCourses);
+      document.getElementById('stat-plans').textContent        = fmt(s.totalPlans);
+    } catch (err) {
+      alertEl.textContent     = 'Failed to load stats: ' + err.message;
+      alertEl.style.display   = 'block';
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>

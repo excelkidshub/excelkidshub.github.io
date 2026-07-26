@@ -1,3 +1,59 @@
+/* ===== Navigation Styles ===== */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  z-index: 1000;
+  border-radius: 5px;
+  padding: 10px 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  color: #2b3a57;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+  transition: background 0.3s;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f8f9fa;
+  color: #facc15;
+}
+
+.btn-nav-login,
+.btn-nav-register {
+  background: #facc15;
+  color: #2b3a57;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 10px;
+  transition: background 0.3s;
+}
+
+.btn-nav-login:hover,
+.btn-nav-register:hover {
+  background: #e5b800;
+}
+
 /* ===== Dhanori Section Font Consistency ===== */
 .c-state-box {
   background-color: #21314d;

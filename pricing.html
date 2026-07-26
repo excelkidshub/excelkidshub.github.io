@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Reading Subscription | ExcelKidsHub Phonics Academy</title>
+<meta name="description" content="Choose your digital reading subscription for interactive phonics learning, audio support, and self-paced practice activities.">
+<link rel="stylesheet" href="css/style.css?v=20260706">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+.subscription-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #2b3a57 0%, #1a253a 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(250,204,21,0.1)"/></svg>');
+  background-size: 200px;
+  animation: float 20s infinite linear;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-100px) rotate(360deg); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: #facc15;
+  color: #2b3a57;
+  padding: 15px 35px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #e5b800;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(250, 204, 21, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: white;
+  padding: 15px 35px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  border: 2px solid white;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: white;
+  color: #2b3a57;
+  transform: translateY(-2px);
+}
+
+/* Important Info Section */
+.info-section {
+  padding: 60px 0;
+  background: #fff3cd;
+  border-radius: 10px;
+  margin: 40px auto;
+  max-width: 900px;
+  text-align: center;
+}
+
+.info-title {
+  font-size: 24px;
+  color: #2b3a57;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.info-content {
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.info-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.info-content li {
+  padding: 8px 0;
+  font-size: 16px;
+}
+
+.info-content li::before {
+  content: '✓';
+  color: #28a745;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.important-note {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #dc3545;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.important-note h4 {
+  color: #dc3545;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.important-note p {
+  color: #555;
+  margin: 0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* Features Section */
+.features-section {
+  padding: 80px 0;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 32px;
+  color: #2b3a57;
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.feature-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.feature-title {
+  font-size: 18px;
+  color: #2b3a57;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.feature-description {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Pricing Section */
+.pricing-section {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.pricing-card {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid transparent;
+  cursor: pointer;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.pricing-card.selected {
+  border-color: #facc15;
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(250, 204, 21, 0.3);
+}
+
+.pricing-card.selected::before {
+  content: '✓ Selected';
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background: #facc15;
+  color: #2b3a57;
+  padding: 5px 40px;
+  font-weight: 600;
+  font-size: 14px;
+  transform: rotate(45deg);
+}
+
+.pricing-card.featured {
+  border-color: #facc15;
+  transform: scale(1.05);
+}
+
+.pricing-card.featured:hover {
+  transform: scale(1.05) translateY(-5px);
+}
+
+.pricing-card.featured::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background: #facc15;
+  color: #2b3a57;
+  padding: 5px 40px;
+  font-weight: 600;
+  font-size: 14px;
+  transform: rotate(45deg);
+}
+
+.plan-badge {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.plan-badge.free {
+  background: #e8f5e9;
+  color: #388e3c;
+}
+
+.plan-name {
+  font-size: 24px;
+  color: #2b3a57;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.plan-price {
+  font-size: 48px;
+  color: #2b3a57;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.plan-price span {
+  font-size: 18px;
+  color: #666;
+  font-weight: 400;
+}
+
+.plan-duration {
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.plan-highlight {
+  background: #fff3cd;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #856404;
+  font-weight: 500;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+  text-align: left;
+}
+
+.plan-features li {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  color: #555;
+  font-size: 15px;
+}
+
+.plan-features li:last-child {
+  border-bottom: none;
+}
+
+.plan-features li::before {
+  content: '✓';
+  color: #28a745;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.btn-plan {
+  display: inline-block;
+  background: #facc15;
+  color: #2b3a57;
+  padding: 15px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-plan:hover {
+  background: #e5b800;
+}
+
+.btn-plan.selected {
+  background: #28a745;
+  color: white;
+}
+
+.btn-plan.free-btn {
+  background: #28a745;
+  color: white;
+}
+
+.btn-plan.free-btn:hover {
+  background: #218838;
+}
+
+/* Subscription Information Section */
+.subscription-info-section {
+  padding: 60px 0;
+}
+
+.subscription-info-card {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-left: 4px solid #facc15;
+}
+
+.info-card-title {
+  font-size: 24px;
+  color: #2b3a57;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.info-card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-card-list li {
+  padding: 12px 0;
+  color: #555;
+  line-height: 1.6;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  padding-left: 25px;
+}
+
+.info-card-list li:last-child {
+  border-bottom: none;
+}
+
+.info-card-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #facc15;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Comparison Table */
+.comparison-section {
+  padding: 80px 0;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 15px 20px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.comparison-table th {
+  background: #2b3a57;
+  color: white;
+  font-weight: 600;
+}
+
+.comparison-table th:first-child {
+  text-align: left;
+  background: #f8f9fa;
+  color: #2b3a57;
+}
+
+.comparison-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: #2b3a57;
+}
+
+.comparison-table .check {
+  color: #28a745;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.comparison-table .cross {
+  color: #dc3545;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* How It Works */
+.how-it-works {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.timeline-item {
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  position: relative;
+}
+
+.timeline-number {
+  width: 60px;
+  height: 60px;
+  background: #facc15;
+  color: #2b3a57;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 auto 20px;
+}
+
+.timeline-content h4 {
+  color: #2b3a57;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.timeline-content p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.timeline-arrow {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .timeline-arrow {
+    display: block;
+    font-size: 30px;
+    color: #facc15;
+    margin-top: 20px;
+  }
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: 80px 0;
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.faq-question {
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: #2b3a57;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.faq-question:hover {
+  background: #f8f9fa;
+}
+
+.faq-toggle {
+  font-size: 24px;
+  color: #facc15;
+  font-weight: bold;
+  transition: transform 0.3s;
+}
+
+.faq-item.active .faq-toggle {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 20px;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+  padding: 0 20px 20px 20px;
+}
+
+.faq-answer p {
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+  padding-top: 10px;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #2b3a57 0%, #1a253a 100%);
+  color: white;
+  text-align: center;
+}
+
+.cta-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.cta-subtitle {
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 32px;
+  }
+  
+  .hero-subtitle {
+    font-size: 16px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+  }
+  
+  .pricing-card.featured,
+  .pricing-card.selected {
+    transform: none;
+  }
+  
+  .pricing-card.featured:hover,
+  .pricing-card.selected:hover {
+    transform: translateY(-5px);
+  }
+  
+  .comparison-table {
+    font-size: 14px;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 10px;
+  }
+  
+  .info-section {
+    margin: 20px;
+    padding: 30px 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div id="nav-placeholder"></div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="subscription-container">
+    <div class="hero-content">
+      <h1 class="hero-title">Choose Your Digital Reading Subscription</h1>
+      <p class="hero-subtitle">Help your child build strong reading skills through interactive digital books, Jolly Phonics audio, and self-paced practice activities. Children can learn anytime, anywhere using our Digital Reading Platform.</p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="handleStartFree()">Start Free</button>
+        <button class="btn-secondary" onclick="scrollToPlans()">View Plans</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Important Information -->
+<section class="subscription-container">
+  <div class="info-section">
+    <h2 class="info-title">What is included?</h2>
+    <div class="info-content">
+      <p>These subscription plans provide access to the ExcelKidsHub Digital Reading Platform.</p>
+      <p>Children can:</p>
+      <ul>
+        <li>Read interactive digital books</li>
+        <li>Listen to Jolly Phonics audio</li>
+        <li>Practice independently</li>
+        <li>Track reading progress</li>
+        <li>Learn anytime on mobile, tablet or desktop</li>
+      </ul>
+    </div>
+    <div class="important-note">
+      <h4>⚠️ Important Note</h4>
+      <p>These subscriptions DO NOT include live online or offline phonics classes. Live classes are offered separately through ExcelKidsHub Phonics Academy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Why Parents Love It -->
+<section class="features-section">
+  <div class="subscription-container">
+    <h2 class="section-title">Why Parents Love It</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <h3 class="feature-title">Interactive Digital Books</h3>
+        <p class="feature-description">Children enjoy engaging reading experiences with colorful illustrations and animations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔊</div>
+        <h3 class="feature-title">Audio Pronunciation</h3>
+        <p class="feature-description">Listen to correct Jolly Phonics sounds and proper word pronunciation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⏰</div>
+        <h3 class="feature-title">Self-Paced Learning</h3>
+        <p class="feature-description">Practice anytime without fixed schedules or time constraints.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3 class="feature-title">Progress Tracking</h3>
+        <p class="feature-description">Monitor reading improvement with detailed progress reports.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💻</div>
+        <h3 class="feature-title">Works Everywhere</h3>
+        <p class="feature-description">Access on desktop, tablet, and mobile devices seamlessly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👨‍🏫</div>
+        <h3 class="feature-title">Designed by Experts</h3>
+        <p class="feature-description">Created using the proven ExcelKidsHub teaching methodology.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing-section" id="plans">
+  <div class="subscription-container">
+    <h2 class="section-title">Choose Your Plan</h2>
+    <div class="pricing-grid">
+      <!-- Free Plan -->
+      <div class="pricing-card" data-plan="free" onclick="selectPlan('free')">
+        <span class="plan-badge free">FREE</span>
+        <h3 class="plan-name">Starter</h3>
+        <div class="plan-price">
+          ₹0
+          <span>/forever</span>
+        </div>
+        <p class="plan-duration">Perfect for exploring the platform</p>
+        <div class="plan-highlight">Best for New Parents</div>
+        <ul class="plan-features">
+          <li>Sample Reading Book</li>
+          <li>Sample Activities</li>
+          <li>Audio Support</li>
+          <li>Limited Practice</li>
+        </ul>
+        <button class="btn-plan free-btn" id="btn-free" onclick="handleBuyClick('free', event)">Start Free</button>
+      </div>
+
+      <!-- Level 1 Plan -->
+      <div class="pricing-card featured" data-plan="level1" onclick="selectPlan('level1')">
+        <span class="plan-badge">PAID</span>
+        <h3 class="plan-name">Digital Reading Level 1</h3>
+        <div class="plan-price">
+          ₹499
+          <span>/month</span>
+        </div>
+        <p class="plan-duration">Valid for 30 Days</p>
+        <ul class="plan-features">
+          <li>Complete Level 1 Interactive Book</li>
+          <li>Audio Support</li>
+          <li>Reading Practice</li>
+          <li>Progress Tracking</li>
+        </ul>
+        <button class="btn-plan" id="btn-level1" onclick="handleBuyClick('level1', event)">Subscribe Now</button>
+      </div>
+
+      <!-- Complete Bundle -->
+      <div class="pricing-card" data-plan="bundle" onclick="selectPlan('bundle')">
+        <span class="plan-badge">BUNDLE</span>
+        <h3 class="plan-name">Complete Reading Bundle</h3>
+        <div class="plan-price">
+          ₹999
+          <span>/month</span>
+        </div>
+        <p class="plan-duration">Valid for 30 Days</p>
+        <ul class="plan-features">
+          <li>Level 1</li>
+          <li>Level 2</li>
+          <li>Stories</li>
+          <li>Reading Practice</li>
+          <li>Audio Support</li>
+          <li>Progress Tracking</li>
+          <li>Future Bundle Content</li>
+        </ul>
+        <button class="btn-plan" id="btn-bundle" onclick="handleBuyClick('bundle', event)">Subscribe Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Subscription Information -->
+<section class="subscription-info-section">
+  <div class="subscription-container">
+    <div class="subscription-info-card">
+      <h3 class="info-card-title">Subscription Information</h3>
+      <ul class="info-card-list">
+        <li>Free plan is available forever with limited content.</li>
+        <li>Paid subscriptions are valid for 30 days from the date of activation.</li>
+        <li>During an active subscription, children can access all content included in their selected plan.</li>
+        <li>Learning progress is automatically saved in the child's account.</li>
+        <li>Parents can renew their subscription at any time.</li>
+        <li>If a subscription expires, progress remains saved, but access to premium content is paused until the subscription is renewed.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison Table -->
+<section class="comparison-section">
+  <div class="subscription-container">
+    <h2 class="section-title">Compare All Plans</h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Features</th>
+          <th>Starter (Free)</th>
+          <th>Level 1 (₹499)</th>
+          <th>Complete Bundle (₹999)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Validity</td>
+          <td>Forever</td>
+          <td>30 Days</td>
+          <td>30 Days</td>
+        </tr>
+        <tr>
+          <td>Sample Book</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Level 1 Content</td>
+          <td class="cross">✗</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Level 2 Content</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Stories</td>
+          <td class="cross">✗</td>
+          <td class="cross">✗</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Audio Support</td>
+          <td>Limited</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Practice Activities</td>
+          <td>Limited</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Progress Tracking</td>
+          <td>Basic</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+  <div class="subscription-container">
+    <h2 class="section-title">How It Works</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-number">1</div>
+        <div class="timeline-content">
+          <h4>Create your account</h4>
+          <p>Sign up for free in seconds</p>
+        </div>
+      </div>
+      <div class="timeline-arrow">↓</div>
+      <div class="timeline-item">
+        <div class="timeline-number">2</div>
+        <div class="timeline-content">
+          <h4>Choose your subscription</h4>
+          <p>Select the plan that fits your needs</p>
+        </div>
+      </div>
+      <div class="timeline-arrow">↓</div>
+      <div class="timeline-item">
+        <div class="timeline-number">3</div>
+        <div class="timeline-content">
+          <h4>Open your Reading Studio</h4>
+          <p>Access your digital reading platform</p>
+        </div>
+      </div>
+      <div class="timeline-arrow">↓</div>
+      <div class="timeline-item">
+        <div class="timeline-number">4</div>
+        <div class="timeline-content">
+          <h4>Read, practice and track progress</h4>
+          <p>Watch your child's reading skills grow</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+  <div class="subscription-container">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-question">
+          What is the Digital Reading Platform?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Our Digital Reading Platform is an online learning system where children can access interactive phonics books, audio support, and practice activities. It's designed to supplement classroom learning and build reading confidence through self-paced practice.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Does this include live classes?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>No, these subscriptions are for the Digital Reading Platform only. They do not include live online or offline phonics classes. Live teacher-led classes are offered separately through ExcelKidsHub Phonics Academy.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Can my child use it on mobile?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes! Our platform is fully responsive and works on smartphones, tablets, and desktop computers. Your child can learn anywhere with an internet connection.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Is internet required?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, an internet connection is required to access the Digital Reading Platform. However, some content can be downloaded for offline use depending on your subscription plan.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Can I upgrade later?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, you can upgrade your subscription at any time. Simply contact our support team or choose a higher plan from your dashboard. The upgrade cost will be prorated.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          How long do I get access?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Subscriptions are valid for 30 days from the date of activation. You can renew at any time. Your child's reading progress is always saved — even after a subscription expires, progress is preserved and resumes exactly where you left off when you renew.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Can multiple children use one account?
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Each subscription is intended for single-child use to ensure accurate progress tracking. For multiple children, we recommend separate accounts or contacting us for family plans.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="subscription-container">
+    <h2 class="cta-title">Start Your Child's Reading Journey Today</h2>
+    <p class="cta-subtitle">Join hundreds of young learners building reading confidence with ExcelKidsHub.</p>
+    <div class="cta-buttons">
+      <button class="btn-primary" onclick="handleStartFree()">Start Free</button>
+      <button class="btn-secondary" onclick="handleBuySubscription()">Buy Subscription</button>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script type="module">
+  import { api } from './js/api.js';
+  import { storage } from './js/storage.js';
+
+  // ── Plan ID map (slug → database plan name used to resolve id via /plans) ──
+  // We load plan IDs dynamically from GET /plans so we never hardcode them.
+  let planData = {};        // planSlug → PlanDto
+  let selectedPlanSlug = null;
+
+  // ── Welcome banner (?welcome=1 after registration) ─────────────────────────
+  (function showWelcomeBanner() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('welcome') === '1') {
+      const banner = document.createElement('div');
+      banner.style.cssText = [
+        'background:#d4edda', 'color:#155724', 'border:1px solid #c3e6cb',
+        'padding:14px 20px', 'border-radius:8px', 'text-align:center',
+        'font-size:15px', 'margin:20px auto', 'max-width:700px'
+      ].join(';');
+      banner.innerHTML = '🎉 <strong>Welcome to ExcelKidsHub!</strong> Choose a plan to start your child\'s reading journey.';
+      const heroSection = document.querySelector('.hero-section');
+      if (heroSection) heroSection.insertAdjacentElement('afterend', banner);
+      // Clean URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  })();
+
+  // ── Load plans from backend ─────────────────────────────────────────────────
+  async function loadPlans() {
+    try {
+      const response = await fetch(
+        (location.hostname.includes('localhost') ? 'http://localhost:8080' : 'https://api.excelkidshub.in') + '/api/plans'
+      );
+      if (response.ok) {
+        const json = await response.json();
+        const plans = json.data || [];
+        plans.forEach(plan => {
+          // Map by lowercase name slug for matching pricing cards
+          const slug = plan.name.toLowerCase().replace(/\s+/g, '-');
+          planData[slug] = plan;
+        });
+      }
+    } catch (e) {
+      console.warn('Could not load plans from API:', e.message);
+    }
+  }
+
+  loadPlans();
+
+  // ── Auth helpers ────────────────────────────────────────────────────────────
+  function isLoggedIn() {
+    return localStorage.getItem('jwt_token') !== null;
+  }
+
+  // ── Plan selection UI ───────────────────────────────────────────────────────
+  window.selectPlan = function(plan) {
+    document.querySelectorAll('.pricing-card').forEach(card => card.classList.remove('selected'));
+    document.querySelectorAll('.btn-plan').forEach(btn => {
+      btn.classList.remove('selected');
+      if (!btn.disabled) {
+        btn.textContent = btn.classList.contains('free-btn') ? 'Start Free' : 'Subscribe Now';
+      }
+    });
+    const selectedCard = document.querySelector(`[data-plan="${plan}"]`);
+    if (selectedCard) selectedCard.classList.add('selected');
+    const selectedBtn = document.getElementById(`btn-${plan}`);
+    if (selectedBtn && !selectedBtn.disabled) {
+      selectedBtn.classList.add('selected');
+      selectedBtn.textContent = '✓ Selected';
+    }
+    selectedPlanSlug = plan;
+  };
+
+  // ── Free plan ───────────────────────────────────────────────────────────────
+  window.handleStartFree = function() {
+    window.location.href = isLoggedIn() ? 'dashboard/index.html' : 'register.html';
+  };
+
+  // ── Subscribe button click ──────────────────────────────────────────────────
+  window.handleBuyClick = function(plan, event) {
+    event.stopPropagation();
+    window.selectPlan(plan);
+    if (plan === 'free') {
+      window.handleStartFree();
+    } else {
+      initiatePayment(plan);
+    }
+  };
+
+  window.handleBuySubscription = function() {
+    if (selectedPlanSlug && selectedPlanSlug !== 'free') {
+      initiatePayment(selectedPlanSlug);
+    } else {
+      window.location.href = isLoggedIn() ? 'dashboard/index.html' : 'login.html';
+    }
+  };
+
+  // ── Razorpay checkout flow ──────────────────────────────────────────────────
+  async function initiatePayment(planSlug) {
+    if (!isLoggedIn()) {
+      window.location.href = 'login.html?redirect=pricing';
+      return;
+    }
+
+    // Resolve plan ID from loaded plan data
+    // Try exact slug match, then fallback to partial name match
+    let plan = planData[planSlug];
+    if (!plan) {
+      // Fallback: try matching by partial name
+      plan = Object.values(planData).find(p =>
+        p.name.toLowerCase().includes(planSlug.replace(/-/g, ' ').toLowerCase())
+        || planSlug.includes(p.name.toLowerCase().replace(/\s+/g, '-'))
+      );
+    }
+
+    if (!plan) {
+      alert('Plan not found. Please refresh the page and try again.');
+      return;
+    }
+
+    const btn = document.getElementById(`btn-${planSlug}`);
+    if (btn) { btn.disabled = true; btn.textContent = 'Opening payment…'; }
+
+    try {
+      // 1. Create Razorpay order
+      const orderRes = await api.post('/payments/create-order', { planId: plan.id });
+      const orderData = orderRes.data || orderRes;
+
+      // 2. Get user info for prefill
+      const user = storage.getUser() || {};
+
+      // 3. Open Razorpay Checkout modal
+      const rzp = new window.Razorpay({
+        key:         orderData.razorpayKeyId,
+        amount:      Math.round(orderData.amount * 100),  // paise
+        currency:    orderData.currency || 'INR',
+        order_id:    orderData.orderId,
+        name:        'ExcelKidsHub',
+        description: `${orderData.planName} — 30 Days`,
+        image:       '/images/logo.svg',
+        prefill: {
+          name:  user.name || (user.firstName ? `${user.firstName} ${user.lastName}` : ''),
+          email: user.email || '',
+        },
+        theme: { color: '#2b3a57' },
+
+        handler: async function(response) {
+          // 4. Verify payment with backend
+          try {
+            const verifyRes = await api.post('/payments/verify', {
+              razorpayOrderId:  response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+              planId:            plan.id,
+            });
+            const subData = verifyRes.data || verifyRes;
+            // Update cached subscription
+            storage.setSubscription({
+              status:    subData.status,
+              planName:  subData.planName,
+              endDate:   subData.endDate,
+              startDate: subData.startDate,
+            });
+            alert('🎉 Payment successful! Your subscription is now active.');
+            window.location.href = 'dashboard/index.html';
+          } catch (err) {
+            alert('Payment was received but activation failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
+          }
+        },
+
+        modal: {
+          ondismiss: function() {
+            if (btn) { btn.disabled = false; btn.textContent = 'Subscribe Now'; }
+          }
+        }
+      });
+
+      rzp.on('payment.failed', function(response) {
+        alert('Payment failed: ' + (response.error.description || 'Please try again.'));
+        if (btn) { btn.disabled = false; btn.textContent = 'Subscribe Now'; }
+      });
+
+      rzp.open();
+
+    } catch (err) {
+      alert(err.message || 'Could not initiate payment. Please try again.');
+      if (btn) { btn.disabled = false; btn.textContent = 'Subscribe Now'; }
+    }
+  }
+
+  // ── Scroll to plans ─────────────────────────────────────────────────────────
+  window.scrollToPlans = function() {
+    document.getElementById('plans').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // ── FAQ Accordion ───────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all items
+        faqItems.forEach(i => {
+          i.classList.remove('active');
+          const toggle = i.querySelector('.faq-toggle');
+          if (toggle) toggle.textContent = '+';
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+          item.classList.add('active');
+          const toggle = item.querySelector('.faq-toggle');
+          if (toggle) toggle.textContent = '+';
+        }
+      });
+    });
+  });
+</script>
+
+<script src="js/nav.js?v=20260706"></script>
+<script src="js/script.js?v=20260706"></script>
+
+</body>
+</html>

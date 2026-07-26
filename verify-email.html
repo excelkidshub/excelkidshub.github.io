@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify Email | ExcelKidsHub Phonics Academy</title>
+<meta name="description" content="Verify your ExcelKidsHub email address.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/style.css?v=20260706">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<style>
+.verify-container {
+  max-width: 480px;
+  margin: 80px auto;
+  padding: 50px 40px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.verify-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+.verify-container h1 {
+  color: #2b3a57;
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+.verify-container p {
+  color: #666;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.btn-primary {
+  display: inline-block;
+  background: #facc15;
+  color: #2b3a57;
+  padding: 13px 32px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.3s;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover { background: #e5b800; }
+.spinner-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  color: #666;
+  font-size: 15px;
+}
+.spin {
+  width: 24px; height: 24px;
+  border: 3px solid #ddd;
+  border-top: 3px solid #2b3a57;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+<header><div id="nav-placeholder"></div></header>
+
+<main>
+<div class="verify-container">
+
+  <!-- Verifying state -->
+  <div id="state-verifying">
+    <div class="verify-icon">📧</div>
+    <h1>Verifying your email...</h1>
+    <div class="spinner-wrap">
+      <div class="spin"></div>
+      <span>Please wait</span>
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div id="state-success" style="display:none;">
+    <div class="verify-icon">✅</div>
+    <h1>Email Verified!</h1>
+    <p>Your email address has been verified successfully.<br>You can now access all features of your account.</p>
+    <a href="dashboard/index.html" class="btn-primary">Go to Dashboard</a>
+  </div>
+
+  <!-- Error state -->
+  <div id="state-error" style="display:none;">
+    <div class="verify-icon">❌</div>
+    <h1>Verification Failed</h1>
+    <p id="error-message">This verification link is invalid or has already been used. Please request a new one from your dashboard.</p>
+    <a href="dashboard/index.html" class="btn-primary">Go to Dashboard</a>
+  </div>
+
+  <!-- No token state -->
+  <div id="state-no-token" style="display:none;">
+    <div class="verify-icon">📨</div>
+    <h1>Check Your Inbox</h1>
+    <p>We sent a verification link to your email address when you registered.<br>Click the link in that email to verify your account.</p>
+    <a href="dashboard/index.html" class="btn-primary">Go to Dashboard</a>
+  </div>
+
+</div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script type="module">
+  import { api } from './js/api.js';
+
+  const params = new URLSearchParams(window.location.search);
+  const token  = params.get('token');
+
+  const stateVerifying = document.getElementById('state-verifying');
+  const stateSuccess   = document.getElementById('state-success');
+  const stateError     = document.getElementById('state-error');
+  const stateNoToken   = document.getElementById('state-no-token');
+  const errorMessage   = document.getElementById('error-message');
+
+  function show(el) {
+    [stateVerifying, stateSuccess, stateError, stateNoToken].forEach(s => s.style.display = 'none');
+    el.style.display = 'block';
+  }
+
+  if (!token) {
+    show(stateNoToken);
+  } else {
+    // Attempt verification immediately on page load
+    (async () => {
+      try {
+        await api.get(`/auth/verify-email?token=${encodeURIComponent(token)}`);
+        // Clean the URL so reloads don't re-submit
+        window.history.replaceState({}, document.title, window.location.pathname);
+        show(stateSuccess);
+      } catch (err) {
+        errorMessage.textContent = err.message
+          || 'This verification link is invalid or has already been used. Please request a new one from your dashboard.';
+        show(stateError);
+      }
+    })();
+  }
+</script>
+
+<script src="js/nav.js?v=20260706"></script>
+<script src="js/script.js?v=20260706"></script>
+</body>
+</html>
