@@ -18,77 +18,102 @@
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .hero {
-  background: linear-gradient(135deg, #1a253a 0%, #2b3a57 50%, #1e4d7b 100%);
+  background: linear-gradient(150deg, #facc15 0%, #f59e0b 30%, #2b3a57 70%, #1a253a 100%);
   color: #fff;
   padding: 0;
   position: relative;
   overflow: hidden;
-  min-height: 520px;
+  min-height: 480px;
   display: flex;
   align-items: center;
 }
-/* Decorative background pattern — friendly, colourful, child-appropriate */
+/* Bright scattered circles — child-friendly decoration */
 .hero::before {
   content: '';
-  position: absolute; inset: 0; z-index: 0;
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background-image:
-    radial-gradient(circle at 15% 50%, rgba(250,204,21,.12) 0%, transparent 45%),
-    radial-gradient(circle at 85% 20%, rgba(99,179,237,.15) 0%, transparent 40%),
-    radial-gradient(circle at 70% 80%, rgba(154,230,180,.10) 0%, transparent 35%);
+    radial-gradient(circle at  8% 20%, rgba(255,255,255,.22) 0%, transparent 18%),
+    radial-gradient(circle at 92% 75%, rgba(255,255,255,.18) 0%, transparent 16%),
+    radial-gradient(circle at 55% 90%, rgba(250,204,21,.35)  0%, transparent 20%),
+    radial-gradient(circle at 20% 85%, rgba(99,179,237,.30)  0%, transparent 18%),
+    radial-gradient(circle at 78% 10%, rgba(154,230,180,.28) 0%, transparent 15%),
+    radial-gradient(circle at 40% 10%, rgba(255,255,255,.12) 0%, transparent 12%);
 }
-/* Floating emoji decorations */
-.hero::after {
-  content: '📖  🔊  ✏️  🌟  📚  🎯  🎶  ⭐';
-  position: absolute; inset: 0; z-index: 0;
-  display: flex; align-items: center; justify-content: space-around;
-  font-size: 42px; opacity: .06; pointer-events: none;
-  word-spacing: 80px; letter-spacing: 4px;
-  white-space: pre-wrap; padding: 0 40px;
+/* Wavy bottom edge */
+.hero-wave {
+  position: absolute; bottom: -2px; left: 0; right: 0; z-index: 1; line-height: 0;
 }
+.hero-wave svg { display: block; width: 100%; height: 48px; }
+
+/* Large decorative emoji — scattered, semi-transparent */
+.hero-emojis {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  overflow: hidden;
+}
+.hero-emojis span {
+  position: absolute; font-size: 36px; opacity: .18; animation: float 6s ease-in-out infinite;
+  user-select: none;
+}
+.hero-emojis span:nth-child(1)  { top:  8%; left:  3%; animation-delay: 0s;   font-size: 44px; }
+.hero-emojis span:nth-child(2)  { top: 60%; left:  6%; animation-delay: 1.2s; font-size: 32px; }
+.hero-emojis span:nth-child(3)  { top: 20%; left: 48%; animation-delay: 0.6s; font-size: 30px; }
+.hero-emojis span:nth-child(4)  { top: 70%; left: 52%; animation-delay: 2s;   font-size: 38px; }
+.hero-emojis span:nth-child(5)  { top: 10%; right: 4%; animation-delay: 0.3s; font-size: 40px; }
+.hero-emojis span:nth-child(6)  { top: 55%; right: 5%; animation-delay: 1.8s; font-size: 28px; }
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50%       { transform: translateY(-10px) rotate(4deg); }
+}
+
 .hero-inner {
-  position: relative; z-index: 1; width: 100%;
+  position: relative; z-index: 2; width: 100%;
   display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
-  padding: 60px 0;
+  padding: 56px 0 72px;
 }
 .hero-left { text-align: left; }
 .hero-left h1 {
-  font-size: 36px; font-weight: 800; line-height: 1.2;
-  margin: 0 0 14px; color: #fff;
+  font-size: 38px; font-weight: 900; line-height: 1.15;
+  margin: 0 0 16px; color: #1a253a;
+  text-shadow: 0 1px 0 rgba(255,255,255,.3);
 }
-.hero-left h1 span { color: #facc15; }
-.hero-left p  { font-size: 16px; opacity: .85; margin: 0 0 22px; line-height: 1.6; max-width: 440px; }
-.hero-note { font-size: 12px; opacity: .55; margin-top: 12px; }
-.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 0; }
+.hero-left h1 em {
+  font-style: normal; color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.hero-left p {
+  font-size: 16px; color: rgba(255,255,255,.92); margin: 0 0 26px;
+  line-height: 1.65; max-width: 420px;
+  text-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+.hero-note { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 14px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
-/* Child-friendly right panel — benefits + visual */
+/* Right panel — white card, bright and clean */
 .hero-right {
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  border-radius: 20px;
   padding: 28px 24px;
-  backdrop-filter: blur(4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.18);
 }
 .hero-right h3 {
-  font-size: 14px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .8px; color: #facc15; margin: 0 0 18px; text-align: center;
+  font-size: 13px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 1px; color: #2b3a57; margin: 0 0 18px; text-align: center;
 }
-.hero-benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.hero-benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .hero-benefit {
-  background: rgba(255,255,255,.08);
-  border-radius: 12px; padding: 14px 12px; text-align: center;
-  transition: background .2s;
+  background: #f8fafc; border-radius: 12px; padding: 14px 10px; text-align: center;
+  border: 1px solid #e8edf2; transition: transform .2s, box-shadow .2s;
 }
-.hero-benefit:hover { background: rgba(255,255,255,.14); }
-.hero-benefit .icon { font-size: 28px; margin-bottom: 6px; display: block; }
-.hero-benefit strong { display: block; font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 2px; }
-.hero-benefit span   { font-size: 11px; color: rgba(255,255,255,.65); line-height: 1.3; }
+.hero-benefit:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+.hero-benefit .icon { font-size: 30px; margin-bottom: 6px; display: block; }
+.hero-benefit strong { display: block; font-size: 12px; font-weight: 800; color: #2b3a57; margin-bottom: 2px; }
+.hero-benefit span   { font-size: 11px; color: #666; line-height: 1.3; }
 
 @media (max-width: 700px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
-  .hero-left h1 { font-size: 26px; }
-  .hero-left { text-align: center; }
-  .hero-left p { margin: 0 auto 22px; }
-  .hero-btns { justify-content: center; }
+  .hero-inner { grid-template-columns: 1fr; gap: 24px; padding: 40px 0 60px; }
+  .hero-left h1 { font-size: 26px; text-align: center; }
+  .hero-left p  { text-align: center; margin: 0 auto 22px; }
+  .hero-btns    { justify-content: center; }
 }
 </style>
 
@@ -257,12 +282,22 @@
 
 <!-- ══ 1. HERO — with benefits panel merged in ════════════════════════════════ -->
 <section class="hero">
+  <!-- Floating decorative emojis -->
+  <div class="hero-emojis" aria-hidden="true">
+    <span>📖</span>
+    <span>✏️</span>
+    <span>⭐</span>
+    <span>🎯</span>
+    <span>📚</span>
+    <span>🌟</span>
+  </div>
+
   <div class="pc">
     <div class="hero-inner">
 
       <!-- Left: headline + CTA -->
       <div class="hero-left">
-        <h1>Build <span>Reading Skills</span> —<br>Anytime, Anywhere</h1>
+        <h1>Build <em>Reading Skills</em> —<br>Anytime, Anywhere</h1>
         <p>Interactive digital reading practice for children aged 4–10. Jolly Phonics books, audio and activities — all in one place.</p>
         <div class="hero-btns">
           <button class="btn-y"       onclick="handleStartFree()">Start Free</button>
@@ -299,6 +334,13 @@
       </div>
 
     </div>
+  </div>
+
+  <!-- Wavy bottom edge transitions into white/grey page content -->
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1200 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,32 C200,0 400,48 600,24 C800,0 1000,40 1200,20 L1200,48 L0,48 Z" fill="#f4f6f9"/>
+    </svg>
   </div>
 </section>
 
@@ -337,7 +379,6 @@
         <div class="plan-price" id="price-level1">
           <span style="font-size:16px;color:#888;">Loading…</span>
         </div>
-        <p class="plan-period" id="period-level1">30 Days</p>
         <ul class="plan-features">
           <li>Complete Level 1 Interactive Book</li>
           <li>Audio Support</li>
@@ -357,7 +398,6 @@
         <div class="plan-price" id="price-bundle">
           <span style="font-size:16px;color:#888;">Loading…</span>
         </div>
-        <p class="plan-period" id="period-bundle">30 Days</p>
         <ul class="plan-features">
           <li>Level 1</li>
           <li>Level 2</li>
