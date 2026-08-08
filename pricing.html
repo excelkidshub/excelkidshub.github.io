@@ -1053,6 +1053,18 @@
       <button class="btn-primary" onclick="handleStartFree()">Start Free</button>
       <button class="btn-secondary" onclick="handleBuySubscription()">Buy Subscription</button>
     </div>
+    <!-- Coupon input: shown below the CTA buttons -->
+    <div id="coupon-section" style="margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;">
+        <input type="text" id="coupon-input" placeholder="Have a coupon code?"
+          style="padding:10px 14px;border:1px solid #ddd;border-radius:6px;font-size:14px;width:220px;text-transform:uppercase;">
+        <button onclick="validateCoupon()" id="coupon-btn"
+          style="padding:10px 18px;background:#2b3a57;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;font-weight:600;">
+          Apply
+        </button>
+      </div>
+      <div id="coupon-result" style="font-size:13px;min-height:18px;"></div>
+    </div>
   </div>
 </section>
 
@@ -1164,6 +1176,9 @@
     }
   };
 
+  // ── Coupon state ────────────────────────────────────────────────────────────
+  let appliedCoupon = null;   // { code, discountPercent, discountAmount, finalAmount, originalAmount }
+
   // ── Razorpay checkout flow ──────────────────────────────────────────────────
   async function initiatePayment(planSlug) {
     if (!isLoggedIn()) {
@@ -1172,10 +1187,8 @@
     }
 
     // Resolve plan ID from loaded plan data
-    // Try exact slug match, then fallback to partial name match
     let plan = planData[planSlug];
     if (!plan) {
-      // Fallback: try matching by partial name
       plan = Object.values(planData).find(p =>
         p.name.toLowerCase().includes(planSlug.replace(/-/g, ' ').toLowerCase())
         || planSlug.includes(p.name.toLowerCase().replace(/\s+/g, '-'))
@@ -1188,20 +1201,43 @@
     }
 
     const btn = document.getElementById(`btn-${planSlug}`);
-    if (btn) { btn.disabled = true; btn.textContent = 'Opening payment…'; }
+    if (btn) { btn.disabled = true; btn.textContent = 'Processing…'; }
 
     try {
-      // 1. Create Razorpay order
-      const orderRes = await api.post('/payments/create-order', { planId: plan.id });
+      // ── If a 100% coupon was applied, skip Razorpay entirely ────────────────
+      if (appliedCoupon && appliedCoupon.planId === plan.id
+          && Number(appliedCoupon.finalAmount) === 0) {
+
+        const couponRes = await api.post('/payments/apply-coupon', {
+          planId:     plan.id,
+          couponCode: appliedCoupon.code,
+        });
+        const subData = couponRes.data || couponRes;
+        storage.setSubscription({
+          status:    subData.status,
+          planName:  subData.planName,
+          endDate:   subData.endDate,
+          startDate: subData.startDate,
+        });
+        alert('🎉 Coupon applied! Your subscription is now active.');
+        window.location.href = 'dashboard/index.html';
+        return;
+      }
+
+      // ── Normal Razorpay flow ────────────────────────────────────────────────
+      // Pass coupon code if one was applied (partial discount)
+      const orderPayload = { planId: plan.id };
+      if (appliedCoupon && appliedCoupon.planId === plan.id) {
+        orderPayload.couponCode = appliedCoupon.code;
+      }
+
+      const orderRes  = await api.post('/payments/create-order', orderPayload);
       const orderData = orderRes.data || orderRes;
+      const user      = storage.getUser() || {};
 
-      // 2. Get user info for prefill
-      const user = storage.getUser() || {};
-
-      // 3. Open Razorpay Checkout modal
       const rzp = new window.Razorpay({
         key:         orderData.razorpayKeyId,
-        amount:      Math.round(orderData.amount * 100),  // paise
+        amount:      Math.round(orderData.amount * 100),
         currency:    orderData.currency || 'INR',
         order_id:    orderData.orderId,
         name:        'ExcelKidsHub',
@@ -1256,6 +1292,88 @@
       if (btn) { btn.disabled = false; btn.textContent = 'Subscribe Now'; }
     }
   }
+
+  // ── Coupon validation ────────────────────────────────────────────────────────
+  window.validateCoupon = async function() {
+    if (!isLoggedIn()) {
+      window.location.href = 'login.html?redirect=' + encodeURIComponent('pricing.html');
+      return;
+    }
+
+    const code        = document.getElementById('coupon-input').value.trim().toUpperCase();
+    const resultEl    = document.getElementById('coupon-result');
+    const couponBtn   = document.getElementById('coupon-btn');
+
+    if (!code) { resultEl.textContent = 'Please enter a coupon code.'; resultEl.style.color = '#dc2626'; return; }
+
+    // Determine which plan to validate against
+    // Use the selected plan if one is selected, otherwise default to the first paid plan
+    let plan = selectedPlanSlug ? planData[selectedPlanSlug] : null;
+    if (!plan || selectedPlanSlug === 'free') {
+      plan = Object.values(planData).find(p => p.price > 0);
+    }
+
+    if (!plan) {
+      resultEl.textContent = 'Please select a plan first.';
+      resultEl.style.color = '#dc2626';
+      return;
+    }
+
+    couponBtn.disabled    = true;
+    couponBtn.textContent = 'Checking…';
+    resultEl.textContent  = '';
+
+    try {
+      const res  = await api.post('/coupons/validate', { code, planId: plan.id });
+      const data = res.data || res;
+
+      if (data.valid) {
+        const isFull = Number(data.finalAmount) === 0;
+        const saved  = Number(data.discountAmount || 0);
+
+        appliedCoupon = {
+          code,
+          planId:         plan.id,
+          finalAmount:    data.finalAmount,
+          originalAmount: data.originalAmount,
+          discountAmount: data.discountAmount,
+          discountPercent:data.discountPercent,
+        };
+
+        if (isFull) {
+          resultEl.innerHTML = `✅ <strong>100% discount applied!</strong> This plan is now FREE. Click Subscribe to activate.`;
+          resultEl.style.color = '#15803d';
+          // Update the subscribe button label to reflect free activation
+          if (selectedPlanSlug && selectedPlanSlug !== 'free') {
+            const btn = document.getElementById(`btn-${selectedPlanSlug}`);
+            if (btn) btn.textContent = '🎁 Activate Free';
+          }
+        } else {
+          resultEl.innerHTML = `✅ <strong>${data.message}</strong> &nbsp;
+            <span style="color:#888;text-decoration:line-through;">₹${Number(data.originalAmount).toLocaleString('en-IN')}</span>
+            → <strong style="color:#15803d;">₹${Number(data.finalAmount).toLocaleString('en-IN')}</strong>`;
+          resultEl.style.color = '#15803d';
+        }
+      } else {
+        appliedCoupon = null;
+        resultEl.textContent = '❌ ' + (data.message || 'Invalid coupon code.');
+        resultEl.style.color = '#dc2626';
+      }
+    } catch (err) {
+      appliedCoupon = null;
+      resultEl.textContent = '❌ ' + (err.message || 'Could not validate coupon.');
+      resultEl.style.color = '#dc2626';
+    } finally {
+      couponBtn.disabled    = false;
+      couponBtn.textContent = 'Apply';
+    }
+  };
+
+  // Allow pressing Enter in coupon input
+  document.addEventListener('DOMContentLoaded', () => {
+    const inp = document.getElementById('coupon-input');
+    if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') window.validateCoupon(); });
+  });
 
   // ── Scroll to plans ─────────────────────────────────────────────────────────
   window.scrollToPlans = function() {

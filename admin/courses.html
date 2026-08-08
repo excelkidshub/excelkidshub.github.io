@@ -15,7 +15,7 @@
 <main class="admin-main">
   <div class="page-header">
     <h1>Courses</h1>
-    <p>Create and manage reading studio courses. Slug maps to the reading studio URL path.</p>
+    <p>Manage courses and their URL slugs. The slug must match the reading studio URL path exactly.</p>
   </div>
 
   <div id="alert-error"   class="alert alert-error"></div>
@@ -23,7 +23,6 @@
 
   <div class="toolbar">
     <button class="btn btn-primary" id="new-course-btn">+ New Course</button>
-    <span id="result-count" style="color:#888;font-size:12px;margin-left:4px;"></span>
   </div>
 
   <div class="table-wrap">
@@ -32,17 +31,16 @@
         <tr>
           <th>ID</th>
           <th>Title</th>
-          <th>Level</th>
           <th>Slug</th>
-          <th>Age Group</th>
-          <th>Lessons</th>
+          <th>Level</th>
+          <th>Pages</th>
           <th>Free</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody id="courses-body">
-        <tr><td colspan="9" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>
+        <tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>
       </tbody>
     </table>
   </div>
@@ -52,51 +50,38 @@
 <div class="modal-backdrop" id="course-modal" style="display:none;">
   <div class="modal">
     <h2 id="modal-title">New Course</h2>
-
     <div class="form-group">
       <label>Title</label>
       <input type="text" id="course-title" placeholder="e.g. Phonics Level 1">
     </div>
-
+    <div class="form-group">
+      <label>Slug <span style="font-size:10px;color:#888;font-weight:400;">(must match reading studio URL path)</span></label>
+      <input type="text" id="course-slug" placeholder="e.g. phonics/level-1">
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div class="form-group">
         <label>Level Name</label>
         <input type="text" id="course-level" placeholder="e.g. Level 1">
       </div>
       <div class="form-group">
-        <label>Age Group</label>
-        <input type="text" id="course-age" placeholder="e.g. 4-7 years">
+        <label>Total Pages</label>
+        <input type="number" id="course-pages" min="1" placeholder="e.g. 70">
       </div>
     </div>
-
     <div class="form-group">
-      <label>Slug <span style="font-weight:400;text-transform:none;font-size:11px;color:#888;">(URL path in reading studio, e.g. phonics/level-1)</span></label>
-      <input type="text" id="course-slug" placeholder="phonics/level-1">
+      <label>Age Group</label>
+      <input type="text" id="course-age" placeholder="e.g. 4-7 years">
     </div>
-
     <div class="form-group">
       <label>Description</label>
-      <textarea id="course-description" rows="2" placeholder="Short description…"></textarea>
+      <textarea id="course-desc" rows="2" placeholder="Short description…"></textarea>
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div class="form-group">
-        <label>Thumbnail URL</label>
-        <input type="text" id="course-thumbnail" placeholder="https://…">
-      </div>
-      <div class="form-group">
-        <label>Total Lessons / Pages</label>
-        <input type="number" id="course-lessons" min="0" placeholder="70">
-      </div>
-    </div>
-
     <div class="form-group">
       <label style="display:flex;align-items:center;gap:8px;text-transform:none;font-size:13px;">
         <input type="checkbox" id="course-free" style="width:auto;">
-        Free course (accessible to all authenticated users without a subscription)
+        Free course (accessible to all logged-in users without subscription)
       </label>
     </div>
-
     <div class="modal-footer">
       <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
       <button class="btn btn-primary" id="modal-save">Save Course</button>
@@ -115,60 +100,50 @@
   const alertError   = document.getElementById('alert-error');
   const alertSuccess = document.getElementById('alert-success');
   const tbody        = document.getElementById('courses-body');
-  const countEl      = document.getElementById('result-count');
   const modal        = document.getElementById('course-modal');
   let editingId = null;
 
   function showAlert(type, msg) {
     alertError.style.display = alertSuccess.style.display = 'none';
-    if (type === 'error') {
-      alertError.textContent   = msg;
-      alertError.style.display = 'block';
-    } else {
-      alertSuccess.textContent   = msg;
-      alertSuccess.style.display = 'block';
-    }
+    if (type === 'error') { alertError.textContent = msg; alertError.style.display = 'block'; }
+    else { alertSuccess.textContent = msg; alertSuccess.style.display = 'block'; }
     setTimeout(() => { alertError.style.display = alertSuccess.style.display = 'none'; }, 4000);
   }
 
   async function load() {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>';
     try {
-      const res   = await adminGetCourses();
-      const data  = res.data || res;
-      const rows  = data.content || data.courses || data || [];
-      const total = data.totalElements || rows.length;
-
-      countEl.textContent = `${total} course${total !== 1 ? 's' : ''}`;
+      const res  = await adminGetCourses();
+      const data = res.data || res;
+      const rows = data.content || data || [];
 
       if (!rows.length) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:32px;color:#888;">No courses found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">No courses found.</td></tr>';
         return;
       }
 
       tbody.innerHTML = rows.map(c => `
         <tr>
           <td>${c.id}</td>
-          <td><strong>${c.title || '—'}</strong></td>
+          <td><strong>${c.title}</strong></td>
+          <td><code style="background:#f3f4f6;padding:2px 6px;border-radius:3px;font-size:12px;">${c.slug || '—'}</code></td>
           <td>${c.levelName || '—'}</td>
-          <td><code style="font-size:11px;background:#f3f4f6;padding:2px 6px;border-radius:3px;">${c.slug || '—'}</code></td>
-          <td>${c.ageGroup || '—'}</td>
-          <td>${c.totalLessons != null ? c.totalLessons : '—'}</td>
+          <td>${c.totalLessons ?? '—'}</td>
           <td>${c.isFree
             ? '<span class="badge badge-green">Free</span>'
             : '<span class="badge badge-gray">Paid</span>'}</td>
-          <td>${c.active !== false
+          <td>${c.hasAccess !== false
             ? '<span class="badge badge-green">Active</span>'
             : '<span class="badge badge-red">Inactive</span>'}</td>
           <td style="display:flex;gap:6px;flex-wrap:wrap;">
             <button class="btn btn-sm btn-ghost"
-              onclick='openEdit(${JSON.stringify(c).replace(/"/g, "&quot;")})'>Edit</button>
-            ${c.active !== false
-              ? `<button class="btn btn-sm btn-danger" onclick="toggleStatus(${c.id}, false)">Deactivate</button>`
-              : `<button class="btn btn-sm btn-success" onclick="toggleStatus(${c.id}, true)">Activate</button>`}
+              onclick="openEdit(${JSON.stringify(c).replace(/"/g,'&quot;')})">Edit</button>
+            <button class="btn btn-sm ${c.hasAccess !== false ? 'btn-danger' : 'btn-success'}"
+              onclick="toggleStatus(${c.id}, ${c.hasAccess === false})">
+              ${c.hasAccess !== false ? 'Deactivate' : 'Activate'}
+            </button>
           </td>
         </tr>`).join('');
-
     } catch (err) {
       showAlert('error', err.message);
     }
@@ -176,52 +151,33 @@
 
   function openModal(course) {
     editingId = course ? course.id : null;
-    document.getElementById('modal-title').textContent        = course ? 'Edit Course' : 'New Course';
-    document.getElementById('course-title').value             = course?.title         || '';
-    document.getElementById('course-level').value             = course?.levelName     || '';
-    document.getElementById('course-age').value               = course?.ageGroup      || '';
-    document.getElementById('course-slug').value              = course?.slug          || '';
-    document.getElementById('course-description').value       = course?.description   || '';
-    document.getElementById('course-thumbnail').value         = course?.thumbnailUrl  || '';
-    document.getElementById('course-lessons').value           = course?.totalLessons  ?? '';
-    document.getElementById('course-free').checked            = course?.isFree        || false;
+    document.getElementById('modal-title').textContent  = course ? 'Edit Course' : 'New Course';
+    document.getElementById('course-title').value       = course?.title       || '';
+    document.getElementById('course-slug').value        = course?.slug        || '';
+    document.getElementById('course-level').value       = course?.levelName   || '';
+    document.getElementById('course-pages').value       = course?.totalLessons ?? '';
+    document.getElementById('course-age').value         = course?.ageGroup    || '';
+    document.getElementById('course-desc').value        = course?.description || '';
+    document.getElementById('course-free').checked      = course?.isFree      || false;
     modal.style.display = 'flex';
   }
 
-  // Exposed to inline onclick handlers
-  window.openEdit      = (c)        => openModal(c);
-  window.toggleStatus  = async (id, active) => {
-    if (!confirm(`${active ? 'Activate' : 'Deactivate'} this course?`)) return;
-    try {
-      await adminSetCourseStatus(id, active);
-      showAlert('success', `Course ${active ? 'activated' : 'deactivated'}.`);
-      load();
-    } catch (err) { showAlert('error', err.message); }
-  };
-
+  window.openEdit = function(c) { openModal(c); };
   document.getElementById('new-course-btn').addEventListener('click', () => openModal(null));
-  document.getElementById('modal-cancel').addEventListener('click',   () => { modal.style.display = 'none'; });
+  document.getElementById('modal-cancel').addEventListener('click', () => { modal.style.display = 'none'; });
 
   document.getElementById('modal-save').addEventListener('click', async () => {
     const dto = {
-      title:        document.getElementById('course-title').value.trim(),
-      levelName:    document.getElementById('course-level').value.trim(),
-      ageGroup:     document.getElementById('course-age').value.trim(),
-      slug:         document.getElementById('course-slug').value.trim(),
-      description:  document.getElementById('course-description').value.trim(),
-      thumbnailUrl: document.getElementById('course-thumbnail').value.trim() || null,
-      totalLessons: parseInt(document.getElementById('course-lessons').value, 10) || null,
-      isFree:       document.getElementById('course-free').checked,
+      title:       document.getElementById('course-title').value.trim(),
+      slug:        document.getElementById('course-slug').value.trim(),
+      levelName:   document.getElementById('course-level').value.trim(),
+      totalLessons:parseInt(document.getElementById('course-pages').value, 10) || null,
+      ageGroup:    document.getElementById('course-age').value.trim(),
+      description: document.getElementById('course-desc').value.trim(),
+      isFree:      document.getElementById('course-free').checked,
     };
 
-    if (!dto.title) {
-      showAlert('error', 'Course title is required.');
-      return;
-    }
-    if (!dto.slug) {
-      showAlert('error', 'Slug is required (e.g. phonics/level-1).');
-      return;
-    }
+    if (!dto.title || !dto.slug) { showAlert('error', 'Title and slug are required.'); return; }
 
     try {
       if (editingId) {
@@ -229,14 +185,20 @@
         showAlert('success', 'Course updated.');
       } else {
         await adminCreateCourse(dto);
-        showAlert('success', 'Course created.');
+        showAlert('success', `Course "${dto.title}" created.`);
       }
       modal.style.display = 'none';
       load();
-    } catch (err) {
-      showAlert('error', err.message);
-    }
+    } catch (err) { showAlert('error', err.message); }
   });
+
+  window.toggleStatus = async function(id, active) {
+    try {
+      await adminSetCourseStatus(id, active);
+      showAlert('success', `Course ${active ? 'activated' : 'deactivated'}.`);
+      load();
+    } catch (err) { showAlert('error', err.message); }
+  };
 
   load();
 </script>

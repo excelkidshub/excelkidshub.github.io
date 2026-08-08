@@ -14,6 +14,7 @@ export function renderAdminNav() {
         { href: '/admin/payments',        label: 'Payments'      },
         { href: '/admin/plans',           label: 'Plans'         },
         { href: '/admin/courses',         label: 'Courses'       },
+        { href: '/admin/coupons',         label: 'Coupons'       },
     ];
 
     const navHtml = links.map(l => {
