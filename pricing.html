@@ -18,49 +18,81 @@
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .hero {
-  background: linear-gradient(135deg, #2b3a57 0%, #1a253a 100%);
-  color: #fff; padding: 72px 0 56px; text-align: center;
+  background: linear-gradient(135deg, #1a253a 0%, #2b3a57 50%, #1e4d7b 100%);
+  color: #fff;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
 }
-.hero h1 { font-size: 38px; font-weight: 700; margin: 0 0 12px; line-height: 1.2; }
-.hero p  { font-size: 16px; opacity: .9; max-width: 560px; margin: 0 auto 28px; line-height: 1.6; }
-.hero-pills {
-  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px;
+/* Decorative background pattern — friendly, colourful, child-appropriate */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(250,204,21,.12) 0%, transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(99,179,237,.15) 0%, transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(154,230,180,.10) 0%, transparent 35%);
 }
-.hero-pill {
-  background: rgba(255,255,255,.12); border-radius: 20px;
-  padding: 7px 16px; font-size: 13px; font-weight: 500;
+/* Floating emoji decorations */
+.hero::after {
+  content: '📖  🔊  ✏️  🌟  📚  🎯  🎶  ⭐';
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; align-items: center; justify-content: space-around;
+  font-size: 42px; opacity: .06; pointer-events: none;
+  word-spacing: 80px; letter-spacing: 4px;
+  white-space: pre-wrap; padding: 0 40px;
 }
-.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
-.btn-y {
-  background: #facc15; color: #2b3a57; border: none; border-radius: 24px;
-  padding: 13px 32px; font-size: 15px; font-weight: 700; cursor: pointer;
-  transition: background .2s, transform .2s;
+.hero-inner {
+  position: relative; z-index: 1; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+  padding: 60px 0;
 }
-.btn-y:hover { background: #e5b800; transform: translateY(-2px); }
-.btn-outline {
-  background: transparent; color: #fff; border: 2px solid #fff; border-radius: 24px;
-  padding: 11px 30px; font-size: 15px; font-weight: 600; cursor: pointer;
-  transition: background .2s, color .2s;
+.hero-left { text-align: left; }
+.hero-left h1 {
+  font-size: 36px; font-weight: 800; line-height: 1.2;
+  margin: 0 0 14px; color: #fff;
 }
-.btn-outline:hover { background: #fff; color: #2b3a57; }
-.hero-note { font-size: 12px; opacity: .65; margin-top: 4px; }
+.hero-left h1 span { color: #facc15; }
+.hero-left p  { font-size: 16px; opacity: .85; margin: 0 0 22px; line-height: 1.6; max-width: 440px; }
+.hero-note { font-size: 12px; opacity: .55; margin-top: 12px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 0; }
+
+/* Child-friendly right panel — benefits + visual */
+.hero-right {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 18px;
+  padding: 28px 24px;
+  backdrop-filter: blur(4px);
+}
+.hero-right h3 {
+  font-size: 14px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .8px; color: #facc15; margin: 0 0 18px; text-align: center;
+}
+.hero-benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.hero-benefit {
+  background: rgba(255,255,255,.08);
+  border-radius: 12px; padding: 14px 12px; text-align: center;
+  transition: background .2s;
+}
+.hero-benefit:hover { background: rgba(255,255,255,.14); }
+.hero-benefit .icon { font-size: 28px; margin-bottom: 6px; display: block; }
+.hero-benefit strong { display: block; font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.hero-benefit span   { font-size: 11px; color: rgba(255,255,255,.65); line-height: 1.3; }
+
+@media (max-width: 700px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
+  .hero-left h1 { font-size: 26px; }
+  .hero-left { text-align: center; }
+  .hero-left p { margin: 0 auto 22px; }
+  .hero-btns { justify-content: center; }
+}
 </style>
 
 <style>
-/* ── What Your Child Gets ─────────────────────────────────────────────────── */
-.gets-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px; margin-bottom: 20px;
-}
-.gets-card {
-  background: #fff; border-radius: 10px; padding: 24px 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.07); text-align: center;
-}
-.gets-icon { font-size: 36px; margin-bottom: 10px; }
-.gets-card h3 { font-size: 15px; font-weight: 700; color: #2b3a57; margin: 0 0 6px; }
-.gets-card p  { font-size: 13px; color: #666; margin: 0; line-height: 1.5; }
-.gets-note { text-align: center; font-size: 13px; color: #888; margin-top: 0; }
-
 /* ── Pricing ──────────────────────────────────────────────────────────────── */
 .pricing-sec { background: #f4f6f9; }
 .pricing-grid {
@@ -223,58 +255,55 @@
 <body>
 <header><div id="nav-placeholder"></div></header>
 
-<!-- ══ 1. HERO ═══════════════════════════════════════════════════════════════ -->
+<!-- ══ 1. HERO — with benefits panel merged in ════════════════════════════════ -->
 <section class="hero">
   <div class="pc">
-    <h1>Build Reading Skills — Anytime, Anywhere</h1>
-    <p>Interactive digital reading practice for children aged 4–10.</p>
-    <div class="hero-pills">
-      <span class="hero-pill">📖 Interactive Books</span>
-      <span class="hero-pill">🔊 Jolly Phonics Audio</span>
-      <span class="hero-pill">🎯 Reading Practice</span>
-      <span class="hero-pill">📈 Progress Tracking</span>
+    <div class="hero-inner">
+
+      <!-- Left: headline + CTA -->
+      <div class="hero-left">
+        <h1>Build <span>Reading Skills</span> —<br>Anytime, Anywhere</h1>
+        <p>Interactive digital reading practice for children aged 4–10. Jolly Phonics books, audio and activities — all in one place.</p>
+        <div class="hero-btns">
+          <button class="btn-y"       onclick="handleStartFree()">Start Free</button>
+          <button class="btn-outline" onclick="scrollToPlans()">View Plans</button>
+        </div>
+        <p class="hero-note">Digital Reading Platform only — live phonics classes not included.</p>
+      </div>
+
+      <!-- Right: benefit cards (merged from "What Your Child Gets") -->
+      <div class="hero-right">
+        <h3>Everything your child needs</h3>
+        <div class="hero-benefits">
+          <div class="hero-benefit">
+            <span class="icon">📖</span>
+            <strong>Interactive Books</strong>
+            <span>Engaging digital books with activities</span>
+          </div>
+          <div class="hero-benefit">
+            <span class="icon">🔊</span>
+            <strong>Jolly Phonics Audio</strong>
+            <span>Correct sounds and pronunciation</span>
+          </div>
+          <div class="hero-benefit">
+            <span class="icon">🎯</span>
+            <strong>Reading Practice</strong>
+            <span>Self-paced, at your child's level</span>
+          </div>
+          <div class="hero-benefit">
+            <span class="icon">📈</span>
+            <strong>Progress Tracking</strong>
+            <span>Monitor learning automatically</span>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div class="hero-btns">
-      <button class="btn-y"       onclick="handleStartFree()">Start Free</button>
-      <button class="btn-outline" onclick="scrollToPlans()">View Plans</button>
-    </div>
-    <p class="hero-note">Digital Reading Platform only — live phonics classes are not included.</p>
   </div>
 </section>
 
 <!-- Welcome banner placeholder (injected by JS when ?welcome=1) -->
 <div id="welcome-banner-slot"></div>
-
-<!-- ══ 2. WHAT YOUR CHILD GETS ═══════════════════════════════════════════════ -->
-<section class="sec">
-  <div class="pc">
-    <h2 class="sec-title">Everything Your Child Needs to Practise Reading</h2>
-    <p class="sec-sub" style="margin-bottom:28px;">&nbsp;</p>
-    <div class="gets-grid">
-      <div class="gets-card">
-        <div class="gets-icon">📖</div>
-        <h3>Interactive Books</h3>
-        <p>Engaging digital books with activities and illustrations.</p>
-      </div>
-      <div class="gets-card">
-        <div class="gets-icon">🔊</div>
-        <h3>Jolly Phonics Audio</h3>
-        <p>Hear correct phonics sounds and pronunciation.</p>
-      </div>
-      <div class="gets-card">
-        <div class="gets-icon">🎯</div>
-        <h3>Reading Practice</h3>
-        <p>Practise independently at your child's own pace.</p>
-      </div>
-      <div class="gets-card">
-        <div class="gets-icon">📈</div>
-        <h3>Progress Tracking</h3>
-        <p>Monitor your child's learning progress.</p>
-      </div>
-    </div>
-    <p class="gets-note">Works on mobile, tablet and desktop.</p>
-  </div>
-</section>
 
 <!-- ══ 3. CHOOSE YOUR PLAN ═══════════════════════════════════════════════════ -->
 <section class="sec pricing-sec" id="plans">
