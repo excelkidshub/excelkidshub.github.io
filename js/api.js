@@ -40,7 +40,9 @@ export const api = {
     
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      // Use errorData.error for the detailed reason, fall back to message
+      const detail = errorData.error || errorData.message || `HTTP error! status: ${response.status}`;
+      throw new Error(detail);
     }
     
     return response.json();
