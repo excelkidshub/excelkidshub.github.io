@@ -24,6 +24,7 @@ function getNavigationHTML(isLoggedIn) {
     <nav class="nav-links" id="navLinks">
         <a href="/">Home</a>
         <a href="/courses.html">Courses</a>
+        <a href="/schedule.html">Schedule</a>
         <a href="/pricing.html">Pricing</a>
         <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
@@ -65,6 +66,7 @@ function getNavigationHTML(isLoggedIn) {
     <nav class="nav-links" id="navLinks">
         <a href="/">Home</a>
         <a href="/courses.html">Courses</a>
+        <a href="/schedule.html">Schedule</a>
         <a href="/pricing.html">Pricing</a>
         <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
