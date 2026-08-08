@@ -15,21 +15,49 @@
 }
 
 .welcome-section {
-  background: linear-gradient(135deg, #2b3a57 0%, #1a253a 100%);
+  background: linear-gradient(135deg, #2f80ed 0%, #195fba 100%);
   color: white;
   padding: 40px;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.welcome-section::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  border-radius: 50%;
 }
 
 .welcome-section h1 {
   margin: 0 0 10px 0;
   font-size: 32px;
+  position: relative;
+  z-index: 1;
 }
 
 .welcome-section p {
   margin: 0;
-  opacity: 0.9;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
 }
 
 .dashboard-grid {
@@ -42,14 +70,33 @@
 .dashboard-card {
   background: white;
   padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 2px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  border-color: #667eea;
 }
 
 .dashboard-card h2 {
   margin: 0 0 20px 0;
   color: #2b3a57;
   font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-card h2::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
 }
 
 .status-badge {
@@ -61,13 +108,14 @@
 }
 
 .status-active {
-  background: #d4edda;
-  color: #155724;
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  color: white;
 }
 
 .status-inactive {
-  background: #f8d7da;
-  color: #721c24;
+  background: #f8f9fa;
+  color: #667085;
+  border: 2px solid #e0e0e0;
 }
 
 .course-list {
@@ -78,12 +126,20 @@
 
 .course-item {
   padding: 15px;
-  border: 1px solid #eee;
-  border-radius: 5px;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.2s ease;
+  background: #fafbfc;
+}
+
+.course-item:hover {
+  border-color: #667eea;
+  background: white;
+  transform: translateX(4px);
 }
 
 .course-item:last-child {
@@ -96,19 +152,22 @@
 }
 
 .btn-course {
-  background: #facc15;
-  color: #2b3a57;
-  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 24px;
   cursor: pointer;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 .btn-course:hover {
-  background: #e5b800;
+  background: linear-gradient(135deg, #5a67d8 0%, #667eea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
 }
 
 .no-courses {
@@ -130,37 +189,58 @@
 }
 
 .cta-box {
-  background: #fff3cd;
-  border: 1px solid #ffc107;
-  padding: 20px;
-  border-radius: 5px;
+  background: linear-gradient(135deg, #fff9ed 0%, #fff0df 100%);
+  border: 2px solid #facc15;
+  padding: 24px;
+  border-radius: 16px;
   margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-box::before {
+  content: '🎁';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 40px;
+  opacity: 0.2;
 }
 
 .cta-box h3 {
   margin: 0 0 10px 0;
-  color: #856404;
+  color: #2b3a57;
+  position: relative;
+  z-index: 1;
 }
 
 .cta-box p {
   margin: 0 0 15px 0;
-  color: #856404;
+  color: #667085;
+  position: relative;
+  z-index: 1;
 }
 
 .btn-cta {
-  background: #ffc107;
+  background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%);
   color: #2b3a57;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 5px;
+  border-radius: 24px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+  position: relative;
+  z-index: 1;
 }
 
 .btn-cta:hover {
-  background: #e0a800;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(250, 204, 21, 0.4);
 }
 
 .loading {
@@ -180,20 +260,38 @@
 .progress-bar-wrap {
   background: #e9ecef;
   border-radius: 10px;
-  height: 10px;
+  height: 12px;
   margin: 10px 0 6px;
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 .progress-bar-fill {
   height: 100%;
-  background: #facc15;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
   border-radius: 10px;
   transition: width 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 .progress-meta {
   font-size: 13px;
-  color: #666;
+  color: #667085;
   margin-bottom: 14px;
+  font-weight: 500;
 }
 </style>
 </head>
@@ -210,10 +308,12 @@
   
   <div id="dashboard-content" style="display: none;">
       <!-- Email verification banner (hidden by default, shown when email not verified) -->
-      <div id="verify-banner" style="display:none; background:#fff3cd; border:1px solid #ffc107; padding:14px 20px; border-radius:8px; margin-bottom:20px; font-size:14px; color:#856404;">
-        <strong>Please verify your email address.</strong>
-        Check your inbox for a verification link from ExcelKidsHub.
-        <a href="#" id="resend-verify" style="margin-left:10px; color:#2b3a57; font-weight:600; text-decoration:underline;">Resend email</a>
+      <div id="verify-banner" style="display:none; background:linear-gradient(135deg, #fff9ed 0%, #fff0df 100%); border:2px solid #facc15; padding:16px 24px; border-radius:12px; margin-bottom:20px; font-size:14px; color:#2b3a57; position:relative; overflow:hidden;">
+        <div style="position:relative; z-index:1;">
+          <strong>Please verify your email address.</strong>
+          Check your inbox for a verification link from ExcelKidsHub.
+          <a href="#" id="resend-verify" style="margin-left:10px; color:#2f80ed; font-weight:700; text-decoration:underline;">Resend email</a>
+        </div>
       </div>
 
     <div class="welcome-section">

@@ -18,8 +18,8 @@
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .hero {
-  background: linear-gradient(150deg, #facc15 0%, #f59e0b 30%, #2b3a57 70%, #1a253a 100%);
-  color: #fff;
+  background: linear-gradient(180deg, #f4fbff 0%, #fff9ed 52%, #f7fff5 100%);
+  color: #243142;
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -73,19 +73,16 @@
 .hero-left { text-align: left; }
 .hero-left h1 {
   font-size: 38px; font-weight: 900; line-height: 1.15;
-  margin: 0 0 16px; color: #1a253a;
-  text-shadow: 0 1px 0 rgba(255,255,255,.3);
+  margin: 0 0 16px; color: #2b3a57;
 }
 .hero-left h1 em {
-  font-style: normal; color: #fff;
-  text-shadow: 0 2px 8px rgba(0,0,0,.2);
+  font-style: normal; color: #667eea;
 }
 .hero-left p {
-  font-size: 16px; color: rgba(255,255,255,.92); margin: 0 0 26px;
+  font-size: 16px; color: #667085; margin: 0 0 26px;
   line-height: 1.65; max-width: 420px;
-  text-shadow: 0 1px 4px rgba(0,0,0,.2);
 }
-.hero-note { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 14px; }
+.hero-note { font-size: 12px; color: #667085; margin-top: 14px; }
 .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* Right panel — white card, bright and clean */
@@ -119,7 +116,7 @@
 
 <style>
 /* ── Pricing ──────────────────────────────────────────────────────────────── */
-.pricing-sec { background: #f4f6f9; }
+.pricing-sec { background: linear-gradient(180deg, #f7fff5 0%, #f4fbff 100%); }
 .pricing-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
   gap: 24px; margin-bottom: 36px;
@@ -132,11 +129,11 @@
   position: relative; overflow: hidden; cursor: pointer;
 }
 .plan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.12); }
-.plan-card.best-value { border-color: #facc15; }
-.plan-card.selected   { border-color: #2b3a57; box-shadow: 0 8px 28px rgba(43,58,87,.18); }
+.plan-card.best-value { border-color: #667eea; }
+.plan-card.selected   { border-color: #2f80ed; box-shadow: 0 8px 28px rgba(47,128,237,.18); }
 .plan-ribbon {
   position: absolute; top: 18px; right: -28px;
-  background: #facc15; color: #2b3a57; font-size: 11px; font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; font-size: 11px; font-weight: 700;
   padding: 4px 38px; transform: rotate(45deg); letter-spacing: .3px;
 }
 .plan-badge {
@@ -165,12 +162,12 @@
 }
 .btn-plan:hover:not(:disabled) { transform: translateY(-1px); }
 .btn-plan:disabled { opacity: .55; cursor: not-allowed; }
-.btn-free   { background: #22c55e; color: #fff; }
-.btn-free:hover:not(:disabled) { background: #16a34a; }
-.btn-paid   { background: #facc15; color: #2b3a57; }
-.btn-paid:hover:not(:disabled) { background: #e5b800; }
-.btn-bundle { background: #2b3a57; color: #fff; }
-.btn-bundle:hover:not(:disabled) { background: #1a253a; }
+.btn-free   { background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); color: #fff; }
+.btn-free:hover:not(:disabled) { background: linear-gradient(135deg, #219a52 0%, #27ae60 100%); }
+.btn-paid   { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; }
+.btn-paid:hover:not(:disabled) { background: linear-gradient(135deg, #5a67d8 0%, #667eea 100%); }
+.btn-bundle { background: linear-gradient(135deg, #2f80ed 0%, #195fba 100%); color: #fff; }
+.btn-bundle:hover:not(:disabled) { background: linear-gradient(135deg, #195fba 0%, #0d4a8a 100%); }
 </style>
 
 <style>
@@ -211,7 +208,7 @@
   text-align: center; font-size: 14px;
 }
 .compare-table th {
-  background: #2b3a57; color: #fff; font-weight: 600; font-size: 13px;
+  background: linear-gradient(135deg, #2f80ed 0%, #195fba 100%); color: #fff; font-weight: 600; font-size: 13px;
 }
 .compare-table th:first-child { text-align: left; background: #f8f9fa; color: #2b3a57; }
 .compare-table td:first-child { text-align: left; font-weight: 600; color: #2b3a57; }
@@ -229,7 +226,7 @@
   box-shadow: 0 2px 10px rgba(0,0,0,.06);
 }
 .step-num {
-  width: 44px; height: 44px; background: #facc15; color: #2b3a57;
+  width: 44px; height: 44px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-size: 18px; font-weight: 800; margin: 0 auto 12px;
 }
@@ -249,7 +246,7 @@
   transition: background .2s; user-select: none;
 }
 .faq-q:hover { background: #f8f9fa; }
-.faq-icon { font-size: 20px; color: #facc15; font-weight: 700;
+.faq-icon { font-size: 20px; color: #667eea; font-weight: 700;
   transition: transform .25s; flex-shrink: 0; margin-left: 12px; }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 20px; }
@@ -258,7 +255,7 @@
 
 /* ── Final CTA ────────────────────────────────────────────────────────────── */
 .final-cta {
-  background: linear-gradient(135deg, #2b3a57 0%, #1a253a 100%);
+  background: linear-gradient(135deg, #2f80ed 0%, #195fba 100%);
   color: #fff; text-align: center; padding: 52px 0;
 }
 .final-cta h2 { font-size: 26px; font-weight: 700; margin: 0 0 10px; }
@@ -339,7 +336,7 @@
   <!-- Wavy bottom edge transitions into white/grey page content -->
   <div class="hero-wave" aria-hidden="true">
     <svg viewBox="0 0 1200 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,32 C200,0 400,48 600,24 C800,0 1000,40 1200,20 L1200,48 L0,48 Z" fill="#f4f6f9"/>
+      <path d="M0,32 C200,0 400,48 600,24 C800,0 1000,40 1200,20 L1200,48 L0,48 Z" fill="#f7fff5"/>
     </svg>
   </div>
 </section>
@@ -427,7 +424,7 @@
 </section>
 
 <!-- ══ 5. COMPARE PLANS ══════════════════════════════════════════════════════ -->
-<section class="sec" style="background:#f4f6f9;">
+<section class="sec" style="background:linear-gradient(180deg, #f4fbff 0%, #fff9ed 100%);">
   <div class="pc">
     <h2 class="sec-title">Compare Plans</h2>
     <p class="sec-sub" style="margin-bottom:24px;"></p>
@@ -513,7 +510,7 @@
 </section>
 
 <!-- ══ 7. FAQ ═════════════════════════════════════════════════════════════════ -->
-<section class="sec" style="background:#f4f6f9;">
+<section class="sec" style="background:linear-gradient(180deg, #fff9ed 0%, #f7fff5 100%);">
   <div class="pc">
     <h2 class="sec-title">Frequently Asked Questions</h2>
     <p class="sec-sub" style="margin-bottom:24px;"></p>
