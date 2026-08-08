@@ -868,8 +868,8 @@
         <tr>
           <th>Features</th>
           <th>Starter (Free)</th>
-          <th>Level 1 (₹499)</th>
-          <th>Complete Bundle (₹999)</th>
+          <th id="th-level1">Digital Reading Level 1</th>
+          <th id="th-bundle">Complete Reading Bundle</th>
         </tr>
       </thead>
       <tbody>
@@ -1098,31 +1098,77 @@
     }
   })();
 
-  // ── Load plans from backend ─────────────────────────────────────────────────
-  // data-plan values on pricing cards: "free", "level1", "bundle"
-  // Map them to DB plans by price: 0 → free, 499 → level1, 999 → bundle.
-  // This avoids fragile slug matching against DB plan names.
-  const PRICE_TO_SLUG = { 0: 'free', 499: 'level1', 999: 'bundle' };
-
+  // ── Load plans from backend and update card prices dynamically ──────────────
+  // Maps by plan order: DB id 1 = free (Starter), id 2 = level1, id 3 = bundle.
+  // Uses order, not price, so changing the price in DB reflects immediately on the page.
   async function loadPlans() {
     try {
-      const response = await fetch(
-        (location.hostname.includes('localhost') ? 'http://localhost:8080' : 'https://api.excelkidshub.in') + '/api/plans'
-      );
-      if (response.ok) {
-        const json = await response.json();
-        const plans = json.data || [];
-        plans.forEach(plan => {
-          const price = Math.round(Number(plan.price));
-          const slug  = PRICE_TO_SLUG[price];
-          if (slug) {
-            planData[slug] = plan;
-          }
-        });
-        console.log('Plans loaded:', Object.entries(planData).map(([k,v]) => `${k}→id:${v.id}`).join(', '));
-      }
+      const apiBase = location.hostname.includes('localhost')
+        ? 'http://localhost:8080'
+        : 'https://api.excelkidshub.in';
+
+      const response = await fetch(`${apiBase}/api/plans`);
+      if (!response.ok) return;
+
+      const json  = await response.json();
+      const plans = (json.data || []).filter(p => p.id != null);
+
+      if (!plans.length) return;
+
+      // Sort by id ascending so the order is always Starter → Level1 → Bundle
+      plans.sort((a, b) => a.id - b.id);
+
+      // Assign slugs by position: first = free, second = level1, third = bundle
+      const SLOT_SLUGS = ['free', 'level1', 'bundle'];
+      plans.forEach((plan, i) => {
+        const slug = SLOT_SLUGS[i];
+        if (slug) planData[slug] = plan;
+      });
+
+      console.log('Plans loaded:', Object.entries(planData)
+        .map(([k, v]) => `${k}→id:${v.id} ₹${v.price}`).join(', '));
+
+      // ── Update pricing card UI with real prices from DB ──────────────────
+      updatePricingCards();
+
     } catch (e) {
       console.warn('Could not load plans from API:', e.message);
+    }
+  }
+
+  function updatePricingCards() {
+    // level1 card
+    const p1 = planData['level1'];
+    if (p1) {
+      const card1 = document.querySelector('[data-plan="level1"]');
+      if (card1) {
+        const priceEl = card1.querySelector('.plan-price');
+        if (priceEl) {
+          priceEl.innerHTML = `₹${Number(p1.price).toLocaleString('en-IN')}<span>/month</span>`;
+        }
+        const nameEl = card1.querySelector('.plan-name');
+        if (nameEl) nameEl.textContent = p1.name;
+      }
+      // Update comparison table header
+      const th1 = document.getElementById('th-level1');
+      if (th1) th1.textContent = `${p1.name} (₹${Number(p1.price).toLocaleString('en-IN')})`;
+    }
+
+    // bundle card
+    const p2 = planData['bundle'];
+    if (p2) {
+      const card2 = document.querySelector('[data-plan="bundle"]');
+      if (card2) {
+        const priceEl = card2.querySelector('.plan-price');
+        if (priceEl) {
+          priceEl.innerHTML = `₹${Number(p2.price).toLocaleString('en-IN')}<span>/month</span>`;
+        }
+        const nameEl = card2.querySelector('.plan-name');
+        if (nameEl) nameEl.textContent = p2.name;
+      }
+      // Update comparison table header
+      const th2 = document.getElementById('th-bundle');
+      if (th2) th2.textContent = `${p2.name} (₹${Number(p2.price).toLocaleString('en-IN')})`;
     }
   }
 
