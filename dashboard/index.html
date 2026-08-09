@@ -373,18 +373,17 @@
           <p>Get access to all phonics courses and materials</p>
           <a href="../pricing.html" class="btn-cta">View Plans</a>
         </div>
-        
-        <!-- Refund Section -->
-        <div id="refund-section" style="display:none; margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0;">
-          <h3 style="font-size: 16px; margin-bottom: 12px; color: #2b3a57;">7-Day Refund Policy</h3>
-          <p style="font-size: 13px; color: #667085; margin-bottom: 12px;">
-            Eligible digital purchases can be requested for a refund within 7 days of purchase.
-          </p>
-          <div id="refund-status-content"></div>
-          <div id="refund-request-form" style="display:none;">
-            <textarea id="refund-reason" placeholder="Reason for refund request (optional)" style="width:100%; padding:8px; border:1px solid #e2e8f0; border-radius:4px; font-family:inherit; margin-bottom:8px;" rows="2"></textarea>
-            <button id="request-refund-btn" class="btn-course" style="font-size:13px; padding:8px 16px;">Request Refund</button>
-          </div>
+
+        <!-- Action Buttons -->
+        <div id="subscription-actions" style="display:none; margin-top: 16px; padding-top: 16px; border-top: 2px solid #f0f0f0;">
+          <button id="request-refund-btn" class="btn-course" style="font-size:13px; padding:8px 16px; margin-right: 8px; background: #f59e0b; border-color: #f59e0b;">Request Refund</button>
+          <button id="cancel-subscription-btn" class="btn-course" style="font-size:13px; padding:8px 16px; background: #ef4444; border-color: #ef4444;">Cancel Subscription</button>
+        </div>
+
+        <!-- Refund Status -->
+        <div id="refund-status-section" style="display:none; margin-top: 16px; padding-top: 16px; border-top: 2px solid #f0f0f0;">
+          <h3 style="font-size: 14px; margin-bottom: 8px; color: #2b3a57;">Refund Status</h3>
+          <div id="refund-status-content" style="font-size: 13px; color: #667085;"></div>
         </div>
       </div>
 
@@ -422,6 +421,35 @@
 </main>
 
 <div id="footer-placeholder"></div>
+
+<!-- Refund Request Modal -->
+<div id="refund-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:white; padding:24px; border-radius:12px; max-width:400px; width:90%; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+    <h3 style="margin:0 0 16px; color:#2b3a57;">Request Refund</h3>
+    <p style="font-size:14px; color:#667085; margin-bottom:16px;">
+      You can request a refund within 7 days of purchase. Please provide a reason for your refund request.
+    </p>
+    <textarea id="refund-reason-input" placeholder="Reason for refund (optional)" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:6px; font-family:inherit; margin-bottom:16px; resize:vertical;" rows="3"></textarea>
+    <div style="display:flex; gap:12px; justify-content:flex-end;">
+      <button id="cancel-refund-modal" style="padding:8px 16px; border:1px solid #e2e8f0; background:white; border-radius:6px; cursor:pointer;">Cancel</button>
+      <button id="submit-refund-request" style="padding:8px 16px; background:#f59e0b; color:white; border:none; border-radius:6px; cursor:pointer;">Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Cancellation Confirmation Modal -->
+<div id="cancel-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:white; padding:24px; border-radius:12px; max-width:400px; width:90%; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+    <h3 style="margin:0 0 16px; color:#2b3a57;">Cancel Subscription</h3>
+    <p style="font-size:14px; color:#667085; margin-bottom:16px;">
+      Are you sure you want to cancel your subscription? Your access will continue until the end of your current billing period.
+    </p>
+    <div style="display:flex; gap:12px; justify-content:flex-end;">
+      <button id="cancel-cancel-modal" style="padding:8px 16px; border:1px solid #e2e8f0; background:white; border-radius:6px; cursor:pointer;">Keep Subscription</button>
+      <button id="confirm-cancel-subscription" style="padding:8px 16px; background:#ef4444; color:white; border:none; border-radius:6px; cursor:pointer;">Yes, Cancel</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
   import { auth } from '../js/auth.js';
@@ -476,7 +504,8 @@
     const planEl   = document.getElementById('subscription-plan');
     const expiryEl = document.getElementById('subscription-expiry');
     const ctaEl    = document.getElementById('subscription-cta');
-    const refundEl = document.getElementById('refund-section');
+    const actionsEl = document.getElementById('subscription-actions');
+    const refundStatusEl = document.getElementById('refund-status-section');
 
     if (subscription && subscription.status === 'ACTIVE') {
       statusEl.innerHTML = '<span class="status-badge status-active">● Active</span>';
@@ -487,20 +516,17 @@
         : 'N/A';
       expiryEl.textContent = `Valid until ${expiry}`;
       ctaEl.style.display  = 'none';
-      
-      // Show refund section if paymentId is available
-      if (subscription.paymentId) {
-        refundEl.style.display = 'block';
-        loadRefundStatus(subscription.paymentId);
-      } else {
-        refundEl.style.display = 'none';
-      }
+      actionsEl.style.display = 'block';
+
+      // Load refund status
+      loadRefundStatus(subscription.id);
     } else {
       statusEl.innerHTML   = '<span class="status-badge status-inactive">No Active Subscription</span>';
       planEl.textContent   = 'No plan selected';
       expiryEl.textContent = '-';
       ctaEl.style.display  = 'block';
-      refundEl.style.display = 'none';
+      actionsEl.style.display = 'none';
+      refundStatusEl.style.display = 'none';
     }
   }
 
@@ -587,79 +613,145 @@
   });
 
   // ── Refund Status ─────────────────────────────────────────────────────────────
-  let currentPaymentId = null;
+  let currentSubscriptionId = null;
 
-  async function loadRefundStatus(paymentId) {
-    currentPaymentId = paymentId;
-    const statusContent = document.getElementById('refund-status-content');
-    const requestForm = document.getElementById('refund-request-form');
-    
+  async function loadRefundStatus(subscriptionId) {
+    currentSubscriptionId = subscriptionId;
+    const refundStatusEl = document.getElementById('refund-status-section');
+    const refundStatusContent = document.getElementById('refund-status-content');
+    const actionsEl = document.getElementById('subscription-actions');
+
     try {
-      // Check eligibility first
-      const eligibility = await api.checkRefundEligibility(paymentId);
-      if (eligibility.data === false) {
-        statusContent.innerHTML = '<p style="font-size:13px;color:#666;">This payment is not eligible for refund (outside 7-day window or already processed).</p>';
-        requestForm.style.display = 'none';
+      // Get subscription details to find payment
+      const subResponse = await api.get(`/subscription/active`);
+      const subscription = subResponse.data;
+
+      if (!subscription || !subscription.id) {
+        refundStatusEl.style.display = 'none';
         return;
       }
 
-      // Check existing refund status
-      const refundStatus = await api.getRefundStatus(paymentId);
-      if (refundStatus.data) {
-        const r = refundStatus.data;
-        const statusMap = {
-          'REQUESTED': '<span style="color:#f59e0b;font-weight:600;">Under Review</span>',
-          'APPROVED': '<span style="color:#2f80ed;font-weight:600;">Approved</span>',
-          'REJECTED': '<span style="color:#dc2626;font-weight:600;">Not Approved</span>',
-          'REFUNDED': '<span style="color:#27ae60;font-weight:600;">Refunded</span>'
-        };
-        
-        let message = '';
-        if (r.status === 'REQUESTED') {
-          message = `Your refund request is under review. Requested on: ${new Date(r.requestedAt).toLocaleDateString('en-IN')}.`;
-        } else if (r.status === 'APPROVED') {
-          message = `Your refund request has been approved. The refund will be processed to your original payment method.`;
-        } else if (r.status === 'REJECTED') {
-          message = `Your refund request was not approved. Please contact ExcelKidsHub Support if you have questions.`;
-        } else if (r.status === 'REFUNDED') {
-          message = `Your refund has been processed. Your digital subscription access has ended.`;
-        }
+      // Check refund eligibility and status
+      try {
+        const refundStatus = await api.get(`/refund/status?subscriptionId=${subscription.id}`);
+        if (refundStatus.data) {
+          const r = refundStatus.data;
+          const statusMap = {
+            'REQUESTED': '<span style="color:#f59e0b;font-weight:600;">Under Review</span>',
+            'APPROVED': '<span style="color:#2f80ed;font-weight:600;">Approved</span>',
+            'REJECTED': '<span style="color:#dc2626;font-weight:600;">Not Approved</span>',
+            'REFUNDED': '<span style="color:#27ae60;font-weight:600;">Refunded</span>'
+          };
 
-        statusContent.innerHTML = `
-          <p style="font-size:13px;color:#667085;margin-bottom:8px;">Status: ${statusMap[r.status] || r.status}</p>
-          <p style="font-size:12px;color:#666;">${message}</p>
-        `;
-        requestForm.style.display = 'none';
-      } else {
-        // No existing refund, show request form
-        statusContent.innerHTML = '<p style="font-size:13px;color:#27ae60;">✓ Eligible for refund</p>';
-        requestForm.style.display = 'block';
+          let message = '';
+          if (r.status === 'REQUESTED') {
+            message = `Your refund request is under review. Requested on: ${new Date(r.requestedAt).toLocaleDateString('en-IN')}.`;
+          } else if (r.status === 'APPROVED') {
+            message = `Your refund request has been approved. The refund will be processed to your original payment method.`;
+          } else if (r.status === 'REJECTED') {
+            message = `Your refund request was not approved. ${r.adminNote || 'Please contact ExcelKidsHub Support if you have questions.'}`;
+          } else if (r.status === 'REFUNDED') {
+            message = `Your refund has been processed. Your digital subscription access has ended.`;
+            // Hide action buttons when refunded
+            actionsEl.style.display = 'none';
+          }
+
+          refundStatusContent.innerHTML = `
+            <p style="font-size:13px;color:#667085;margin-bottom:8px;">Status: ${statusMap[r.status] || r.status}</p>
+            <p style="font-size:12px;color:#666;">${message}</p>
+          `;
+          refundStatusEl.style.display = 'block';
+
+          // Hide refund button if already requested
+          if (r.status !== null) {
+            document.getElementById('request-refund-btn').style.display = 'none';
+          }
+        } else {
+          // No existing refund, check eligibility
+          try {
+            const eligibility = await api.get(`/refund/eligibility?subscriptionId=${subscription.id}`);
+            if (eligibility.data === true) {
+              refundStatusEl.style.display = 'none';
+              document.getElementById('request-refund-btn').style.display = 'inline-block';
+            } else {
+              refundStatusContent.innerHTML = '<p style="font-size:13px;color:#666;">Not eligible for refund (outside 7-day window).</p>';
+              refundStatusEl.style.display = 'block';
+              document.getElementById('request-refund-btn').style.display = 'none';
+            }
+          } catch (eligErr) {
+            console.log('Eligibility check failed:', eligErr.message);
+            refundStatusEl.style.display = 'none';
+          }
+        }
+      } catch (refundErr) {
+        console.log('Refund status check failed:', refundErr.message);
+        refundStatusEl.style.display = 'none';
       }
     } catch (err) {
-      console.log('Refund status check failed:', err.message);
-      statusContent.innerHTML = '<p style="font-size:13px;color:#666;">Unable to check refund eligibility.</p>';
-      requestForm.style.display = 'none';
+      console.log('Failed to load refund status:', err.message);
+      refundStatusEl.style.display = 'none';
     }
   }
 
-  // ── Request Refund ─────────────────────────────────────────────────────────────
-  document.getElementById('request-refund-btn').addEventListener('click', async () => {
-    if (!currentPaymentId) return;
-    
-    const reason = document.getElementById('refund-reason').value.trim();
-    const btn = document.getElementById('request-refund-btn');
-    
+  // ── Refund Modal Handlers ─────────────────────────────────────────────────────
+  const refundModal = document.getElementById('refund-modal');
+  const refundReasonInput = document.getElementById('refund-reason-input');
+
+  document.getElementById('request-refund-btn').addEventListener('click', () => {
+    refundModal.style.display = 'flex';
+    refundReasonInput.value = '';
+  });
+
+  document.getElementById('cancel-refund-modal').addEventListener('click', () => {
+    refundModal.style.display = 'none';
+  });
+
+  document.getElementById('submit-refund-request').addEventListener('click', async () => {
+    const reason = refundReasonInput.value.trim();
+    const btn = document.getElementById('submit-refund-request');
+
     btn.textContent = 'Submitting...';
     btn.disabled = true;
-    
+
     try {
-      const response = await api.requestRefund(currentPaymentId, reason);
+      await api.post('/refund/request', { subscriptionId: currentSubscriptionId, reason });
       alert('Your refund request has been submitted. Our team will review it and contact you.');
-      loadRefundStatus(currentPaymentId);
+      refundModal.style.display = 'none';
+      loadRefundStatus(currentSubscriptionId);
     } catch (err) {
       alert(err.message || 'Failed to submit refund request. Please try again.');
     } finally {
-      btn.textContent = 'Request Refund';
+      btn.textContent = 'Submit Request';
+      btn.disabled = false;
+    }
+  });
+
+  // ── Cancellation Modal Handlers ─────────────────────────────────────────────────
+  const cancelModal = document.getElementById('cancel-modal');
+
+  document.getElementById('cancel-subscription-btn').addEventListener('click', () => {
+    cancelModal.style.display = 'flex';
+  });
+
+  document.getElementById('cancel-cancel-modal').addEventListener('click', () => {
+    cancelModal.style.display = 'none';
+  });
+
+  document.getElementById('confirm-cancel-subscription').addEventListener('click', async () => {
+    const btn = document.getElementById('confirm-cancel-subscription');
+    btn.textContent = 'Cancelling...';
+    btn.disabled = true;
+
+    try {
+      await api.post('/subscription/cancel');
+      alert('Your subscription has been cancelled. Your access will continue until the end of your current billing period.');
+      cancelModal.style.display = 'none';
+      // Reload dashboard to show updated status
+      window.location.reload();
+    } catch (err) {
+      alert(err.message || 'Failed to cancel subscription. Please try again.');
+    } finally {
+      btn.textContent = 'Yes, Cancel';
       btn.disabled = false;
     }
   });
