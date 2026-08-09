@@ -20,50 +20,114 @@
 
   <div id="alert-error" class="alert alert-error"></div>
 
+  <!-- Key Metrics -->
   <div class="stat-grid" id="stat-grid">
-    <div class="stat-card">
+    <div class="stat-card stat-card--primary">
+      <div class="stat-card__icon">👥</div>
       <div class="stat-card__label">Total Users</div>
       <div class="stat-card__value" id="stat-users">—</div>
+      <div class="stat-card__trend" id="stat-users-trend">—</div>
     </div>
-    <div class="stat-card stat-card--green">
+    <div class="stat-card stat-card--success">
+      <div class="stat-card__icon">⭐</div>
       <div class="stat-card__label">Active Subscriptions</div>
       <div class="stat-card__value" id="stat-active-subs">—</div>
+      <div class="stat-card__trend" id="stat-active-subs-trend">—</div>
     </div>
-    <div class="stat-card stat-card--red">
-      <div class="stat-card__label">Expired Subscriptions</div>
-      <div class="stat-card__value" id="stat-expired-subs">—</div>
+    <div class="stat-card stat-card--warning">
+      <div class="stat-card__icon">⚠️</div>
+      <div class="stat-card__label">Pending Refunds</div>
+      <div class="stat-card__value" id="stat-pending-refunds">—</div>
+      <div class="stat-card__trend">Action Required</div>
     </div>
-    <div class="stat-card stat-card--blue">
+    <div class="stat-card stat-card--info">
+      <div class="stat-card__icon">💰</div>
+      <div class="stat-card__label">Total Revenue</div>
+      <div class="stat-card__value" id="stat-revenue">—</div>
+      <div class="stat-card__trend" id="stat-revenue-trend">—</div>
+    </div>
+  </div>
+
+  <!-- Secondary Metrics -->
+  <div class="stat-grid stat-grid--compact">
+    <div class="stat-card stat-card--secondary">
       <div class="stat-card__label">Total Payments</div>
       <div class="stat-card__value" id="stat-payments">—</div>
     </div>
-    <div class="stat-card stat-card--purple">
-      <div class="stat-card__label">Total Revenue</div>
-      <div class="stat-card__value" id="stat-revenue">—</div>
+    <div class="stat-card stat-card--secondary">
+      <div class="stat-card__label">Expired Subscriptions</div>
+      <div class="stat-card__value" id="stat-expired-subs">—</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card stat-card--secondary">
       <div class="stat-card__label">Active Courses</div>
       <div class="stat-card__value" id="stat-courses">—</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-card__label">Plans</div>
+    <div class="stat-card stat-card--secondary">
+      <div class="stat-card__label">Active Plans</div>
       <div class="stat-card__value" id="stat-plans">—</div>
     </div>
   </div>
 
-  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
-    <a href="/admin/users"         class="btn btn-ghost">Manage Users →</a>
-    <a href="/admin/subscriptions" class="btn btn-ghost">Manage Subscriptions →</a>
-    <a href="/admin/payments"      class="btn btn-ghost">View Payments →</a>
-    <a href="/admin/plans"         class="btn btn-ghost">Manage Plans →</a>
-    <a href="/admin/courses"       class="btn btn-ghost">Manage Courses →</a>
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h3>Quick Actions</h3>
+    <div class="quick-actions__grid">
+      <a href="/admin/users" class="quick-action">
+        <div class="quick-action__icon">👤</div>
+        <div class="quick-action__label">Manage Users</div>
+      </a>
+      <a href="/admin/subscriptions" class="quick-action">
+        <div class="quick-action__icon">⭐</div>
+        <div class="quick-action__label">Subscriptions</div>
+      </a>
+      <a href="/admin/refunds" class="quick-action quick-action--urgent">
+        <div class="quick-action__icon">💸</div>
+        <div class="quick-action__label">Refund Requests</div>
+        <div class="quick-action__badge" id="refund-badge">0</div>
+      </a>
+      <a href="/admin/payments" class="quick-action">
+        <div class="quick-action__icon">💳</div>
+        <div class="quick-action__label">Payments</div>
+      </a>
+      <a href="/admin/plans" class="quick-action">
+        <div class="quick-action__icon">📋</div>
+        <div class="quick-action__label">Plans</div>
+      </a>
+      <a href="/admin/courses" class="quick-action">
+        <div class="quick-action__icon">📚</div>
+        <div class="quick-action__label">Courses</div>
+      </a>
+      <a href="/admin/coupons" class="quick-action">
+        <div class="quick-action__icon">🎟️</div>
+        <div class="quick-action__label">Coupons</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="dashboard-grid">
+    <div class="dashboard-section">
+      <h3>Recent Refund Requests</h3>
+      <div id="recent-refunds" class="activity-list">
+        <div class="activity-item activity-item--loading">Loading...</div>
+      </div>
+      <a href="/admin/refunds" class="view-all">View All Refunds →</a>
+    </div>
+
+    <div class="dashboard-section">
+      <h3>Recent Payments</h3>
+      <div id="recent-payments" class="activity-list">
+        <div class="activity-item activity-item--loading">Loading...</div>
+      </div>
+      <a href="/admin/payments" class="view-all">View All Payments →</a>
+    </div>
   </div>
 </main>
 
 <script type="module">
   import { requireAdmin } from './js/admin-guard.js';
   import { renderAdminNav } from './js/admin-nav.js';
-  import { adminStats } from './js/admin-api.js';
+  import { adminStats, adminGetPendingRefunds, adminGetPayments } from './js/admin-api.js';
 
   requireAdmin();
   renderAdminNav();
@@ -73,6 +137,10 @@
   function fmt(n) { return n != null ? n.toLocaleString('en-IN') : '—'; }
   function fmtCurrency(n) {
     return n != null ? '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 }) : '—';
+  }
+  function formatDate(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
   }
 
   async function load() {
@@ -86,6 +154,54 @@
       document.getElementById('stat-revenue').textContent      = fmtCurrency(s.totalRevenue);
       document.getElementById('stat-courses').textContent      = fmt(s.totalCourses);
       document.getElementById('stat-plans').textContent        = fmt(s.totalPlans);
+
+      // Load pending refunds
+      try {
+        const refundsRes = await adminGetPendingRefunds();
+        const refunds = refundsRes.data || refundsRes;
+        document.getElementById('stat-pending-refunds').textContent = fmt(refunds.length);
+        document.getElementById('refund-badge').textContent = refunds.length;
+
+        const refundsContainer = document.getElementById('recent-refunds');
+        if (refunds.length === 0) {
+          refundsContainer.innerHTML = '<div class="activity-item">No pending refund requests</div>';
+        } else {
+          refundsContainer.innerHTML = refunds.slice(0, 5).map(r => `
+            <div class="activity-item">
+              <div class="activity-item__main">
+                <div class="activity-item__title">${r.userName || 'Unknown'}</div>
+                <div class="activity-item__meta">${r.planName || 'Unknown plan'} • ${fmtCurrency(r.amount)}</div>
+              </div>
+              <div class="activity-item__date">${formatDate(r.requestedAt)}</div>
+            </div>
+          `).join('');
+        }
+      } catch (refundErr) {
+        console.log('Failed to load refunds:', refundErr.message);
+      }
+
+      // Load recent payments
+      try {
+        const paymentsRes = await adminGetPayments('', 0);
+        const payments = paymentsRes.data || paymentsRes;
+        const paymentsContainer = document.getElementById('recent-payments');
+        if (!payments || payments.length === 0) {
+          paymentsContainer.innerHTML = '<div class="activity-item">No recent payments</div>';
+        } else {
+          paymentsContainer.innerHTML = payments.slice(0, 5).map(p => `
+            <div class="activity-item">
+              <div class="activity-item__main">
+                <div class="activity-item__title">${p.userName || 'Unknown'}</div>
+                <div class="activity-item__meta">${p.planName || 'Unknown plan'} • ${fmtCurrency(p.amount)}</div>
+              </div>
+              <div class="activity-item__date">${formatDate(p.paymentDate)}</div>
+            </div>
+          `).join('');
+        }
+      } catch (paymentErr) {
+        console.log('Failed to load payments:', paymentErr.message);
+      }
+
     } catch (err) {
       alertEl.textContent   = '⚠ Failed to load stats: ' + err.message + ' — please ensure you are logged in as an Admin and refresh.';
       alertEl.style.display = 'block';

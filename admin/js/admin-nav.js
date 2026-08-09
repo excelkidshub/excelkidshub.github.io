@@ -28,7 +28,8 @@ export function renderAdminNav() {
     document.getElementById('admin-nav-placeholder').innerHTML = `
       <div class="admin-topbar">
         <a class="admin-topbar__brand" href="/admin/">⚙ ExcelKidsHub Admin</a>
-        <nav class="admin-topbar__nav">${navHtml}</nav>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        <nav class="admin-topbar__nav" id="admin-nav">${navHtml}</nav>
         <div class="admin-topbar__right">
           <span class="admin-topbar__user">${user ? user.email : ''}</span>
           <button class="btn-logout" id="admin-logout-btn">Logout</button>
@@ -36,4 +37,20 @@ export function renderAdminNav() {
       </div>`;
 
     document.getElementById('admin-logout-btn').addEventListener('click', adminLogout);
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const adminNav = document.getElementById('admin-nav');
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            adminNav.classList.toggle('open');
+        });
+    }
+
+    // Close mobile menu when clicking a link
+    adminNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            adminNav.classList.remove('open');
+        });
+    });
 }
