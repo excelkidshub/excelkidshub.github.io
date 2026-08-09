@@ -18,99 +18,105 @@
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .hero {
-  background: linear-gradient(135deg, #dff1ff 0%, #fff0df 25%, #d9f8df 50%, #f3e5f5 75%, #dff1ff 100%);
+  background: linear-gradient(180deg, #f4fbff 0%, #fff9ed 100%);
   color: #243142;
   padding: 0;
   position: relative;
   overflow: hidden;
-  min-height: 480px;
+  min-height: auto;
   display: flex;
   align-items: center;
-}
-/* Bright scattered circles — child-friendly decoration */
-.hero::before {
-  content: '';
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background-image:
-    radial-gradient(circle at  8% 20%, rgba(255,255,255,.22) 0%, transparent 18%),
-    radial-gradient(circle at 92% 75%, rgba(255,255,255,.18) 0%, transparent 16%),
-    radial-gradient(circle at 55% 90%, rgba(250,204,21,.35)  0%, transparent 20%),
-    radial-gradient(circle at 20% 85%, rgba(99,179,237,.30)  0%, transparent 18%),
-    radial-gradient(circle at 78% 10%, rgba(154,230,180,.28) 0%, transparent 15%),
-    radial-gradient(circle at 40% 10%, rgba(255,255,255,.12) 0%, transparent 12%);
-}
-/* Wavy bottom edge */
-.hero-wave {
-  position: absolute; bottom: -2px; left: 0; right: 0; z-index: 1; line-height: 0;
-}
-.hero-wave svg { display: block; width: 100%; height: 48px; }
-
-/* Large decorative emoji — scattered, semi-transparent */
-.hero-emojis {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  overflow: hidden;
-}
-.hero-emojis span {
-  position: absolute; font-size: 36px; opacity: .18; animation: float 6s ease-in-out infinite;
-  user-select: none;
-}
-.hero-emojis span:nth-child(1)  { top:  8%; left:  3%; animation-delay: 0s;   font-size: 44px; }
-.hero-emojis span:nth-child(2)  { top: 60%; left:  6%; animation-delay: 1.2s; font-size: 32px; }
-.hero-emojis span:nth-child(3)  { top: 20%; left: 48%; animation-delay: 0.6s; font-size: 30px; }
-.hero-emojis span:nth-child(4)  { top: 70%; left: 52%; animation-delay: 2s;   font-size: 38px; }
-.hero-emojis span:nth-child(5)  { top: 10%; right: 4%; animation-delay: 0.3s; font-size: 40px; }
-.hero-emojis span:nth-child(6)  { top: 55%; right: 5%; animation-delay: 1.8s; font-size: 28px; }
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(-4deg); }
-  50%       { transform: translateY(-10px) rotate(4deg); }
+  padding: 48px 0 40px;
 }
 
 .hero-inner {
   position: relative; z-index: 2; width: 100%;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
-  padding: 56px 0 72px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  padding: 0;
 }
 .hero-left { text-align: left; }
 .hero-left h1 {
-  font-size: 38px; font-weight: 900; line-height: 1.15;
+  font-size: 36px; font-weight: 800; line-height: 1.2;
   margin: 0 0 16px; color: #2b3a57;
 }
 .hero-left h1 em {
-  font-style: normal; color: #667eea;
+  font-style: normal; color: #2f80ed;
 }
 .hero-left p {
-  font-size: 16px; color: #667085; margin: 0 0 26px;
-  line-height: 1.65; max-width: 420px;
+  font-size: 16px; color: #667085; margin: 0 0 12px;
+  line-height: 1.6; max-width: 480px;
 }
-.hero-note { font-size: 12px; color: #667085; margin-top: 14px; }
+.hero-subtext {
+  font-size: 14px; color: #888; margin: 0 0 24px;
+}
+.hero-note { font-size: 13px; color: #667085; margin-top: 16px; }
 .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
-/* Right panel — white card, bright and clean */
+/* Right panel — product screenshot */
 .hero-right {
-  background: rgba(255,255,255,.96);
-  border-radius: 20px;
-  padding: 28px 24px;
-  box-shadow: 0 12px 40px rgba(0,0,0,.18);
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  border: 2px solid #e8edf2;
 }
-.hero-right h3 {
-  font-size: 13px; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 1px; color: #2b3a57; margin: 0 0 18px; text-align: center;
+.hero-right img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
 }
-.hero-benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.hero-benefit {
-  background: #f8fafc; border-radius: 12px; padding: 14px 10px; text-align: center;
-  border: 1px solid #e8edf2; transition: transform .2s, box-shadow .2s;
-}
-.hero-benefit:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
-.hero-benefit .icon { font-size: 30px; margin-bottom: 6px; display: block; }
-.hero-benefit strong { display: block; font-size: 12px; font-weight: 800; color: #2b3a57; margin-bottom: 2px; }
-.hero-benefit span   { font-size: 11px; color: #666; line-height: 1.3; }
 
 @media (max-width: 700px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 24px; padding: 40px 0 60px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 24px; padding: 40px 0 32px; }
   .hero-left h1 { font-size: 26px; text-align: center; }
   .hero-left p  { text-align: center; margin: 0 auto 22px; }
   .hero-btns    { justify-content: center; }
+  .hero-right   { order: 2; }
+}
+
+@media (max-width: 430px) {
+  .hero { padding: 32px 0 28px; }
+  .hero-inner { gap: 20px; padding: 32px 0 24px; }
+  .hero-left h1 { font-size: 24px; }
+  .hero-left p { font-size: 15px; }
+  .hero-subtext { font-size: 13px; }
+  .hero-note { font-size: 12px; }
+}
+
+@media (max-width: 390px) {
+  .hero-left h1 { font-size: 22px; }
+  .hero-left p { font-size: 14px; }
+}
+
+@media (max-width: 360px) {
+  .hero-left h1 { font-size: 20px; }
+  .hero-left p { font-size: 13px; }
+  .hero-btns button { width: 100%; }
+}
+
+/* ── Experience Section ───────────────────────────────────────────────────────── */
+.experience-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px; margin-top: 32px;
+}
+.experience-item {
+  background: #fff; border-radius: 16px; padding: 32px 24px;
+  text-align: center; border: 2px solid #f0f0f0;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.experience-item:hover {
+  transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  border-color: #667eea;
+}
+.experience-icon {
+  font-size: 48px; margin-bottom: 16px; display: block;
+}
+.experience-title {
+  font-size: 18px; font-weight: 700; color: #2b3a57; margin: 0 0 8px;
+}
+.experience-desc {
+  font-size: 14px; color: #667085; margin: 0; line-height: 1.5;
 }
 </style>
 
@@ -122,14 +128,45 @@
   gap: 24px; margin-bottom: 36px;
 }
 .plan-card {
-  background: #fff; border-radius: 14px; padding: 32px 28px;
+  background: #fff; border-radius: 16px; padding: 32px 28px;
   box-shadow: 0 2px 14px rgba(0,0,0,.08);
   border: 2px solid transparent; text-align: center;
   transition: transform .25s, box-shadow .25s, border-color .25s;
   position: relative; overflow: hidden; cursor: pointer;
 }
 .plan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.12); }
-.plan-card.best-value { border-color: #667eea; }
+
+/* Starter - Soft green */
+.plan-card[data-plan="free"] {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #86efac;
+}
+.plan-card[data-plan="free"]:hover {
+  border-color: #22c55e;
+  box-shadow: 0 8px 28px rgba(34, 197, 94, .2);
+}
+
+/* Level 1 - Soft blue */
+.plan-card[data-plan="level1"] {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-color: #93c5fd;
+}
+.plan-card[data-plan="level1"]:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 28px rgba(59, 130, 246, .2);
+}
+
+/* Complete - Warm yellow/orange */
+.plan-card[data-plan="bundle"] {
+  background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+  border-color: #fde047;
+}
+.plan-card[data-plan="bundle"]:hover {
+  border-color: #eab308;
+  box-shadow: 0 8px 28px rgba(234, 179, 8, .2);
+}
+
+.plan-card.best-value { border-color: #facc15; }
 .plan-card.selected   { border-color: #2f80ed; box-shadow: 0 8px 28px rgba(47,128,237,.18); }
 .plan-ribbon {
   position: absolute; top: 18px; right: -28px;
@@ -137,14 +174,14 @@
   padding: 4px 38px; transform: rotate(45deg); letter-spacing: .3px;
 }
 .plan-badge {
-  display: inline-block; border-radius: 12px; padding: 3px 12px;
-  font-size: 11px; font-weight: 700; margin-bottom: 12px; letter-spacing: .3px;
+  display: inline-block; border-radius: 12px; padding: 4px 14px;
+  font-size: 12px; font-weight: 700; margin-bottom: 12px; letter-spacing: .3px;
 }
 .badge-free   { background: #dcfce7; color: #15803d; }
 .badge-paid   { background: #dbeafe; color: #1d4ed8; }
 .badge-bundle { background: #fef9c3; color: #854d0e; }
-.plan-name  { font-size: 20px; font-weight: 700; color: #2b3a57; margin: 0 0 10px; }
-.plan-price { font-size: 42px; font-weight: 800; color: #2b3a57; line-height: 1; margin: 0 0 4px; }
+.plan-name  { font-size: 22px; font-weight: 800; color: #2b3a57; margin: 0 0 10px; }
+.plan-price { font-size: 48px; font-weight: 800; color: #2b3a57; line-height: 1; margin: 0 0 4px; }
 .plan-price sub { font-size: 14px; font-weight: 500; color: #888; vertical-align: middle; }
 .plan-period { font-size: 13px; color: #888; margin: 0 0 20px; }
 .plan-features {
@@ -237,15 +274,88 @@
   text-align: center; line-height: 1.5;
 }
 
+/* ── Decision Section ───────────────────────────────────────────────────────── */
+.decision-section {
+  background: #fff; border-radius: 16px; padding: 32px 28px;
+  margin-top: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.decision-title {
+  font-size: 20px; font-weight: 700; color: #2b3a57;
+  text-align: center; margin: 0 0 24px;
+}
+.decision-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.decision-item {
+  background: #f8fafc; border-radius: 12px; padding: 20px 16px;
+  text-align: center; border: 2px solid #e8edf2;
+  transition: transform .2s, border-color .2s;
+}
+.decision-item:hover {
+  transform: translateY(-2px); border-color: #667eea;
+}
+.decision-icon {
+  font-size: 32px; margin-bottom: 12px; display: block;
+}
+.decision-heading {
+  font-size: 14px; font-weight: 700; color: #2b3a57;
+  margin: 0 0 6px;
+}
+.decision-text {
+  font-size: 13px; color: #667085; margin: 0; line-height: 1.4;
+}
+
+/* ── Try Before Section ───────────────────────────────────────────────────────── */
+.try-before-box {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-radius: 16px; padding: 32px 28px;
+  border: 2px solid #86efac; text-align: center;
+}
+.try-before-title {
+  font-size: 22px; font-weight: 700; color: #2b3a57;
+  margin: 0 0 12px;
+}
+.try-before-text {
+  font-size: 15px; color: #667085; margin: 0; line-height: 1.6;
+  max-width: 600px; margin-left: auto; margin-right: auto;
+}
+
+/* ── Digital Clarification Section ─────────────────────────────────────────────── */
+.digital-clarification {
+  background: #fff; border-radius: 16px; padding: 32px 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06); text-align: center;
+}
+.digital-title {
+  font-size: 22px; font-weight: 700; color: #2b3a57;
+  margin: 0 0 12px;
+}
+.digital-text {
+  font-size: 15px; color: #667085; margin: 0 0 20px; line-height: 1.6;
+  max-width: 600px; margin-left: auto; margin-right: auto;
+}
+.digital-cta {
+  padding-top: 20px; border-top: 2px solid #f0f0f0;
+}
+.digital-cta-text {
+  font-size: 14px; color: #2b3a57; margin: 0 0 8px;
+}
+.digital-cta-link {
+  display: inline-block; color: #2f80ed; font-weight: 700;
+  text-decoration: none; font-size: 15px;
+  transition: color .2s;
+}
+.digital-cta-link:hover { color: #195fba; }
+
 /* ── Compare Table ────────────────────────────────────────────────────────── */
 .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .compare-table {
   width: 100%; border-collapse: collapse; background: #fff;
-  border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.08);
   min-width: 480px;
 }
 .compare-table th, .compare-table td {
-  padding: 13px 16px; border-bottom: 1px solid #f0f0f0;
+  padding: 14px 18px; border-bottom: 1px solid #f0f0f0;
   text-align: center; font-size: 14px;
 }
 .compare-table th {
@@ -254,7 +364,8 @@
 .compare-table th:first-child { text-align: left; background: #f8f9fa; color: #2b3a57; }
 .compare-table td:first-child { text-align: left; font-weight: 600; color: #2b3a57; }
 .compare-table tr:last-child td { border-bottom: none; }
-.ck { color: #22c55e; font-size: 16px; font-weight: 700; }
+.compare-table tr:hover td { background: #f8fafc; }
+.ck { color: #22c55e; font-size: 18px; font-weight: 700; }
 .na { color: #aaa; font-size: 14px; }
 
 /* ── How It Works ─────────────────────────────────────────────────────────── */
@@ -277,22 +388,24 @@
 /* ── FAQ ──────────────────────────────────────────────────────────────────── */
 .faq-wrap { max-width: 720px; margin: 0 auto; }
 .faq-item {
-  background: #fff; border-radius: 8px; margin-bottom: 10px;
-  box-shadow: 0 1px 6px rgba(0,0,0,.06); overflow: hidden;
+  background: #fff; border-radius: 12px; margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06); overflow: hidden;
+  border: 2px solid #f0f0f0; transition: border-color .2s;
 }
+.faq-item:hover { border-color: #667eea; }
 .faq-q {
-  padding: 16px 20px; cursor: pointer;
+  padding: 18px 22px; cursor: pointer;
   display: flex; justify-content: space-between; align-items: center;
-  font-weight: 600; color: #2b3a57; font-size: 14px;
+  font-weight: 700; color: #2b3a57; font-size: 15px;
   transition: background .2s; user-select: none;
 }
 .faq-q:hover { background: #f8f9fa; }
-.faq-icon { font-size: 20px; color: #667eea; font-weight: 700;
+.faq-icon { font-size: 22px; color: #667eea; font-weight: 700;
   transition: transform .25s; flex-shrink: 0; margin-left: 12px; }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
-.faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 20px; }
-.faq-item.open .faq-a { max-height: 300px; padding: 0 20px 16px; }
-.faq-a p { font-size: 13px; color: #555; line-height: 1.6; margin: 0; padding-top: 8px; }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 22px; }
+.faq-item.open .faq-a { max-height: 300px; padding: 0 22px 18px; }
+.faq-a p { font-size: 14px; color: #555; line-height: 1.7; margin: 0; padding-top: 10px; }
 
 /* ── Final CTA ────────────────────────────────────────────────────────────── */
 .final-cta {
@@ -311,6 +424,19 @@
   .sec-title { font-size: 22px; }
   .coupon-box { padding: 20px 16px; }
   .steps-grid { grid-template-columns: 1fr 1fr; }
+  .experience-grid { grid-template-columns: 1fr 1fr; }
+  .decision-grid { grid-template-columns: 1fr; }
+  .try-before-box { padding: 24px 20px; }
+  .digital-clarification { padding: 24px 20px; }
+  .final-cta h2 { font-size: 22px; }
+  .final-cta-btns { flex-direction: column; }
+  .final-cta-btns .btn-outline { width: 100%; text-align: center; }
+}
+
+@media (max-width: 400px) {
+  .hero h1 { font-size: 22px; }
+  .experience-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
 }
 </style>
 
@@ -318,67 +444,59 @@
 <body>
 <header><div id="nav-placeholder"></div></header>
 
-<!-- ══ 1. HERO — with benefits panel merged in ════════════════════════════════ -->
+<!-- ══ 1. HERO ══════════════════════════════════════════════════════════════ -->
 <section class="hero">
-  <!-- Floating decorative emojis -->
-  <div class="hero-emojis" aria-hidden="true">
-    <span>📖</span>
-    <span>✏️</span>
-    <span>⭐</span>
-    <span>🎯</span>
-    <span>📚</span>
-    <span>🌟</span>
-  </div>
-
   <div class="pc">
     <div class="hero-inner">
 
       <!-- Left: headline + CTA -->
       <div class="hero-left">
-        <h1>Build <em>Reading Skills</em> —<br>Anytime, Anywhere</h1>
-        <p>Interactive digital reading practice for children aged 4–10. Jolly Phonics books, audio and activities — all in one place.</p>
+        <h1>📚 Make Reading Practice <em>Fun!</em></h1>
+        <p>Interactive phonics books, Jolly Phonics audio and activities to help your child practise reading — anytime, anywhere.</p>
+        <p class="hero-subtext">For children aged 4–10 · Self-paced digital learning</p>
         <div class="hero-btns">
-          <button class="btn-y"       onclick="handleStartFree()">Start Free</button>
-          <button class="btn-outline" onclick="scrollToPlans()">View Plans</button>
+          <button class="btn-y" onclick="handleStartFree()">Start Free</button>
         </div>
-        <p class="hero-note">Digital Reading Platform only — live phonics classes not included.</p>
+        <p class="hero-note">Digital reading subscription — live phonics classes are separate.</p>
       </div>
 
-      <!-- Right: benefit cards (merged from "What Your Child Gets") -->
+      <!-- Right: product screenshot -->
       <div class="hero-right">
-        <h3>Everything your child needs</h3>
-        <div class="hero-benefits">
-          <div class="hero-benefit">
-            <span class="icon">📖</span>
-            <strong>Interactive Books</strong>
-            <span>Engaging digital books with activities</span>
-          </div>
-          <div class="hero-benefit">
-            <span class="icon">🔊</span>
-            <strong>Jolly Phonics Audio</strong>
-            <span>Correct sounds and pronunciation</span>
-          </div>
-          <div class="hero-benefit">
-            <span class="icon">🎯</span>
-            <strong>Reading Practice</strong>
-            <span>Self-paced, at your child's level</span>
-          </div>
-          <div class="hero-benefit">
-            <span class="icon">📈</span>
-            <strong>Progress Tracking</strong>
-            <span>Monitor learning automatically</span>
-          </div>
-        </div>
+        <img src="/images/reading-studio-preview.png" alt="ExcelKidsHub Reading Studio - Interactive phonics books and activities" loading="lazy">
       </div>
 
     </div>
   </div>
+</section>
 
-  <!-- Wavy bottom edge transitions into white/grey page content -->
-  <div class="hero-wave" aria-hidden="true">
-    <svg viewBox="0 0 1200 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,32 C200,0 400,48 600,24 C800,0 1000,40 1200,20 L1200,48 L0,48 Z" fill="#f7fff5"/>
-    </svg>
+<!-- ══ 2. PRODUCT EXPERIENCE ═══════════════════════════════════════════════════ -->
+<section class="sec" style="background:#fff;">
+  <div class="pc">
+    <h2 class="sec-title">Everything Your Child Needs to Practise Reading</h2>
+    <p class="sec-sub">Four key skills that build strong reading foundations</p>
+    
+    <div class="experience-grid">
+      <div class="experience-item">
+        <div class="experience-icon">📖</div>
+        <h3 class="experience-title">Read</h3>
+        <p class="experience-desc">Interactive digital phonics books</p>
+      </div>
+      <div class="experience-item">
+        <div class="experience-icon">🔊</div>
+        <h3 class="experience-title">Hear</h3>
+        <p class="experience-desc">Jolly Phonics sounds and pronunciation</p>
+      </div>
+      <div class="experience-item">
+        <div class="experience-icon">✏️</div>
+        <h3 class="experience-title">Practise</h3>
+        <p class="experience-desc">Interactive reading activities</p>
+      </div>
+      <div class="experience-item">
+        <div class="experience-icon">📈</div>
+        <h3 class="experience-title">Grow</h3>
+        <p class="experience-desc">Reading progress and practice</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -395,7 +513,7 @@
 
       <!-- Starter (Free) -->
       <div class="plan-card" data-plan="free" onclick="selectPlan('free')">
-        <span class="plan-badge badge-free">FREE</span>
+        <span class="plan-badge badge-free">🌱 FREE</span>
         <h3 class="plan-name">Starter</h3>
         <div class="plan-price">₹0</div>
         <p class="plan-period">Forever</p>
@@ -412,7 +530,7 @@
       <!-- Digital Reading Level 1 -->
       <!-- Price updated dynamically by updatePricingCards() from GET /api/plans -->
       <div class="plan-card" data-plan="level1" onclick="selectPlan('level1')">
-        <span class="plan-badge badge-paid">LEVEL 1</span>
+        <span class="plan-badge badge-paid">🔤 LEVEL 1</span>
         <h3 class="plan-name" id="name-level1">Digital Reading Level 1</h3>
         <div class="plan-price" id="price-level1">
           <span style="font-size:16px;color:#888;">Loading…</span>
@@ -424,14 +542,14 @@
           <li>Progress Tracking</li>
         </ul>
         <button class="btn-plan btn-paid" id="btn-level1"
-                onclick="handleBuyClick('level1', event)">Subscribe Now</button>
+                onclick="handleBuyClick('level1', event)">Choose Level 1</button>
       </div>
 
       <!-- Complete Reading Bundle -->
       <!-- Price updated dynamically by updatePricingCards() from GET /api/plans -->
       <div class="plan-card best-value" data-plan="bundle" onclick="selectPlan('bundle')">
         <div class="plan-ribbon">⭐ BEST VALUE</div>
-        <span class="plan-badge badge-bundle">BUNDLE</span>
+        <span class="plan-badge badge-bundle">⭐ BUNDLE</span>
         <h3 class="plan-name" id="name-bundle">Complete Reading Bundle</h3>
         <div class="plan-price" id="price-bundle">
           <span style="font-size:16px;color:#888;">Loading…</span>
@@ -446,10 +564,32 @@
           <li>Future Bundle Content</li>
         </ul>
         <button class="btn-plan btn-bundle" id="btn-bundle"
-                onclick="handleBuyClick('bundle', event)">Subscribe Now</button>
+                onclick="handleBuyClick('bundle', event)">Get Complete Bundle</button>
       </div>
 
     </div><!-- /pricing-grid -->
+
+    <!-- ══ WHICH PLAN IS RIGHT? ═════════════════════════════════════════════════ -->
+    <div class="decision-section">
+      <h3 class="decision-title">Which Plan Is Right for Your Child?</h3>
+      <div class="decision-grid">
+        <div class="decision-item">
+          <div class="decision-icon">🌱</div>
+          <h4 class="decision-heading">Just exploring?</h4>
+          <p class="decision-text">Start with <strong>Starter</strong></p>
+        </div>
+        <div class="decision-item">
+          <div class="decision-icon">🔤</div>
+          <h4 class="decision-heading">Beginning phonics and early reading?</h4>
+          <p class="decision-text">Choose <strong>Level 1</strong></p>
+        </div>
+        <div class="decision-item">
+          <div class="decision-icon">📚</div>
+          <h4 class="decision-heading">Want the complete reading experience?</h4>
+          <p class="decision-text">Choose <strong>Complete</strong></p>
+        </div>
+      </div>
+    </div>
 
     <!-- ══ 4. COUPON ══════════════════════════════════════════════════════════ -->
     <div class="coupon-box">
@@ -462,6 +602,31 @@
     </div>
 
   </div><!-- /pc -->
+</section>
+
+<!-- ══ TRY BEFORE YOU SUBSCRIBE ═════════════════════════════════════════════════ -->
+<section class="sec" style="background:#fff;">
+  <div class="pc">
+    <div class="try-before-box">
+      <h2 class="try-before-title">Try Before You Subscribe</h2>
+      <p class="try-before-text">Let your child explore ExcelKidsHub Reading Studio before choosing a paid plan. The Starter plan gives you access to sample books and activities so you can see if it's right for your child.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DIGITAL PRODUCT CLARIFICATION ══════════════════════════════════════════ -->
+<section class="sec" style="background:linear-gradient(180deg, #f4fbff 0%, #fff9ed 100%);">
+  <div class="pc">
+    <div class="digital-clarification">
+      <h2 class="digital-title">Digital Reading Platform</h2>
+      <p class="digital-text">This subscription provides access to interactive digital books, phonics audio, self-paced practice, reading activities, and progress features.</p>
+      
+      <div class="digital-cta">
+        <p class="digital-cta-text"><strong>Looking for live phonics classes?</strong></p>
+        <a href="/courses.html" class="digital-cta-link">Explore our teacher-led programs →</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ══ 5. COMPARE PLANS ══════════════════════════════════════════════════════ -->
@@ -523,28 +688,33 @@
 <!-- ══ 6. HOW IT WORKS ═══════════════════════════════════════════════════════ -->
 <section class="sec">
   <div class="pc">
-    <h2 class="sec-title">Start Learning in 4 Simple Steps</h2>
-    <p class="sec-sub">&nbsp;</p>
+    <h2 class="sec-title">How ExcelKidsHub Works</h2>
+    <p class="sec-sub">From sign-up to reading confidence in 5 simple steps</p>
     <div class="steps-grid">
       <div class="step">
         <div class="step-num">1</div>
-        <h4>Create Account</h4>
-        <p>Sign up for free.</p>
+        <h4>Choose a plan</h4>
+        <p>Select the reading access you need</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h4>Choose Your Plan</h4>
-        <p>Select the reading access you need.</p>
+        <h4>Get access</h4>
+        <p>Sign up and start exploring</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h4>Open Reading Studio</h4>
-        <p>Access your digital books and activities.</p>
+        <h4>Explore books & activities</h4>
+        <p>Access your digital content</p>
       </div>
       <div class="step">
         <div class="step-num">4</div>
-        <h4>Read, Practise &amp; Track</h4>
-        <p>Build reading skills at your child's own pace.</p>
+        <h4>Practise regularly</h4>
+        <p>Build skills at your child's pace</p>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <h4>Build reading confidence</h4>
+        <p>Watch progress grow over time</p>
       </div>
     </div>
   </div>
@@ -599,11 +769,11 @@
 <!-- ══ 8. FINAL CTA ══════════════════════════════════════════════════════════ -->
 <section class="final-cta">
   <div class="pc">
-    <h2>Ready to Start Reading?</h2>
-    <p>Let your child explore the ExcelKidsHub Digital Reading Platform today.</p>
+    <h2>Ready to Make Reading Practice a Daily Habit?</h2>
+    <p>Start free and let your child explore ExcelKidsHub Reading Studio.</p>
     <div class="final-cta-btns">
-      <button class="btn-y"       onclick="handleStartFree()">Start Free</button>
-      <button class="btn-outline" onclick="scrollToPlans()">View Plans</button>
+      <button class="btn-y" onclick="handleStartFree()">Start Free</button>
+      <a href="/courses.html" class="btn-outline" style="display:inline-block;padding:12px 24px;border-radius:24px;text-decoration:none;font-weight:600;color:#2b3a57;border:2px solid rgba(255,255,255,0.3);transition:all .3s;">Explore Live Phonics Classes</a>
     </div>
   </div>
 </section>
@@ -710,7 +880,16 @@
     document.querySelectorAll('.btn-plan').forEach(btn => {
       btn.classList.remove('selected');
       if (!btn.disabled) {
-        btn.textContent = btn.classList.contains('btn-free') ? 'Start Free' : 'Subscribe Now';
+        // Preserve original button text based on button class
+        if (btn.classList.contains('btn-free')) {
+          btn.textContent = 'Start Free';
+        } else if (btn.classList.contains('btn-paid')) {
+          btn.textContent = 'Choose Level 1';
+        } else if (btn.classList.contains('btn-bundle')) {
+          btn.textContent = 'Get Complete Bundle';
+        } else {
+          btn.textContent = 'Subscribe Now';
+        }
       }
     });
     const card = document.querySelector(`[data-plan="${plan}"]`);

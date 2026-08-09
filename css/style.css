@@ -2759,3 +2759,19 @@ width:90%;
 max-width:1150px;
 margin:auto;
 }
+
+/* ================= DIGITAL READING STUDIO SECTION ================= */
+/* Arrow connectors hide on very small screens to avoid clutter */
+@media(max-width:480px){
+  .studio-arrow { display:none; }
+}
+
+/* ================= WHY EXCELKIDSHUB GRID — RESPONSIVE ================= */
+@media(max-width:480px){
+  /* The why-grid uses inline auto-fit so it self-collapses. No override needed. */
+}
+
+/* ================= PROGRAM SECTION — VIEW DETAILS BUTTON ================= */
+.program-section .btn {
+  margin-top:0;
+}
