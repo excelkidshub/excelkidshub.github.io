@@ -95,3 +95,8 @@ export const adminGetCourses   = ()             => adminApi.get('/admin/courses?
 export const adminCreateCourse = (dto)          => adminApi.post('/admin/courses', dto);
 export const adminUpdateCourse = (id, dto)      => adminApi.put(`/admin/courses/${id}`, dto);
 export const adminSetCourseStatus = (id, active)=> adminApi.put(`/admin/courses/${id}/status?active=${active}`);
+
+export const adminGetRefunds    = (status)       => adminApi.get(`/admin/refunds?status=${status || ''}`);
+export const adminGetPendingRefunds = ()         => adminApi.get('/admin/refunds/pending');
+export const adminGetRefundById = (id)           => adminApi.get(`/admin/refunds/${id}`);
+export const adminProcessRefundAction = (id, dto)=> adminApi.post(`/admin/refunds/${id}/action`, dto);

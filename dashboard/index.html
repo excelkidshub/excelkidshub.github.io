@@ -348,6 +348,19 @@
           <p>Get access to all phonics courses and materials</p>
           <a href="../pricing.html" class="btn-cta">View Plans</a>
         </div>
+        
+        <!-- Refund Section -->
+        <div id="refund-section" style="display:none; margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0;">
+          <h3 style="font-size: 16px; margin-bottom: 12px; color: #2b3a57;">7-Day Refund Policy</h3>
+          <p style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+            Eligible digital purchases can be requested for a refund within 7 days of purchase.
+          </p>
+          <div id="refund-status-content"></div>
+          <div id="refund-request-form" style="display:none;">
+            <textarea id="refund-reason" placeholder="Reason for refund request (optional)" style="width:100%; padding:8px; border:1px solid #e2e8f0; border-radius:4px; font-family:inherit; margin-bottom:8px;" rows="2"></textarea>
+            <button id="request-refund-btn" class="btn-course" style="font-size:13px; padding:8px 16px;">Request Refund</button>
+          </div>
+        </div>
       </div>
 
       <!-- Courses Card -->
@@ -426,6 +439,7 @@
     const planEl   = document.getElementById('subscription-plan');
     const expiryEl = document.getElementById('subscription-expiry');
     const ctaEl    = document.getElementById('subscription-cta');
+    const refundEl = document.getElementById('refund-section');
 
     if (subscription && subscription.status === 'ACTIVE') {
       statusEl.innerHTML = '<span class="status-badge status-active">Active Subscription</span>';
@@ -436,11 +450,20 @@
         : 'N/A';
       expiryEl.textContent = `Expires: ${expiry}`;
       ctaEl.style.display  = 'none';
+      
+      // Show refund section if paymentId is available
+      if (subscription.paymentId) {
+        refundEl.style.display = 'block';
+        loadRefundStatus(subscription.paymentId);
+      } else {
+        refundEl.style.display = 'none';
+      }
     } else {
       statusEl.innerHTML   = '<span class="status-badge status-inactive">No Active Subscription</span>';
       planEl.textContent   = 'No plan selected';
       expiryEl.textContent = '-';
       ctaEl.style.display  = 'block';
+      refundEl.style.display = 'none';
     }
   }
 
@@ -516,6 +539,84 @@
       resendVerifyLink.textContent = 'Sent! Check your inbox.';
     } catch (err) {
       resendVerifyLink.textContent = 'Failed — try again later.';
+    }
+  });
+
+  // ── Refund Status ─────────────────────────────────────────────────────────────
+  let currentPaymentId = null;
+
+  async function loadRefundStatus(paymentId) {
+    currentPaymentId = paymentId;
+    const statusContent = document.getElementById('refund-status-content');
+    const requestForm = document.getElementById('refund-request-form');
+    
+    try {
+      // Check eligibility first
+      const eligibility = await api.checkRefundEligibility(paymentId);
+      if (eligibility.data === false) {
+        statusContent.innerHTML = '<p style="font-size:13px;color:#666;">This payment is not eligible for refund (outside 7-day window or already processed).</p>';
+        requestForm.style.display = 'none';
+        return;
+      }
+
+      // Check existing refund status
+      const refundStatus = await api.getRefundStatus(paymentId);
+      if (refundStatus.data) {
+        const r = refundStatus.data;
+        const statusMap = {
+          'REQUESTED': '<span style="color:#f59e0b;font-weight:600;">Under Review</span>',
+          'APPROVED': '<span style="color:#2f80ed;font-weight:600;">Approved</span>',
+          'REJECTED': '<span style="color:#dc2626;font-weight:600;">Not Approved</span>',
+          'REFUNDED': '<span style="color:#27ae60;font-weight:600;">Refunded</span>'
+        };
+        
+        let message = '';
+        if (r.status === 'REQUESTED') {
+          message = `Your refund request is under review. Requested on: ${new Date(r.requestedAt).toLocaleDateString('en-IN')}.`;
+        } else if (r.status === 'APPROVED') {
+          message = `Your refund request has been approved. The refund will be processed to your original payment method.`;
+        } else if (r.status === 'REJECTED') {
+          message = `Your refund request was not approved. Please contact ExcelKidsHub Support if you have questions.`;
+        } else if (r.status === 'REFUNDED') {
+          message = `Your refund has been processed. Your digital subscription access has ended.`;
+        }
+
+        statusContent.innerHTML = `
+          <p style="font-size:13px;color:#667085;margin-bottom:8px;">Status: ${statusMap[r.status] || r.status}</p>
+          <p style="font-size:12px;color:#666;">${message}</p>
+        `;
+        requestForm.style.display = 'none';
+      } else {
+        // No existing refund, show request form
+        statusContent.innerHTML = '<p style="font-size:13px;color:#27ae60;">✓ Eligible for refund</p>';
+        requestForm.style.display = 'block';
+      }
+    } catch (err) {
+      console.log('Refund status check failed:', err.message);
+      statusContent.innerHTML = '<p style="font-size:13px;color:#666;">Unable to check refund eligibility.</p>';
+      requestForm.style.display = 'none';
+    }
+  }
+
+  // ── Request Refund ─────────────────────────────────────────────────────────────
+  document.getElementById('request-refund-btn').addEventListener('click', async () => {
+    if (!currentPaymentId) return;
+    
+    const reason = document.getElementById('refund-reason').value.trim();
+    const btn = document.getElementById('request-refund-btn');
+    
+    btn.textContent = 'Submitting...';
+    btn.disabled = true;
+    
+    try {
+      const response = await api.requestRefund(currentPaymentId, reason);
+      alert('Your refund request has been submitted. Our team will review it and contact you.');
+      loadRefundStatus(currentPaymentId);
+    } catch (err) {
+      alert(err.message || 'Failed to submit refund request. Please try again.');
+    } finally {
+      btn.textContent = 'Request Refund';
+      btn.disabled = false;
     }
   });
 

@@ -116,5 +116,20 @@ export const api = {
       console.error('DELETE request error:', error);
       throw error;
     }
+  },
+
+  /**
+   * Refund API methods
+   */
+  async checkRefundEligibility(paymentId) {
+    return await this.get(`/refunds/eligibility/${paymentId}`);
+  },
+
+  async requestRefund(paymentId, reason) {
+    return await this.post('/refunds/request', { paymentId, reason });
+  },
+
+  async getRefundStatus(paymentId) {
+    return await this.get(`/refunds/status/${paymentId}`);
   }
 };

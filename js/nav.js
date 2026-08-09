@@ -123,6 +123,13 @@ const footerHTML = `
             <a href="/phonics-classes-vishrantwadi.html">Vishrantwadi Classes</a>
         </nav>
 
+        <nav class="ekh-footer__col" aria-label="Legal">
+            <h2>Legal</h2>
+            <a href="/terms-and-conditions.html">Terms & Conditions</a>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/refund-policy.html">Refund Policy</a>
+        </nav>
+
         <div class="ekh-footer__col ekh-footer__contact">
             <h2>Visit & Contact</h2>
             <a href="tel:+918793135679">+91 8793135679</a>

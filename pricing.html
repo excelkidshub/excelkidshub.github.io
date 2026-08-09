@@ -569,6 +569,19 @@
 
     </div><!-- /pricing-grid -->
 
+    <!-- ══ TRUST MESSAGE ═══════════════════════════════════════════════════════ -->
+    <div style="text-align:center;margin:32px 0;padding:20px;background:#f0fdf4;border-radius:12px;border:2px solid #86efac;">
+      <p style="margin:0 0 8px;font-size:18px;font-weight:700;color:#2b3a57;">💚 Try With Confidence</p>
+      <p style="margin:0;font-size:15px;color:#555;">7-day refund policy on eligible digital purchases.</p>
+      <div style="margin-top:12px;font-size:13px;color:#667085;">
+        <a href="/terms-and-conditions.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Terms & Conditions</a>
+        <span style="color:#ccc;">·</span>
+        <a href="/privacy-policy.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Privacy Policy</a>
+        <span style="color:#ccc;">·</span>
+        <a href="/refund-policy.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Refund Policy</a>
+      </div>
+    </div>
+
     <!-- ══ WHICH PLAN IS RIGHT? ═════════════════════════════════════════════════ -->
     <div class="decision-section">
       <h3 class="decision-title">Which Plan Is Right for Your Child?</h3>
@@ -599,6 +612,24 @@
         <button class="btn-apply" id="coupon-btn" onclick="validateCoupon()">Apply</button>
       </div>
       <div id="coupon-result"></div>
+    </div>
+
+    <!-- ══ PAYMENT CONSENT ═════════════════════════════════════════════════════ -->
+    <div class="coupon-box" id="consent-box" style="display:none;">
+      <div style="margin-bottom:16px;">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+          <input type="checkbox" id="terms-checkbox" style="margin-top:4px;flex-shrink:0;">
+          <span style="font-size:14px;color:#555;line-height:1.5;">
+            I agree to the <a href="/terms-and-conditions.html" target="_blank" style="color:#2f80ed;">Terms & Conditions</a> and <a href="/privacy-policy.html" target="_blank" style="color:#2f80ed;">Privacy Policy</a>
+          </span>
+        </label>
+      </div>
+      <div style="font-size:13px;color:#888;background:#f8fafc;padding:12px;border-radius:8px;">
+        <strong>What you are purchasing:</strong><br>
+        <span id="purchase-plan-name">Plan name</span> – <span id="purchase-plan-price">₹0</span><br>
+        Access period: <span id="purchase-plan-duration">30 days</span><br>
+        <span style="color:#dc2626;">Digital Reading access only. Live phonics classes are not included unless specifically stated in the plan.</span>
+      </div>
     </div>
 
   </div><!-- /pc -->
@@ -900,6 +931,27 @@
       btn.textContent = '✓ Selected';
     }
     selectedPlanSlug = plan;
+
+    // Show consent box for paid plans
+    const consentBox = document.getElementById('consent-box');
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    if (consentBox && termsCheckbox) {
+      if (plan !== 'free') {
+        consentBox.style.display = 'block';
+        // Update purchase details
+        const planData = window.planData || {};
+        const selectedPlan = planData[plan];
+        if (selectedPlan) {
+          document.getElementById('purchase-plan-name').textContent = selectedPlan.name || plan;
+          document.getElementById('purchase-plan-price').textContent = '₹' + Number(selectedPlan.price).toLocaleString('en-IN');
+          document.getElementById('purchase-plan-duration').textContent = '30 days';
+        }
+        // Reset checkbox
+        termsCheckbox.checked = false;
+      } else {
+        consentBox.style.display = 'none';
+      }
+    }
   };
 
   // ── Free plan ─────────────────────────────────────────────────────────────
@@ -936,6 +988,15 @@
       return;
     }
 
+    // Check consent checkbox for paid plans
+    if (planSlug !== 'free') {
+      const termsCheckbox = document.getElementById('terms-checkbox');
+      if (!termsCheckbox || !termsCheckbox.checked) {
+        alert('Please agree to the Terms & Conditions and Privacy Policy to continue.');
+        return;
+      }
+    }
+
     let plan = planData[planSlug];
     if (!plan) {
       plan = Object.values(planData).find(p =>
@@ -961,8 +1022,8 @@
         const subData = couponRes.data || couponRes;
         storage.setSubscription({ status: subData.status, planName: subData.planName,
           endDate: subData.endDate, startDate: subData.startDate });
-        alert('🎉 Coupon applied! Your subscription is now active.');
-        window.location.href = 'dashboard/index.html';
+        // Redirect to payment success page
+        window.location.href = `payment-success.html?amount=0&order_id=COUPON-${appliedCoupon.code}`;
         return;
       }
 
@@ -1000,11 +1061,11 @@
             const subData = verifyRes.data || verifyRes;
             storage.setSubscription({ status: subData.status, planName: subData.planName,
               endDate: subData.endDate, startDate: subData.startDate });
-            alert('🎉 Payment successful! Your subscription is now active.');
-            window.location.href = 'dashboard/index.html';
+            // Redirect to payment success page with details
+            window.location.href = `payment-success.html?amount=${orderData.amount}&order_id=${response.razorpay_order_id}`;
           } catch (err) {
-            alert('Payment received but activation failed. Contact support with payment ID: '
-              + response.razorpay_payment_id);
+            // Redirect to payment failure page
+            window.location.href = `payment-failed.html?order_id=${response.razorpay_order_id}`;
           }
         },
         modal: { ondismiss: function() {
@@ -1013,8 +1074,8 @@
       });
 
       rzp.on('payment.failed', function(response) {
-        alert('Payment failed: ' + (response.error.description || 'Please try again.'));
-        if (btn) { btn.disabled = false; btn.textContent = 'Subscribe Now'; }
+        // Redirect to payment failure page
+        window.location.href = `payment-failed.html?order_id=${response.error.metadata ? response.error.metadata.order_id : ''}`;
       });
 
       rzp.open();

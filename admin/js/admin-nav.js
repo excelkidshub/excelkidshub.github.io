@@ -12,6 +12,7 @@ export function renderAdminNav() {
         { href: '/admin/users',           label: 'Users'         },
         { href: '/admin/subscriptions',   label: 'Subscriptions' },
         { href: '/admin/payments',        label: 'Payments'      },
+        { href: '/admin/refunds',         label: 'Refunds'       },
         { href: '/admin/plans',           label: 'Plans'         },
         { href: '/admin/courses',         label: 'Courses'       },
         { href: '/admin/coupons',         label: 'Coupons'       },
