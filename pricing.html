@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Reading Plans | ExcelKidsHub Phonics Academy</title>
-<meta name="description" content="Choose a digital reading plan for your child. Interactive books, Jolly Phonics audio, practice activities and progress tracking.">
-<link rel="stylesheet" href="css/style.css?v=20260706">
+<meta name="description" content="Help Your Child Practise Phonics, Read and Build Confidence — Anytime, Anywhere. Interactive phonics books, audio and reading practice designed for children aged 4–10.">
+<link rel="stylesheet" href="css/style.css?v=20260809c">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <style>
 /* ── Base ─────────────────────────────────────────────────────────────────── */
@@ -451,13 +451,13 @@
 
       <!-- Left: headline + CTA -->
       <div class="hero-left">
-        <h1>📚 Make Reading Practice <em>Fun!</em></h1>
-        <p>Interactive phonics books, Jolly Phonics audio and activities to help your child practise reading — anytime, anywhere.</p>
-        <p class="hero-subtext">For children aged 4–10 · Self-paced digital learning</p>
+        <h1>Digital Reading Plans</h1>
+        <p>Help Your Child Practise Phonics, Read and Build Confidence — Anytime, Anywhere</p>
+        <p class="hero-subtext">Interactive phonics books, audio and reading practice designed for children aged 4–10.</p>
         <div class="hero-btns">
           <button class="btn-y" onclick="handleStartFree()">Start Free</button>
         </div>
-        <p class="hero-note">Digital reading subscription — live phonics classes are separate.</p>
+        <p class="hero-note" style="background:#fef3c7;padding:8px 12px;border-radius:6px;border:1px solid #fde68a;color:#92400e;"><strong>Digital Reading Platform only</strong> — live phonics classes are not included.</p>
       </div>
 
       <!-- Right: product screenshot -->
@@ -535,6 +535,7 @@
         <div class="plan-price" id="price-level1">
           <span style="font-size:16px;color:#888;">Loading…</span>
         </div>
+        <p class="plan-period" id="period-level1">30 Days</p>
         <ul class="plan-features">
           <li>Complete Level 1 Interactive Book</li>
           <li>Audio Support</li>
@@ -542,7 +543,7 @@
           <li>Progress Tracking</li>
         </ul>
         <button class="btn-plan btn-paid" id="btn-level1"
-                onclick="handleBuyClick('level1', event)">Choose Level 1</button>
+                onclick="handleBuyClick('level1', event)">Start Reading</button>
       </div>
 
       <!-- Complete Reading Bundle -->
@@ -554,6 +555,7 @@
         <div class="plan-price" id="price-bundle">
           <span style="font-size:16px;color:#888;">Loading…</span>
         </div>
+        <p class="plan-period" id="period-bundle">30 Days</p>
         <ul class="plan-features">
           <li>Level 1</li>
           <li>Level 2</li>
@@ -564,7 +566,7 @@
           <li>Future Bundle Content</li>
         </ul>
         <button class="btn-plan btn-bundle" id="btn-bundle"
-                onclick="handleBuyClick('bundle', event)">Get Complete Bundle</button>
+                onclick="handleBuyClick('bundle', event)">Get Complete Access</button>
       </div>
 
     </div><!-- /pricing-grid -->

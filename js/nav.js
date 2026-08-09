@@ -23,8 +23,8 @@ function getNavigationHTML(isLoggedIn) {
 
     <nav class="nav-links" id="navLinks">
         <a href="/">Home</a>
-        <a href="/courses.html">Courses</a>
-        <a href="/schedule.html">Schedule</a>
+        <a href="/courses.html">Programs</a>
+        <a href="https://read.excelkidshub.in" target="_blank" rel="noopener">Reading Studio</a>
         <a href="/pricing.html">Pricing</a>
         <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
@@ -34,7 +34,7 @@ function getNavigationHTML(isLoggedIn) {
                 <a href="/dashboard/index.html">Dashboard</a>
                 <a href="/dashboard/index.html#courses">My Courses</a>
                 <a href="/dashboard/index.html#subscription">Subscription</a>
-                <a href="/dashboard/profile.html">Profile</a>
+                <a href="/_dashboard/profile.html">Profile</a>
                 <a href="#" id="logout-link">Logout</a>
             </div>
         </div>
@@ -65,8 +65,8 @@ function getNavigationHTML(isLoggedIn) {
 
     <nav class="nav-links" id="navLinks">
         <a href="/">Home</a>
-        <a href="/courses.html">Courses</a>
-        <a href="/schedule.html">Schedule</a>
+        <a href="/courses.html">Programs</a>
+        <a href="https://read.excelkidshub.in" target="_blank" rel="noopener">Reading Studio</a>
         <a href="/pricing.html">Pricing</a>
         <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>

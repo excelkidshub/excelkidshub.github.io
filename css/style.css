@@ -812,10 +812,57 @@ font-size:18px;
 margin-bottom:15px;
 }
 
+.hero-eyebrow {
+font-size:13px;
+font-weight:700;
+color:#667eea;
+letter-spacing:1px;
+margin:0 0 8px 0;
+text-transform:uppercase;
+}
+
+.hero-location {
+font-size:15px;
+color:#555;
+margin:0 0 20px 0;
+font-weight:500;
+}
+
+.hero-buttons {
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.btn-secondary {
+background:#fff;
+color:#2b3a57;
+border:2px solid #e0e0e0;
+}
+
+.btn-secondary:hover {
+background:#f8f9fa;
+border-color:#2b3a57;
+color:#2b3a57;
+}
+
 @media(max-width:768px){
 
   .hero .btn{
     margin:8px 6px;
+  }
+
+  .hero-buttons {
+    justify-content:center;
+  }
+
+  .hero-eyebrow {
+    text-align:center;
+  }
+
+  .hero-location {
+    text-align:center;
   }
 
 }
@@ -896,6 +943,30 @@ width:100%;
 max-width:380px;
 height:auto;
 border-radius:15px;
+}
+
+.founder-text{
+flex:1;
+min-width:300px;
+}
+
+.founder h2{
+margin:0 0 4px 0;
+color:#2b3a57;
+font-size:28px;
+}
+
+.founder-title{
+font-size:16px;
+color:#667eea;
+font-weight:600;
+margin:0 0 8px 0;
+}
+
+.founder-credentials{
+font-size:15px;
+color:#555;
+margin:0 0 16px 0;
 }
 
 .founder-text{
