@@ -444,37 +444,6 @@
 <body>
 <header><div id="nav-placeholder"></div></header>
 
-<!-- ══ 1. PRODUCT EXPERIENCE ═══════════════════════════════════════════════════ -->
-<section class="sec" style="background:#fff;">
-  <div class="pc">
-    <h2 class="sec-title">Everything Your Child Needs to Practise Reading</h2>
-    <p class="sec-sub">Four key skills that build strong reading foundations</p>
-    
-    <div class="experience-grid">
-      <div class="experience-item">
-        <div class="experience-icon">📖</div>
-        <h3 class="experience-title">Read</h3>
-        <p class="experience-desc">Interactive digital phonics books</p>
-      </div>
-      <div class="experience-item">
-        <div class="experience-icon">🔊</div>
-        <h3 class="experience-title">Hear</h3>
-        <p class="experience-desc">Jolly Phonics sounds and pronunciation</p>
-      </div>
-      <div class="experience-item">
-        <div class="experience-icon">✏️</div>
-        <h3 class="experience-title">Practise</h3>
-        <p class="experience-desc">Interactive reading activities</p>
-      </div>
-      <div class="experience-item">
-        <div class="experience-icon">📈</div>
-        <h3 class="experience-title">Grow</h3>
-        <p class="experience-desc">Reading progress and practice</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Welcome banner placeholder (injected by JS when ?welcome=1) -->
 <div id="welcome-banner-slot"></div>
 
@@ -499,7 +468,7 @@
           <li>Limited Practice</li>
         </ul>
         <button class="btn-plan btn-free" id="btn-free"
-                onclick="handleBuyClick('free', event)">Start Learning</button>
+                onclick="handleBuyClick('free', event)">Select Starter</button>
       </div>
 
       <!-- Digital Reading Level 1 -->
@@ -518,7 +487,7 @@
           <li>Progress Tracking</li>
         </ul>
         <button class="btn-plan btn-paid" id="btn-level1"
-                onclick="handleBuyClick('level1', event)">Start Learning</button>
+                onclick="handleBuyClick('level1', event)">Select Level 1</button>
       </div>
 
       <!-- Complete Reading Bundle -->
@@ -541,268 +510,92 @@
           <li>Future Bundle Content</li>
         </ul>
         <button class="btn-plan btn-bundle" id="btn-bundle"
-                onclick="handleBuyClick('bundle', event)">Start Learning</button>
+                onclick="handleBuyClick('bundle', event)">Get Complete Bundle</button>
       </div>
 
     </div><!-- /pricing-grid -->
 
-    <!-- ══ PAYMENT CONSENT ═════════════════════════════════════════════════════ -->
-    <div class="coupon-box" id="consent-box" style="margin-top:32px;">
-      <div style="margin-bottom:16px;">
-        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
-          <input type="checkbox" id="terms-checkbox" style="margin-top:4px;flex-shrink:0;">
-          <span style="font-size:14px;color:#555;line-height:1.5;">
-            I agree to the <a href="/terms-and-conditions.html" target="_blank" style="color:#2f80ed;">Terms & Conditions</a> and <a href="/privacy-policy.html" target="_blank" style="color:#2f80ed;">Privacy Policy</a>
-          </span>
-        </label>
-      </div>
-      <div style="font-size:13px;color:#888;background:#f8fafc;padding:12px;border-radius:8px;">
-        <strong>What you are purchasing:</strong><br>
-        <span id="purchase-plan-name">Select a plan above</span> – <span id="purchase-plan-price">₹0</span><br>
-        Access period: <span id="purchase-plan-duration">30 days</span><br>
-        <span style="color:#dc2626;">Digital Reading access only. Live phonics classes are not included unless specifically stated in the plan.</span>
+    <!-- ══ QUICK PLAN GUIDANCE ═════════════════════════════════════════════════ -->
+    <div style="text-align:center;margin:24px 0;padding:16px;background:#f8fafc;border-radius:12px;border:1px solid #e8edf2;">
+      <p style="margin:0 0 12px;font-size:15px;font-weight:600;color:#2b3a57;">Not sure which plan to choose?</p>
+      <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;font-size:14px;color:#555;">
+        <span>🌱 <strong>Just exploring?</strong> → Starter</span>
+        <span>🔤 <strong>Starting phonics?</strong> → Level 1</span>
+        <span>📚 <strong>Complete experience?</strong> → Complete</span>
       </div>
     </div>
 
-    <!-- ══ TRUST MESSAGE ═══════════════════════════════════════════════════════ -->
-    <div style="text-align:center;margin:32px 0;padding:20px;background:#f0fdf4;border-radius:12px;border:2px solid #86efac;">
-      <p style="margin:0 0 8px;font-size:18px;font-weight:700;color:#2b3a57;">💚 Try With Confidence</p>
-      <p style="margin:0;font-size:15px;color:#555;">7-day refund policy on eligible digital purchases.</p>
-      <div style="margin-top:12px;font-size:13px;color:#667085;">
-        <a href="/terms-and-conditions.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Terms & Conditions</a>
-        <span style="color:#ccc;">·</span>
-        <a href="/privacy-policy.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Privacy Policy</a>
-        <span style="color:#ccc;">·</span>
-        <a href="/refund-policy.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Refund Policy</a>
-      </div>
-    </div>
-
-    <!-- ══ WHICH PLAN IS RIGHT? ═════════════════════════════════════════════════ -->
-    <div class="decision-section">
-      <h3 class="decision-title">Which Plan Is Right for Your Child?</h3>
-      <div class="decision-grid">
-        <div class="decision-item">
-          <div class="decision-icon">🌱</div>
-          <h4 class="decision-heading">Just exploring?</h4>
-          <p class="decision-text">Start with <strong>Starter</strong></p>
-        </div>
-        <div class="decision-item">
-          <div class="decision-icon">🔤</div>
-          <h4 class="decision-heading">Beginning phonics and early reading?</h4>
-          <p class="decision-text">Choose <strong>Level 1</strong></p>
-        </div>
-        <div class="decision-item">
-          <div class="decision-icon">📚</div>
-          <h4 class="decision-heading">Want the complete reading experience?</h4>
-          <p class="decision-text">Choose <strong>Complete</strong></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ 4. COUPON ══════════════════════════════════════════════════════════ -->
-    <div class="coupon-box">
-      <h3>🎁 Have a coupon code?</h3>
-      <div class="coupon-row">
+    <!-- ══ ORDER SUMMARY + COUPON ═════════════════════════════════════════════════════ -->
+    <div class="coupon-box" style="max-width:600px;margin:32px auto 0;">
+      <h3 style="margin:0 0 16px;font-size:18px;font-weight:700;color:#2b3a57;">🎁 Have a coupon?</h3>
+      <div class="coupon-row" style="margin-bottom:20px;">
         <input type="text" id="coupon-input" placeholder="Enter coupon code">
         <button class="btn-apply" id="coupon-btn" onclick="validateCoupon()">Apply</button>
       </div>
-      <div id="coupon-result"></div>
-    </div>
-
-    <!-- ══ PAYMENT CONSENT ═════════════════════════════════════════════════════ -->
-    <div class="coupon-box" id="consent-box" style="display:none;">
-      <div style="margin-bottom:16px;">
-        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
-          <input type="checkbox" id="terms-checkbox" style="margin-top:4px;flex-shrink:0;">
-          <span style="font-size:14px;color:#555;line-height:1.5;">
-            I agree to the <a href="/terms-and-conditions.html" target="_blank" style="color:#2f80ed;">Terms & Conditions</a> and <a href="/privacy-policy.html" target="_blank" style="color:#2f80ed;">Privacy Policy</a>
-          </span>
-        </label>
-      </div>
-      <div style="font-size:13px;color:#888;background:#f8fafc;padding:12px;border-radius:8px;">
-        <strong>What you are purchasing:</strong><br>
-        <span id="purchase-plan-name">Plan name</span> – <span id="purchase-plan-price">₹0</span><br>
-        Access period: <span id="purchase-plan-duration">30 days</span><br>
-        <span style="color:#dc2626;">Digital Reading access only. Live phonics classes are not included unless specifically stated in the plan.</span>
+      <div id="coupon-result" style="margin-bottom:16px;"></div>
+      
+      <div style="border-top:2px solid #e8edf2;padding-top:16px;">
+        <h4 style="margin:0 0 12px;font-size:16px;font-weight:700;color:#2b3a57;">Your Order</h4>
+        
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px;">
+          <span id="order-plan-name">Select a plan</span>
+          <span id="order-plan-price">₹0</span>
+        </div>
+        
+        <div style="margin-bottom:12px;font-size:13px;color:#667085;">
+          Access period: <span id="order-plan-duration">30 days</span>
+        </div>
+        
+        <div id="coupon-discount-row" style="display:none;justify-content:space-between;margin-bottom:8px;font-size:15px;color:#15803d;">
+          <span>Coupon discount</span>
+          <span id="coupon-discount-amount">-₹0</span>
+        </div>
+        
+        <div style="border-top:1px solid #e8edf2;padding-top:12px;margin-top:12px;display:flex;justify-content:space-between;font-size:18px;font-weight:800;color:#2b3a57;">
+          <span>Total</span>
+          <span id="order-total">₹0</span>
+        </div>
+        
+        <div style="margin-top:16px;padding:12px;background:#f8fafc;border-radius:8px;font-size:13px;color:#667085;">
+          <span style="color:#dc2626;">Digital Reading access only. Live phonics classes are not included unless specifically stated in the plan.</span>
+        </div>
+        
+        <div style="margin-top:16px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="terms-checkbox" style="margin-top:4px;flex-shrink:0;">
+            <span style="font-size:14px;color:#555;line-height:1.5;">
+              I agree to the <a href="/terms-and-conditions.html" target="_blank" style="color:#2f80ed;">Terms & Conditions</a> and <a href="/privacy-policy.html" target="_blank" style="color:#2f80ed;">Privacy Policy</a>
+            </span>
+          </label>
+        </div>
+        
+        <button id="payment-cta-btn" class="btn-plan btn-paid" style="margin-top:16px;width:100%;" onclick="handleBuySubscription()" disabled>
+          Continue to Payment
+        </button>
       </div>
     </div>
 
   </div><!-- /pc -->
 </section>
 
-<!-- ══ TRY BEFORE YOU SUBSCRIBE ═════════════════════════════════════════════════ -->
-<section class="sec" style="background:#fff;">
-  <div class="pc">
-    <div class="try-before-box">
-      <h2 class="try-before-title">Try Before You Subscribe</h2>
-      <p class="try-before-text">Let your child explore ExcelKidsHub Reading Studio before choosing a paid plan. The Starter plan gives you access to sample books and activities so you can see if it's right for your child.</p>
-    </div>
+<!-- ══ TRUST & LEGAL ═════════════════════════════════════════════════════ -->
+<div style="text-align:center;padding:24px 20px;background:#f8fafc;border-top:1px solid #e8edf2;">
+  <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:14px;color:#667085;">
+    <span>30-day access</span>
+    <span style="color:#ccc;">·</span>
+    <span>7-day eligible refund</span>
+    <span style="color:#ccc;">·</span>
+    <span>Digital reading access only</span>
   </div>
-</section>
-
-<!-- ══ DIGITAL PRODUCT CLARIFICATION ══════════════════════════════════════════ -->
-<section class="sec" style="background:linear-gradient(180deg, #f4fbff 0%, #fff9ed 100%);">
-  <div class="pc">
-    <div class="digital-clarification">
-      <h2 class="digital-title">Digital Reading Platform</h2>
-      <p class="digital-text">This subscription provides access to interactive digital books, phonics audio, self-paced practice, reading activities, and progress features.</p>
-      
-      <div class="digital-cta">
-        <p class="digital-cta-text"><strong>Looking for live phonics classes?</strong></p>
-        <a href="/courses.html" class="digital-cta-link">Explore our teacher-led programs →</a>
-      </div>
-    </div>
+  <p style="margin:0 0 12px;font-size:13px;color:#888;">Live phonics classes are not included unless specifically stated in the plan.</p>
+  <div style="font-size:13px;color:#667085;">
+    <a href="/terms-and-conditions.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Terms & Conditions</a>
+    <span style="color:#ccc;">·</span>
+    <a href="/privacy-policy.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Privacy Policy</a>
+    <span style="color:#ccc;">·</span>
+    <a href="/refund-policy.html" style="color:#2f80ed;text-decoration:none;margin:0 8px;">Refund Policy</a>
   </div>
-</section>
-
-<!-- ══ 5. COMPARE PLANS ══════════════════════════════════════════════════════ -->
-<section class="sec" style="background:linear-gradient(180deg, #f4fbff 0%, #fff9ed 100%);">
-  <div class="pc">
-    <h2 class="sec-title">Compare Plans</h2>
-    <p class="sec-sub" style="margin-bottom:24px;"></p>
-    <div class="compare-wrap">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th>Starter</th>
-            <th id="th-level1">Level 1</th>
-            <th id="th-bundle">Complete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Access</td>
-            <td>Forever</td>
-            <td>30 Days</td>
-            <td>30 Days</td>
-          </tr>
-          <tr>
-            <td>Sample Book</td>
-            <td class="ck">✓</td><td class="ck">✓</td><td class="ck">✓</td>
-          </tr>
-          <tr>
-            <td>Level 1 Content</td>
-            <td class="na">—</td><td class="ck">✓</td><td class="ck">✓</td>
-          </tr>
-          <tr>
-            <td>Level 2 Content</td>
-            <td class="na">—</td><td class="na">—</td><td class="ck">✓</td>
-          </tr>
-          <tr>
-            <td>Stories</td>
-            <td class="na">—</td><td class="na">—</td><td class="ck">✓</td>
-          </tr>
-          <tr>
-            <td>Audio Support</td>
-            <td>Limited</td><td class="ck">✓</td><td class="ck">✓</td>
-          </tr>
-          <tr>
-            <td>Practice Activities</td>
-            <td>Limited</td><td class="ck">✓</td><td class="ck">✓</td>
-          </tr>
-          <tr>
-            <td>Progress Tracking</td>
-            <td>Basic</td><td class="ck">✓</td><td class="ck">✓</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ══ 6. HOW IT WORKS ═══════════════════════════════════════════════════════ -->
-<section class="sec">
-  <div class="pc">
-    <h2 class="sec-title">How ExcelKidsHub Works</h2>
-    <p class="sec-sub">From sign-up to reading confidence in 5 simple steps</p>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h4>Choose a plan</h4>
-        <p>Select the reading access you need</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h4>Get access</h4>
-        <p>Sign up and start exploring</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h4>Explore books & activities</h4>
-        <p>Access your digital content</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h4>Practise regularly</h4>
-        <p>Build skills at your child's pace</p>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <h4>Build reading confidence</h4>
-        <p>Watch progress grow over time</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ 7. FAQ ═════════════════════════════════════════════════════════════════ -->
-<section class="sec" style="background:linear-gradient(180deg, #fff9ed 0%, #f7fff5 100%);">
-  <div class="pc">
-    <h2 class="sec-title">Frequently Asked Questions</h2>
-    <p class="sec-sub" style="margin-bottom:24px;"></p>
-    <div class="faq-wrap">
-
-      <div class="faq-item">
-        <div class="faq-q">What is the Digital Reading Platform?<span class="faq-icon">+</span></div>
-        <div class="faq-a"><p>An online system where your child can access interactive phonics books, audio support, and practice activities — designed to build reading confidence through self-paced practice.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Does this include live phonics classes?<span class="faq-icon">+</span></div>
-        <div class="faq-a"><p>No. These subscriptions are for the Digital Reading Platform only. Live teacher-led classes are offered separately through ExcelKidsHub Phonics Academy.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Can my child use it on mobile?<span class="faq-icon">+</span></div>
-        <div class="faq-a"><p>Yes. The platform works on smartphones, tablets, and desktop computers. Your child can learn anywhere with an internet connection.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Is internet required?<span class="faq-icon">+</span></div>
-        <div class="faq-a"><p>Yes, an active internet connection is required to use the Digital Reading Platform.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">How long does the subscription last?<span class="faq-icon">+</span></div>
-        <div class="faq-a"><p>Paid subscriptions are valid for 30 days from activation. Your child's progress is always saved — even if the subscription expires, progress resumes from where you left off when you renew.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Can I upgrade later?<span class="faq-icon">+</span></div>
-        <div class="faq-a"><p>Yes. You can switch to a higher plan at any time from the pricing page. Contact support if you need assistance.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Can multiple children use one account?<span class="faq-icon">+</span></div>
-        <div class="faq-a"><p>Each subscription is for one child to ensure accurate progress tracking. For multiple children we recommend separate accounts.</p></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══ 8. FINAL CTA ══════════════════════════════════════════════════════════ -->
-<section class="final-cta">
-  <div class="pc">
-    <h2>Ready to Make Reading Practice a Daily Habit?</h2>
-    <p>Start free and let your child explore ExcelKidsHub Reading Studio.</p>
-    <div class="final-cta-btns">
-      <button class="btn-y" onclick="handleStartFree()">Start Free</button>
-      <a href="/courses.html" class="btn-outline" style="display:inline-block;padding:12px 24px;border-radius:24px;text-decoration:none;font-weight:600;color:#2b3a57;border:2px solid rgba(255,255,255,0.3);transition:all .3s;">Explore Live Phonics Classes</a>
-    </div>
-  </div>
-</section>
+</div>
 
 <div id="footer-placeholder"></div>
 
@@ -927,17 +720,30 @@
     }
     selectedPlanSlug = plan;
 
-    // Update purchase details in consent box
+    // Update order summary
     const termsCheckbox = document.getElementById('terms-checkbox');
+    const paymentBtn = document.getElementById('payment-cta-btn');
+    
     if (termsCheckbox) {
       const selectedPlan = planData[plan];
       if (selectedPlan) {
-        document.getElementById('purchase-plan-name').textContent = selectedPlan.name || plan;
-        document.getElementById('purchase-plan-price').textContent = '₹' + Number(selectedPlan.price).toLocaleString('en-IN');
-        document.getElementById('purchase-plan-duration').textContent = '30 days';
+        const fmt = n => Number(n).toLocaleString('en-IN');
+        const price = Number(selectedPlan.price);
+        
+        document.getElementById('order-plan-name').textContent = selectedPlan.name || plan;
+        document.getElementById('order-plan-price').textContent = '₹' + fmt(price);
+        document.getElementById('order-plan-duration').textContent = plan === 'free' ? 'Forever' : '30 days';
+        
+        // Reset coupon when plan changes
+        appliedCoupon = null;
+        document.getElementById('coupon-discount-row').style.display = 'none';
+        document.getElementById('coupon-result').textContent = '';
+        document.getElementById('order-total').textContent = '₹' + fmt(price);
+        
+        // Reset checkbox and button
+        termsCheckbox.checked = false;
+        if (paymentBtn) paymentBtn.disabled = true;
       }
-      // Reset checkbox when plan changes
-      termsCheckbox.checked = false;
     }
   };
 
@@ -952,35 +758,39 @@
     window.selectPlan(plan);
     if (plan === 'free') {
       window.handleStartFree();
-    } else {
-      // Check consent checkbox before initiating payment
-      const termsCheckbox = document.getElementById('terms-checkbox');
-      if (!termsCheckbox || !termsCheckbox.checked) {
-        alert('Please agree to the Terms & Conditions and Privacy Policy to continue.');
-        // Scroll to consent box to make it visible
-        const consentBox = document.getElementById('consent-box');
-        if (consentBox) {
-          consentBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          // Highlight the checkbox briefly
-          if (termsCheckbox) {
-            termsCheckbox.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.5)';
-            setTimeout(() => {
-              termsCheckbox.style.boxShadow = '';
-            }, 2000);
-          }
-        }
-        return;
-      }
-      initiatePayment(plan);
     }
   };
 
   window.handleBuySubscription = function() {
-    if (selectedPlanSlug && selectedPlanSlug !== 'free') {
-      initiatePayment(selectedPlanSlug);
-    } else {
-      window.location.href = isLoggedIn() ? 'dashboard/index.html' : 'login.html';
+    if (!selectedPlanSlug) {
+      alert('Please select a plan first.');
+      return;
     }
+    
+    if (selectedPlanSlug === 'free') {
+      window.handleStartFree();
+      return;
+    }
+    
+    // Check consent checkbox
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    if (!termsCheckbox || !termsCheckbox.checked) {
+      alert('Please agree to the Terms & Conditions and Privacy Policy to continue.');
+      // Scroll to checkbox
+      const orderSummary = document.querySelector('.coupon-box');
+      if (orderSummary) {
+        orderSummary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (termsCheckbox) {
+          termsCheckbox.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.5)';
+          setTimeout(() => {
+            termsCheckbox.style.boxShadow = '';
+          }, 2000);
+        }
+      }
+      return;
+    }
+    
+    initiatePayment(selectedPlanSlug);
   };
 
   // ── Coupon state ──────────────────────────────────────────────────────────
@@ -1130,6 +940,17 @@
           discountPercent:data.discountPercent,
         };
 
+        // Update order summary with coupon discount
+        const discountRow = document.getElementById('coupon-discount-row');
+        const discountAmount = document.getElementById('coupon-discount-amount');
+        const orderTotal = document.getElementById('order-total');
+        
+        if (discountRow && discountAmount && orderTotal) {
+          discountRow.style.display = 'flex';
+          discountAmount.textContent = '-₹' + fmt(data.discountAmount);
+          orderTotal.textContent = '₹' + fmt(data.finalAmount);
+        }
+
         if (isFull) {
           resultEl.innerHTML   = `✅ <strong>100% discount applied!</strong> This plan is now FREE. Click Subscribe to activate.`;
           resultEl.style.color = '#15803d';
@@ -1159,8 +980,26 @@
     }
   };
 
-  // Enter key in coupon input
+  // ── Checkbox event listener ───────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    const paymentBtn = document.getElementById('payment-cta-btn');
+    
+    if (termsCheckbox && paymentBtn) {
+      termsCheckbox.addEventListener('change', () => {
+        paymentBtn.disabled = !termsCheckbox.checked;
+        if (termsCheckbox.checked && selectedPlanSlug) {
+          const selectedPlan = planData[selectedPlanSlug];
+          if (selectedPlan && Number(selectedPlan.price) > 0) {
+            paymentBtn.textContent = 'Continue to Payment';
+          } else {
+            paymentBtn.textContent = 'Get Started';
+          }
+        }
+      });
+    }
+    
+    // Enter key in coupon input
     const inp = document.getElementById('coupon-input');
     if (inp) inp.addEventListener('keydown', e => {
       if (e.key === 'Enter') window.validateCoupon();
