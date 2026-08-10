@@ -723,29 +723,59 @@
     // Update order summary
     const termsCheckbox = document.getElementById('terms-checkbox');
     const paymentBtn = document.getElementById('payment-cta-btn');
-    
+
     if (termsCheckbox) {
       const selectedPlan = planData[plan];
-      if (selectedPlan) {
-        const fmt = n => Number(n).toLocaleString('en-IN');
-        const price = Number(selectedPlan.price);
-        
-        document.getElementById('order-plan-name').textContent = selectedPlan.name || plan;
-        document.getElementById('order-plan-price').textContent = '₹' + fmt(price);
-        document.getElementById('order-plan-duration').textContent = plan === 'free' ? 'Forever' : '30 days';
-        
-        // Reset coupon when plan changes
-        appliedCoupon = null;
-        document.getElementById('coupon-discount-row').style.display = 'none';
-        document.getElementById('coupon-result').textContent = '';
-        document.getElementById('order-total').textContent = '₹' + fmt(price);
-        
-        // Reset checkbox and button
-        termsCheckbox.checked = false;
-        if (paymentBtn) paymentBtn.disabled = true;
+
+      // If plan data not loaded yet, wait for it and then update
+      if (!selectedPlan) {
+        // Set loading state
+        document.getElementById('order-plan-name').textContent = 'Loading plan details...';
+        document.getElementById('order-plan-price').textContent = '₹0';
+        document.getElementById('order-total').textContent = '₹0';
+
+        // Wait for plans to load and then update
+        const checkInterval = setInterval(() => {
+          if (planData[plan]) {
+            clearInterval(checkInterval);
+            updateOrderSummary(plan);
+          }
+        }, 100);
+
+        // Timeout after 5 seconds
+        setTimeout(() => clearInterval(checkInterval), 5000);
+      } else {
+        updateOrderSummary(plan);
       }
     }
   };
+
+  // Helper function to update order summary
+  function updateOrderSummary(plan) {
+    const selectedPlan = planData[plan];
+    if (!selectedPlan) return;
+
+    const fmt = n => Number(n).toLocaleString('en-IN');
+    const price = Number(selectedPlan.price);
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    const paymentBtn = document.getElementById('payment-cta-btn');
+
+    document.getElementById('order-plan-name').textContent = selectedPlan.name || plan;
+    document.getElementById('order-plan-price').textContent = '₹' + fmt(price);
+    document.getElementById('order-plan-duration').textContent = plan === 'free' ? 'Forever' : '30 days';
+
+    // Reset coupon when plan changes
+    appliedCoupon = null;
+    document.getElementById('coupon-discount-row').style.display = 'none';
+    document.getElementById('coupon-result').textContent = '';
+    document.getElementById('order-total').textContent = '₹' + fmt(price);
+
+    // Reset checkbox and button
+    if (termsCheckbox) {
+      termsCheckbox.checked = false;
+      if (paymentBtn) paymentBtn.disabled = true;
+    }
+  }
 
   // ── Free plan ─────────────────────────────────────────────────────────────
   window.handleStartFree = function() {
