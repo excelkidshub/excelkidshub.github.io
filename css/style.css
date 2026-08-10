@@ -16,8 +16,9 @@
   min-width: 200px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.1);
   z-index: 1000;
-  border-radius: 5px;
-  padding: 10px 0;
+  border-radius: 8px;
+  padding: 8px 0;
+  border: 1px solid #e5e7eb;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -30,11 +31,20 @@
   text-decoration: none;
   display: block;
   transition: background 0.3s;
+  font-size: 14px;
 }
 
 .dropdown-menu a:hover {
   background-color: #f8f9fa;
-  color: #facc15;
+  color: #667eea;
+}
+
+.dropdown-menu a:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.dropdown-menu a:last-child {
+  border-radius: 0 0 8px 8px;
 }
 
 .btn-nav-login,
