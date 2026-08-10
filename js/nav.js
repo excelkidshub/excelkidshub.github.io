@@ -242,8 +242,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Configure chatbot to not auto-open
-    window.chatbase("configure", { autoOpen: false });
+    // Configure chatbot to not auto-open and start minimized
+    window.chatbase("configure", { autoOpen: false, initiallyMinimized: true });
 
     const onLoad = function() {
         if (document.getElementById("RVl2fwyqcmW-c5qfoEEND")) return;

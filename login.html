@@ -224,7 +224,8 @@
   
   <div id="error-message" class="error-message"></div>
   <div id="success-message" class="success-message"></div>
-  
+  <div id="verification-message" class="success-message" style="display: none;"></div>
+
   <form id="login-form" novalidate>
     <div class="form-group">
       <label for="email">Email</label>
@@ -263,6 +264,7 @@
 
 <script type="module">
   import { auth } from './js/auth.js';
+  import { api } from './js/api.js';
 
   // Capture redirect target BEFORE clearing URL params
   const _redirectParam = new URLSearchParams(window.location.search).get('redirect');
@@ -287,6 +289,7 @@
   const loginBtn = document.getElementById('login-btn');
   const errorMessage = document.getElementById('error-message');
   const successMessage = document.getElementById('success-message');
+  const verificationMessage = document.getElementById('verification-message');
   const emailError = document.getElementById('email-error');
   const passwordError = document.getElementById('password-error');
 
@@ -312,6 +315,7 @@
   function hideMessages() {
     errorMessage.style.display = 'none';
     successMessage.style.display = 'none';
+    verificationMessage.style.display = 'none';
   }
 
   function setEmailError(show) {
@@ -402,36 +406,73 @@
 
     try {
       const response = await auth.login(email, password);
-      
+
       // Handle remember me
       if (rememberMeCheckbox.checked) {
         localStorage.setItem('remembered_email', email);
       } else {
         localStorage.removeItem('remembered_email');
       }
-      
+
       showSuccess('Login successful! Redirecting...');
-      
+
       setTimeout(() => {
         window.location.href = AFTER_LOGIN_URL;
       }, 1000);
     } catch (error) {
       console.error('Login error:', error);
-      
+
+      // Re-enable button immediately to ensure page stability
+      loginBtn.disabled = false;
+      loginBtn.classList.remove('loading');
+
       // Handle different error types
-      if (error.message.includes('401') || error.message.includes('credentials')) {
-        showError('Invalid email or password. Please try again.');
+      if (error.message.includes('EMAIL_NOT_VERIFIED') || error.message.includes('verified')) {
+        // Hide login form and show verification message
+        loginForm.style.display = 'none';
+        verificationMessage.innerHTML = `
+          <strong>📧 Email Verification Required</strong><br><br>
+          Your email address has not been verified yet.<br>
+          Please check your inbox for a verification link from ExcelKidsHub.<br><br>
+          <small>Didn't receive the email? <a href="#" id="resend-verify-login" style="color: #2f80ed; font-weight: 700; text-decoration: underline;">Resend verification email</a></small><br><br>
+          <small><a href="login.html" style="color: #666;">← Back to login</a></small>
+        `;
+        verificationMessage.style.display = 'block';
+
+        // Add resend functionality
+        document.getElementById('resend-verify-login').addEventListener('click', async (e) => {
+          e.preventDefault();
+          try {
+            await api.post('/auth/resend-verification', { email });
+            verificationMessage.innerHTML = `
+              <strong>✓ Verification email sent!</strong><br><br>
+              Please check your inbox (including spam folder).<br><br>
+              <small>Still didn't receive it? <a href="#" id="resend-verify-again-login" style="color: #2f80ed; font-weight: 700; text-decoration: underline;">Resend again</a></small><br><br>
+              <small><a href="login.html" style="color: #666;">← Back to login</a></small>
+            `;
+            document.getElementById('resend-verify-again-login').addEventListener('click', (e) => {
+              e.preventDefault();
+              // Re-trigger the resend
+              document.getElementById('resend-verify-login').click();
+            });
+          } catch (error) {
+            verificationMessage.innerHTML += '<br><br><small style="color: #dc3545;">Failed to resend. Please try again later.</small>';
+          }
+        });
+      } else if (error.message.includes('401') || error.message.includes('credentials')) {
+        showError('Invalid email or password. Please check your credentials and try again.');
+        // Focus on email field for quick retry
+        emailInput.focus();
       } else if (error.message.includes('404') || error.message.includes('not found')) {
-        showError('Account not found. Please check your email or register.');
+        showError('Account not found. Please check your email or register a new account.');
       } else if (error.message.includes('network') || error.message.includes('fetch')) {
         showError('Network error. Please check your connection and try again.');
       } else {
         showError(error.message || 'Login failed. Please try again.');
       }
-      
-      // Re-enable button
-      loginBtn.disabled = false;
-      loginBtn.classList.remove('loading');
+
+      // Ensure error message is visible and page is stable
+      errorMessage.style.display = 'block';
     }
   });
 

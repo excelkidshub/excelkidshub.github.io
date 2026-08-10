@@ -35,19 +35,13 @@ export const auth = {
   async register(userData) {
     try {
       const response = await api.post('/auth/register', userData);
-      
+
       // Server wraps the payload in ApiResponse<AuthResponse>
       const payload = response.data || response;
 
-      // Auto-login after successful registration
-      if (payload.token) {
-        storage.setToken(payload.token);
-      }
-      
-      if (payload.user) {
-        storage.setUser(payload.user);
-      }
-      
+      // Do NOT auto-login after registration - user must verify email first
+      // Token and user will be stored only after email verification
+
       return payload;
     } catch (error) {
       console.error('Registration error:', error);

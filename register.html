@@ -247,7 +247,8 @@
   
   <div id="error-message" class="error-message"></div>
   <div id="success-message" class="success-message"></div>
-  
+  <div id="verification-message" class="success-message" style="display: none;"></div>
+
   <form id="register-form" novalidate>
     <div class="form-row">
       <div class="form-group">
@@ -305,6 +306,7 @@
 
 <script type="module">
   import { auth } from './js/auth.js';
+  import { api } from './js/api.js';
 
   // Check if already logged in
   if (auth.isLoggedIn()) {
@@ -322,6 +324,7 @@
   const registerBtn = document.getElementById('register-btn');
   const errorMessage = document.getElementById('error-message');
   const successMessage = document.getElementById('success-message');
+  const verificationMessage = document.getElementById('verification-message');
   const strengthBarFill = document.getElementById('strength-bar-fill');
   const strengthText = document.getElementById('strength-text');
 
@@ -340,6 +343,7 @@
   function hideMessages() {
     errorMessage.style.display = 'none';
     successMessage.style.display = 'none';
+    verificationMessage.style.display = 'none';
   }
 
   function setFieldError(input, errorElement, show, message = '') {
@@ -498,13 +502,36 @@
     try {
       // Send firstName and lastName separately — matches backend RegisterRequest DTO
       const response = await auth.register({ firstName, lastName, email, password });
-      
-      showSuccess('Registration successful! Redirecting...');
-      
-      // Redirect new users to pricing page with welcome flag (not empty dashboard)
-      setTimeout(() => {
-        window.location.href = '../pricing.html?welcome=1';
-      }, 1000);
+
+      // Hide form and show verification message
+      registerForm.style.display = 'none';
+      verificationMessage.innerHTML = `
+        <strong>📧 Registration Successful!</strong><br><br>
+        Please check your inbox for a verification link from ExcelKidsHub.<br>
+        You must verify your email address before logging in.<br><br>
+        <small>Didn't receive the email? <a href="#" id="resend-verify" style="color: #2f80ed; font-weight: 700; text-decoration: underline;">Resend verification email</a></small>
+      `;
+      verificationMessage.style.display = 'block';
+
+      // Add resend functionality
+      document.getElementById('resend-verify').addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+          await api.post('/auth/resend-verification', { email });
+          verificationMessage.innerHTML = `
+            <strong>✓ Verification email sent!</strong><br><br>
+            Please check your inbox (including spam folder).<br><br>
+            <small>Still didn't receive it? <a href="#" id="resend-verify-again" style="color: #2f80ed; font-weight: 700; text-decoration: underline;">Resend again</a></small>
+          `;
+          document.getElementById('resend-verify-again').addEventListener('click', (e) => {
+            e.preventDefault();
+            // Re-trigger the resend
+            document.getElementById('resend-verify').click();
+          });
+        } catch (error) {
+          verificationMessage.innerHTML += '<br><br><small style="color: #dc3545;">Failed to resend. Please try again later.</small>';
+        }
+      });
     } catch (error) {
       console.error('Registration error:', error);
       
