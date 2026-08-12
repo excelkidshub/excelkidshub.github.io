@@ -417,11 +417,11 @@
             <div style="font-size: 11px; color: #667085;">Fun phonics games</div>
           </div>
         </a>
-        <a href="https://read.excelkidshub.in/phonics/songs/index.html" target="_blank" style="text-decoration: none;">
+        <a href="https://read.excelkidshub.in/progress.html" target="_blank" style="text-decoration: none;">
           <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 20px 16px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: 2px solid #86efac; cursor: pointer;">
-            <div style="font-size: 32px; margin-bottom: 8px;">🎵</div>
-            <div style="font-weight: 700; color: #2b3a57; font-size: 14px; margin-bottom: 4px;">SONGS</div>
-            <div style="font-size: 11px; color: #667085;">Sing and learn sounds</div>
+            <div style="font-size: 32px; margin-bottom: 8px;">⭐</div>
+            <div style="font-weight: 700; color: #2b3a57; font-size: 14px; margin-bottom: 4px;">PROGRESS</div>
+            <div style="font-size: 11px; color: #667085;">Track your learning journey</div>
           </div>
         </a>
       </div>
@@ -619,7 +619,49 @@
       return;
     }
 
-    courseList.innerHTML = courses.map(course => {
+    // Filter out sample/starter courses if user has the full version
+    // This prevents showing "Phonics Level 1 — Starter Sample" when user has "Phonics Level 1"
+    const filteredCourses = courses.filter(course => {
+      const isSample = course.title && (
+        course.title.includes('Starter Sample') ||
+        course.title.includes('Sample') ||
+        course.name && course.name.includes('Sample')
+      );
+      
+      // If this is a sample course, check if user has the full version
+      if (isSample) {
+        const baseName = course.title
+          .replace('Starter Sample', '')
+          .replace('Sample', '')
+          .trim();
+        
+        // Check if full version exists in user's courses
+        const hasFullVersion = courses.some(c => 
+          c.title === baseName || 
+          (c.name === baseName && !c.name.includes('Sample'))
+        );
+        
+        // If user has full version, hide the sample
+        if (hasFullVersion) return false;
+      }
+      
+      return true;
+    });
+
+    // Sort courses by level (Level 1, Level 2, Level 3, etc.)
+    const sortedCourses = filteredCourses.sort((a, b) => {
+      const levelA = (a.title || a.name || '').match(/Level (\d+)/);
+      const levelB = (b.title || b.name || '').match(/Level (\d+)/);
+      
+      if (levelA && levelB) {
+        return parseInt(levelA[1]) - parseInt(levelB[1]);
+      }
+      
+      // If no level info, sort alphabetically
+      return (a.title || a.name || '').localeCompare(b.title || b.name || '');
+    });
+
+    courseList.innerHTML = sortedCourses.map(course => {
       const progress = course.progress || 0;
       return `
       <li class="course-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
