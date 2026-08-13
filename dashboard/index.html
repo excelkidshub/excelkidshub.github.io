@@ -708,16 +708,35 @@
 
   // ── Open Course ───────────────────────────────────────────────────────────────
   window.openCourse = async function(courseId, courseSlug) {
+    console.log('[Dashboard] Opening course:', { courseId, courseSlug });
     try {
+      console.log('[Dashboard] Calling access API for course:', courseId);
       const response = await api.post(`/courses/${courseId}/access`);
+      console.log('[Dashboard] Access API response:', response);
+
       if (response.data && response.data.allowed) {
+        // Prefer redirect token from API, fall back to stored token
         const token = response.data.redirectToken || storage.getToken();
-        window.location.href = `${READ_BASE_URL}/${courseSlug}/?token=${token}`;
+        console.log('[Dashboard] Access allowed, redirecting with token:', token ? 'present' : 'missing');
+        console.log('[Dashboard] Token source:', response.data.redirectToken ? 'API redirectToken' : 'localStorage fallback');
+
+        if (!token) {
+          console.error('[Dashboard] No token available for redirect');
+          alert('Authentication error. Please login again.');
+          window.location.href = '../login.html';
+          return;
+        }
+
+        const redirectUrl = `${READ_BASE_URL}/${courseSlug}/?token=${token}`;
+        console.log('[Dashboard] Redirect URL:', redirectUrl.replace(token, '***'));
+        window.location.href = redirectUrl;
       } else {
+        console.log('[Dashboard] Access denied for course:', courseId);
         alert('You do not have access to this course. Please subscribe to access.');
         window.location.href = '../pricing.html';
       }
     } catch (err) {
+      console.error('[Dashboard] Error accessing course:', err);
       alert(err.message || 'Failed to access course. Please try again.');
     }
   };
@@ -743,15 +762,21 @@
     const refundStatusContent = document.getElementById('refund-status-content');
     const actionsEl = document.getElementById('subscription-actions');
 
+    // Hide refund section by default - only show if we successfully load data
+    refundStatusEl.style.display = 'none';
+
     try {
       // Get subscription details to find payment
+      console.log('[Dashboard] Loading refund status for subscription:', subscriptionId);
       const subResponse = await api.get(`/subscription/active`);
       const subscription = subResponse.data;
 
       if (!subscription || !subscription.id) {
-        refundStatusEl.style.display = 'none';
+        console.log('[Dashboard] No active subscription found, hiding refund section');
         return;
       }
+
+      console.log('[Dashboard] Active subscription found:', subscription.id);
 
       // Check refund eligibility and status
       try {
@@ -801,16 +826,17 @@
               document.getElementById('request-refund-btn').style.display = 'none';
             }
           } catch (eligErr) {
-            console.log('Eligibility check failed:', eligErr.message);
+            console.log('[Dashboard] Eligibility check failed:', eligErr.message);
             refundStatusEl.style.display = 'none';
           }
         }
       } catch (refundErr) {
-        console.log('Refund status check failed:', refundErr.message);
+        console.log('[Dashboard] Refund status check failed:', refundErr.message);
         refundStatusEl.style.display = 'none';
       }
     } catch (err) {
-      console.log('Failed to load refund status:', err.message);
+      console.log('[Dashboard] Failed to load refund status:', err.message);
+      // Don't show error to user - refund status is optional functionality
       refundStatusEl.style.display = 'none';
     }
   }
