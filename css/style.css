@@ -64,6 +64,15 @@
   background: #e5b800;
 }
 
+.mobile-logout-link {
+  display: none;
+  color: #ef4444;
+  font-weight: 600;
+  padding: 10px 0;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 10px;
+}
+
 /* ===== Dhanori Section Font Consistency ===== */
 .c-state-box {
   background-color: #21314d;
@@ -1488,6 +1497,10 @@ padding:15px;
 
 .nav-links a{
 margin:10px 0;
+}
+
+.mobile-logout-link {
+  display: block;
 }
 
 .show-menu{

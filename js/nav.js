@@ -29,16 +29,10 @@ function getNavigationHTML(isLoggedIn) {
         <a href="/pricing.html">Pricing</a>
         <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
-        <div class="dropdown">
-            <a href="/dashboard/index.html" class="dropdown-toggle">Dashboard ▼</a>
-            <div class="dropdown-menu">
-                <a href="/dashboard/index.html">Dashboard</a>
-                <a href="/dashboard/index.html#courses">My Courses</a>
-                <a href="/dashboard/index.html#subscription">Subscription</a>
-                <a href="/dashboard/profile.html">Profile</a>
-                <a href="#" id="logout-link">Logout</a>
-            </div>
-        </div>
+        <a href="/dashboard/index.html">Dashboard</a>
+        <a href="/dashboard/profile.html">My Account</a>
+        <a href="#" id="logout-link">Logout</a>
+        <a href="#" id="logout-link-mobile" class="mobile-logout-link">Logout</a>
     </nav>
 
 </div>
@@ -169,17 +163,32 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("footer-placeholder").innerHTML = footerHTML;
     }
 
-    // Handle logout link
+    // Handle logout link (both desktop dropdown and mobile)
     const logoutLink = document.getElementById("logout-link");
-    if (logoutLink) {
-        logoutLink.addEventListener("click", function(e) {
-            e.preventDefault();
-            localStorage.removeItem('jwt_token');
-            localStorage.removeItem('user_data');
-            localStorage.removeItem('subscription_data');
-            localStorage.removeItem('courses_data');
-            window.location.href = '/';
+    const logoutLinkMobile = document.getElementById("logout-link-mobile");
+    
+    const handleLogout = function(e) {
+        e.preventDefault();
+        localStorage.removeItem('jwt_token');
+        localStorage.removeItem('user_data');
+        localStorage.removeItem('subscription_data');
+        localStorage.removeItem('courses_data');
+        sessionStorage.removeItem('studio_jwt_token');
+        // Clear any course IDs cached in sessionStorage
+        Object.keys(sessionStorage).forEach(key => {
+            if (key.startsWith('course_id_')) {
+                sessionStorage.removeItem(key);
+            }
         });
+        window.location.href = '/';
+    };
+    
+    if (logoutLink) {
+        logoutLink.addEventListener("click", handleLogout);
+    }
+    
+    if (logoutLinkMobile) {
+        logoutLinkMobile.addEventListener("click", handleLogout);
     }
 
     // Active Menu Highlight
@@ -224,40 +233,41 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-(function loadChatbase() {
-    if (!window.chatbase || window.chatbase("getState") !== "initialized") {
-        window.chatbase = (...args) => {
-            if (!window.chatbase.q) {
-                window.chatbase.q = [];
-            }
-            window.chatbase.q.push(args);
-        };
-        window.chatbase = new Proxy(window.chatbase, {
-            get(target, prop) {
-                if (prop === "q") {
-                    return target.q;
-                }
-                return (...args) => target(prop, ...args);
-            }
-        });
-    }
+// Chat widget disabled per user request
+// (function loadChatbase() {
+//     if (!window.chatbase || window.chatbase("getState") !== "initialized") {
+//         window.chatbase = (...args) => {
+//             if (!window.chatbase.q) {
+//                 window.chatbase.q = [];
+//             }
+//             window.chatbase.q.push(args);
+//         };
+//         window.chatbase = new Proxy(window.chatbase, {
+//             get(target, prop) {
+//                 if (prop === "q") {
+//                     return target.q;
+//                 }
+//                 return (...args) => target(prop, ...args);
+//             }
+//         });
+//     }
 
-    // Configure chatbot to not auto-open and start minimized
-    window.chatbase("configure", { autoOpen: false, initiallyMinimized: true });
+//     // Configure chatbot to not auto-open and start minimized
+//     window.chatbase("configure", { autoOpen: false, initiallyMinimized: true });
 
-    const onLoad = function() {
-        if (document.getElementById("RVl2fwyqcmW-c5qfoEEND")) return;
+//     const onLoad = function() {
+//         if (document.getElementById("RVl2fwyqcmW-c5qfoEEND")) return;
 
-        const script = document.createElement("script");
-        script.src = "https://www.chatbase.co/embed.min.js";
-        script.id = "RVl2fwyqcmW-c5qfoEEND";
-        script.domain = "www.chatbase.co";
-        document.body.appendChild(script);
-    };
+//         const script = document.createElement("script");
+//         script.src = "https://www.chatbase.co/embed.min.js";
+//         script.id = "RVl2fwyqcmW-c5qfoEEND";
+//         script.domain = "www.chatbase.co";
+//         document.body.appendChild(script);
+//     };
 
-    if (document.readyState === "complete") {
-        onLoad();
-    } else {
-        window.addEventListener("load", onLoad);
-    }
-})();
+//     if (document.readyState === "complete") {
+//         onLoad();
+//     } else {
+//         window.addEventListener("load", onLoad);
+//     }
+// })();

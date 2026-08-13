@@ -403,6 +403,8 @@
     // Disable button and show loading
     loginBtn.disabled = true;
     loginBtn.classList.add('loading');
+    const btnText = loginBtn.querySelector('.btn-text');
+    btnText.textContent = 'Signing in...';
 
     try {
       const response = await auth.login(email, password);
@@ -425,6 +427,8 @@
       // Re-enable button immediately to ensure page stability
       loginBtn.disabled = false;
       loginBtn.classList.remove('loading');
+      const btnText = loginBtn.querySelector('.btn-text');
+      btnText.textContent = 'Login';
 
       // Handle different error types
       if (error.message.includes('EMAIL_NOT_VERIFIED') || error.message.includes('verified')) {
@@ -473,14 +477,6 @@
 
       // Ensure error message is visible and page is stable
       errorMessage.style.display = 'block';
-    }
-  });
-
-  // Handle Enter key for form submission
-  loginForm.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      loginForm.dispatchEvent(new Event('submit'));
     }
   });
 </script>

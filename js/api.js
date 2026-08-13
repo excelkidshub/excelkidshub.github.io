@@ -25,6 +25,7 @@ export const api = {
     if (response.status === 401) {
       // Unauthorized - clear token and redirect to login
       storage.clearToken();
+      storage.clearUser();
       window.location.href = '/login.html';
       throw new Error('Session expired. Please login again.');
     }
