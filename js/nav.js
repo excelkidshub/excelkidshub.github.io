@@ -31,8 +31,7 @@ function getNavigationHTML(isLoggedIn) {
         <a href="/contact.html">Contact</a>
         <a href="/dashboard/index.html">Dashboard</a>
         <a href="/dashboard/profile.html">My Account</a>
-        <a href="#" id="logout-link">Logout</a>
-        <a href="#" id="logout-link-mobile" class="mobile-logout-link">Logout</a>
+        <a href="#" id="logout-link" class="desktop-logout-link">Logout</a>
     </nav>
 
 </div>
@@ -163,9 +162,8 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("footer-placeholder").innerHTML = footerHTML;
     }
 
-    // Handle logout link (both desktop dropdown and mobile)
+    // Handle logout link (works for both desktop and mobile)
     const logoutLink = document.getElementById("logout-link");
-    const logoutLinkMobile = document.getElementById("logout-link-mobile");
     
     const handleLogout = function(e) {
         e.preventDefault();
@@ -185,10 +183,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
     if (logoutLink) {
         logoutLink.addEventListener("click", handleLogout);
-    }
-    
-    if (logoutLinkMobile) {
-        logoutLinkMobile.addEventListener("click", handleLogout);
     }
 
     // Active Menu Highlight

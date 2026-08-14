@@ -395,7 +395,7 @@
         <span style="font-size: 20px;">🚀</span> What would you like to do today?
       </h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
-        <a href="https://read.excelkidshub.in/learn.html" target="_blank" style="text-decoration: none;">
+        <a href="#" onclick="continueLearning()" style="text-decoration: none;">
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px 16px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: none; cursor: pointer; box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); position: relative; overflow: hidden;">
             <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);"></div>
             <div style="font-size: 32px; margin-bottom: 8px; position: relative; z-index: 1;">📖</div>
@@ -403,21 +403,21 @@
             <div style="font-size: 11px; color: rgba(255,255,255,0.9); position: relative; z-index: 1;">Pick up where you left off</div>
           </div>
         </a>
-        <a href="https://read.excelkidshub.in/phonics/practice/index.html" target="_blank" style="text-decoration: none;">
+        <a href="#" onclick="navigateToPractice()" style="text-decoration: none;">
           <div style="background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%); padding: 20px 16px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: 2px solid #fde047; cursor: pointer;">
             <div style="font-size: 32px; margin-bottom: 8px;">✏️</div>
             <div style="font-weight: 700; color: #2b3a57; font-size: 14px; margin-bottom: 4px;">PRACTISE</div>
             <div style="font-size: 11px; color: #667085;">Learn through fun activities</div>
           </div>
         </a>
-        <a href="https://read.excelkidshub.in/phonics/games/index.html" target="_blank" style="text-decoration: none;">
+        <a href="#" onclick="navigateToGames()" style="text-decoration: none;">
           <div style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); padding: 20px 16px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: 2px solid #f9a8d4; cursor: pointer;">
             <div style="font-size: 32px; margin-bottom: 8px;">🎮</div>
             <div style="font-weight: 700; color: #2b3a57; font-size: 14px; margin-bottom: 4px;">PLAY GAMES</div>
             <div style="font-size: 11px; color: #667085;">Fun phonics games</div>
           </div>
         </a>
-        <a href="https://read.excelkidshub.in/progress.html" target="_blank" style="text-decoration: none;">
+        <a href="#" onclick="navigateToProgress()" style="text-decoration: none;">
           <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 20px 16px; border-radius: 16px; text-align: center; transition: all 0.3s ease; border: 2px solid #86efac; cursor: pointer;">
             <div style="font-size: 32px; margin-bottom: 8px;">⭐</div>
             <div style="font-weight: 700; color: #2b3a57; font-size: 14px; margin-bottom: 4px;">PROGRESS</div>
@@ -697,6 +697,64 @@
       console.error('[Dashboard] Error accessing course:', err);
       alert(err.message || 'Failed to access course. Please try again.');
     }
+  };
+
+  // ── Dashboard Card Navigation ─────────────────────────────────────────────────
+  window.continueLearning = async function() {
+    try {
+      // Get courses available to this user
+      const coursesResponse = await api.get('/courses/my');
+      const courses = (coursesResponse.data || coursesResponse.courses || []);
+
+      if (!courses || courses.length === 0) {
+        alert('No courses available. Please subscribe to access.');
+        window.location.href = '../pricing.html';
+        return;
+      }
+
+      // Get progress summary
+      const progressResponse = await api.get('/progress/summary');
+      const progressList = progressResponse.data || progressResponse.summary || [];
+
+      // Find most recent in-progress course
+      const inProgress = progressList
+        .filter(p => p.status !== 'COMPLETED' && p.pageNumber > 0)
+        .sort((a, b) => new Date(b.lastAccessed || 0) - new Date(a.lastAccessed || 0));
+
+      if (inProgress.length > 0) {
+        // Continue from last page
+        const prog = inProgress[0];
+        const course = courses.find(c => c.slug === prog.courseSlug);
+        if (course) {
+          window.openCourse(course.id, course.slug);
+          return;
+        }
+      }
+
+      // No progress - open first available course
+      const firstCourse = courses[0];
+      if (firstCourse) {
+        window.openCourse(firstCourse.id, firstCourse.slug);
+      } else {
+        alert('No courses available. Please subscribe to access.');
+        window.location.href = '../pricing.html';
+      }
+    } catch (err) {
+      console.error('[Dashboard] Continue learning error:', err);
+      alert('Failed to continue learning. Please try again.');
+    }
+  };
+
+  window.navigateToPractice = function() {
+    window.location.href = `${READ_BASE_URL}/phonics/practice/index.html`;
+  };
+
+  window.navigateToGames = function() {
+    window.location.href = `${READ_BASE_URL}/phonics/games/index.html`;
+  };
+
+  window.navigateToProgress = function() {
+    window.location.href = `${READ_BASE_URL}/progress.html`;
   };
 
   // ── Resend verification email ─────────────────────────────────────────────────
