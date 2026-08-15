@@ -746,15 +746,30 @@
   };
 
   window.navigateToPractice = function() {
-    window.location.href = `${READ_BASE_URL}/phonics/practice/index.html`;
+    const token = storage.getToken();
+    if (token) {
+      window.location.href = `${READ_BASE_URL}/phonics/practice/index.html?token=${token}`;
+    } else {
+      window.location.href = `${READ_BASE_URL}/phonics/practice/index.html`;
+    }
   };
 
   window.navigateToGames = function() {
-    window.location.href = `${READ_BASE_URL}/phonics/games/index.html`;
+    const token = storage.getToken();
+    if (token) {
+      window.location.href = `${READ_BASE_URL}/phonics/games/index.html?token=${token}`;
+    } else {
+      window.location.href = `${READ_BASE_URL}/phonics/games/index.html`;
+    }
   };
 
   window.navigateToProgress = function() {
-    window.location.href = `${READ_BASE_URL}/progress.html`;
+    const token = storage.getToken();
+    if (token) {
+      window.location.href = `${READ_BASE_URL}/progress.html?token=${token}`;
+    } else {
+      window.location.href = `${READ_BASE_URL}/progress.html`;
+    }
   };
 
   // ── Resend verification email ─────────────────────────────────────────────────
