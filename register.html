@@ -269,6 +269,12 @@
       <input type="email" id="email" name="email" required autocomplete="email">
       <div class="error-text" id="email-error">Please enter a valid email address</div>
     </div>
+
+    <div class="form-group">
+      <label for="phone">Mobile Number</label>
+      <input type="tel" id="phone" name="phone" required autocomplete="tel" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number">
+      <div class="error-text" id="phone-error">Mobile number must be 10 digits</div>
+    </div>
     
     <div class="form-group">
       <label for="password">Password</label>
@@ -317,6 +323,7 @@
   const firstNameInput = document.getElementById('firstName');
   const lastNameInput = document.getElementById('lastName');
   const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('phone');
   const passwordInput = document.getElementById('password');
   const confirmPasswordInput = document.getElementById('confirmPassword');
   const togglePasswordBtn = document.getElementById('toggle-password');
@@ -431,6 +438,17 @@
       setFieldError(emailInput, document.getElementById('email-error'), false);
     }
 
+    // Validate phone
+    if (!phoneInput.value.trim()) {
+      setFieldError(phoneInput, document.getElementById('phone-error'), true, 'Mobile number is required');
+      isValid = false;
+    } else if (!/^[0-9]{10}$/.test(phoneInput.value.trim())) {
+      setFieldError(phoneInput, document.getElementById('phone-error'), true, 'Mobile number must be 10 digits');
+      isValid = false;
+    } else {
+      setFieldError(phoneInput, document.getElementById('phone-error'), false);
+    }
+
     // Validate password
     if (!passwordInput.value) {
       setFieldError(passwordInput, document.getElementById('password-error'), true, 'Password is required');
@@ -479,6 +497,7 @@
   firstNameInput.addEventListener('input', () => setFieldError(firstNameInput, document.getElementById('firstName-error'), false));
   lastNameInput.addEventListener('input', () => setFieldError(lastNameInput, document.getElementById('lastName-error'), false));
   emailInput.addEventListener('input', () => setFieldError(emailInput, document.getElementById('email-error'), false));
+  phoneInput.addEventListener('input', () => setFieldError(phoneInput, document.getElementById('phone-error'), false));
   confirmPasswordInput.addEventListener('input', () => setFieldError(confirmPasswordInput, document.getElementById('confirmPassword-error'), false));
 
   // Handle form submission
@@ -493,6 +512,7 @@
     const firstName = firstNameInput.value.trim();
     const lastName = lastNameInput.value.trim();
     const email = emailInput.value.trim();
+    const phone = phoneInput.value.trim();
     const password = passwordInput.value;
 
     // Disable button and show loading
@@ -500,8 +520,8 @@
     registerBtn.classList.add('loading');
 
     try {
-      // Send firstName and lastName separately — matches backend RegisterRequest DTO
-      const response = await auth.register({ firstName, lastName, email, password });
+      // Send firstName, lastName, phone — matches backend RegisterRequest DTO
+      const response = await auth.register({ firstName, lastName, email, phone, password });
 
       // Hide form and show verification message
       registerForm.style.display = 'none';

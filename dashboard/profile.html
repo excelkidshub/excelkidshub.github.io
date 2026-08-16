@@ -187,8 +187,18 @@
           <h2>Personal Information</h2>
           
           <div class="profile-field">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" required>
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="firstName" required>
+          </div>
+
+          <div class="profile-field">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="lastName" required>
+          </div>
+          
+          <div class="profile-field">
+            <label for="phone">Mobile Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10">
           </div>
           
           <div class="profile-field">
@@ -313,12 +323,11 @@
   }
 
   function populateUser(user) {
-    const displayName = user.name
-      || ((user.firstName || '') + ' ' + (user.lastName || '')).trim()
-      || '';
-    document.getElementById('name').value              = displayName;
+    document.getElementById('first-name').value = user.firstName || '';
+    document.getElementById('last-name').value = user.lastName || '';
+    document.getElementById('phone').value = user.phone || '';
     document.getElementById('email-display').textContent = user.email || '-';
-    document.getElementById('role-display').textContent  = user.role  || 'Student';
+    document.getElementById('role-display').textContent = user.role || 'Student';
   }
 
   function updateSubscription(subscription) {
@@ -370,11 +379,51 @@
     }
   }
 
-  // Profile name update — PUT /auth/me is not yet implemented on the server.
-  // Show a friendly message instead of a silent failure.
+  // Profile update — PUT /auth/me
   profileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    showSuccess('Profile display is read-only at this time. Contact support to update your details.');
+
+    const firstName = document.getElementById('first-name').value.trim();
+    const lastName = document.getElementById('last-name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    // Basic validation
+    if (!firstName || !lastName) {
+      showError('First name and last name are required.');
+      return;
+    }
+
+    if (phone && !/^[0-9]{10}$/.test(phone)) {
+      showError('Mobile number must be 10 digits.');
+      return;
+    }
+
+    const submitBtn = profileForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Updating...';
+    submitBtn.disabled = true;
+
+    try {
+      const response = await api.put('/auth/me', {
+        firstName,
+        lastName,
+        phone: phone || null
+      });
+
+      // Update local storage with new user data
+      if (response.data && response.data.user) {
+        storage.setUser(response.data.user);
+        storage.setToken(response.data.token);
+        populateUser(response.data.user);
+      }
+
+      showSuccess('Profile updated successfully!');
+    } catch (err) {
+      showError(err.message || 'Failed to update profile. Please try again.');
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
   });
 
   // ── Refund Status ─────────────────────────────────────────────────────────────
