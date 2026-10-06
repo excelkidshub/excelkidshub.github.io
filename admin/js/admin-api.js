@@ -73,6 +73,15 @@ export const adminApi = {
         });
         return handleResponse(res);
     },
+
+    async patch(path, body = {}) {
+        const res = await fetch(`${API_BASE}${path}`, {
+            method: 'PATCH',
+            headers: authHeaders(),
+            body: JSON.stringify(body),
+        });
+        return handleResponse(res);
+    },
 };
 
 // ── Convenience helpers ───────────────────────────────────────────────────────
@@ -85,7 +94,7 @@ export const adminSetUserStatus= (id, active)   => adminApi.put(`/admin/users/${
 export const adminGetSubs      = (status, page) => adminApi.get(`/admin/subscriptions?status=${status || ''}&page=${page || 0}&size=20`);
 export const adminSetSubStatus      = (id, status)      => adminApi.put(`/admin/subscriptions/${id}/status?status=${status}`);
 export const adminGrantSubscription = (dto)              => adminApi.post('/admin/subscriptions', dto);
-export const adminExtendSubscription= (id, newEndDate)   => adminApi.put(`/admin/subscriptions/${id}/extend?newEndDate=${newEndDate}`);
+export const adminExtendSubscription= (id, newEndDate)   => adminApi.patch(`/admin/subscriptions/${id}/extend?newEndDate=${newEndDate}`);
 
 export const adminGetPayments  = (status, page) => adminApi.get(`/admin/payments?status=${status || ''}&page=${page || 0}&size=20`);
 
