@@ -112,7 +112,9 @@
           <td><span class="badge ${u.role === 'ADMIN' ? 'badge-blue' : 'badge-gray'}">${u.role || 'STUDENT'}</span></td>
           <td>${badge(u.emailVerified, '✓ Yes', 'badge-green', '✗ No', 'badge-red')}</td>
           <td>${u.subscriptionStatus
-            ? `<span class="badge ${u.subscriptionStatus === 'ACTIVE' ? 'badge-green' : 'badge-yellow'}">${u.subscriptionStatus}</span> ${u.subscriptionPlan || ''}`
+            ? `<a href="subscriptions.html?search=${encodeURIComponent(u.email)}" style="text-decoration:none;">
+                <span class="badge ${u.subscriptionStatus === 'ACTIVE' ? 'badge-green' : 'badge-yellow'}" title="View subscriptions for ${u.email}">${u.subscriptionStatus}</span> ${u.subscriptionPlan || ''}
+               </a>`
             : '<span class="badge badge-gray">None</span>'}</td>
           <td>${badge(u.active, 'Active', 'badge-green', 'Disabled', 'badge-red')}</td>
           <td>${formatDate(u.createdAt)}</td>

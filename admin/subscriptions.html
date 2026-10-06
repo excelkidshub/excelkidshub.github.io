@@ -27,6 +27,7 @@
   <div id="alert-success" class="alert alert-success"></div>
 
   <div class="toolbar">
+    <input type="search" id="search-input" placeholder="Search by email or name…" style="min-width:220px;">
     <select id="status-filter">
       <option value="">All Statuses</option>
       <option value="ACTIVE">Active</option>
@@ -34,7 +35,7 @@
       <option value="PENDING">Pending</option>
       <option value="CANCELLED">Cancelled</option>
     </select>
-    <button class="btn btn-primary" id="filter-btn">Filter</button>
+    <button class="btn btn-primary" id="filter-btn">Search / Filter</button>
     <span id="result-count" style="color:#888;font-size:12px;margin-left:4px;"></span>
     <button class="btn btn-success" id="grant-btn" style="margin-left:auto;">＋ Grant Subscription</button>
   </div>
@@ -147,6 +148,14 @@
 
   let currentPage = 0;
   let currentStatus = '';
+  let currentSearch = '';
+
+  // ── Auto-populate search from URL param (e.g. ?search=user@email.com) ────
+  const _urlSearch = new URLSearchParams(window.location.search).get('search');
+  if (_urlSearch) {
+    currentSearch = _urlSearch;
+    document.getElementById('search-input').value = _urlSearch;
+  }
 
   function showAlert(type, msg) {
     alertError.style.display = alertSuccess.style.display = 'none';
@@ -168,7 +177,7 @@
   async function load() {
     tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:32px;color:#888;">Loading…</td></tr>';
     try {
-      const res  = await adminGetSubs(currentStatus, currentPage);
+      const res  = await adminGetSubs(currentStatus, currentPage, currentSearch);
       const data = res.data || res;
       const rows = data.content || [];
       const total = data.totalElements || rows.length;
@@ -231,8 +240,12 @@
 
   document.getElementById('filter-btn').addEventListener('click', () => {
     currentStatus = document.getElementById('status-filter').value;
+    currentSearch = document.getElementById('search-input').value.trim();
     currentPage = 0;
     load();
+  });
+  document.getElementById('search-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('filter-btn').click();
   });
 
   // ── Grant Modal ───────────────────────────────────────────────────────────
