@@ -91,7 +91,7 @@ export const adminGetUsers     = (search, page) => adminApi.get(`/admin/users?se
 export const adminGetUser      = (id)           => adminApi.get(`/admin/users/${id}`);
 export const adminSetUserStatus= (id, active)   => adminApi.put(`/admin/users/${id}/status?active=${active}`);
 
-export const adminGetSubs      = (status, page) => adminApi.get(`/admin/subscriptions?status=${status || ''}&page=${page || 0}&size=20`);
+export const adminGetSubs      = (status, page, search) => adminApi.get(`/admin/subscriptions?status=${status || ''}&page=${page || 0}&size=20&search=${encodeURIComponent(search || '')}`);
 export const adminSetSubStatus      = (id, status)      => adminApi.put(`/admin/subscriptions/${id}/status?status=${status}`);
 export const adminGrantSubscription = (dto)              => adminApi.post('/admin/subscriptions', dto);
 export const adminExtendSubscription= (id, newEndDate)   => adminApi.patch(`/admin/subscriptions/${id}/extend?newEndDate=${newEndDate}`);
