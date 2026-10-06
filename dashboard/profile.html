@@ -331,21 +331,38 @@
   }
 
   function updateSubscription(subscription) {
-    const statusEl = document.getElementById('subscription-status');
-    const planEl   = document.getElementById('plan-display');
-    const expiryEl = document.getElementById('expiry-display');
+    const statusEl  = document.getElementById('subscription-status');
+    const planEl    = document.getElementById('plan-display');
+    const expiryEl  = document.getElementById('expiry-display');
+    const actionsEl = document.getElementById('subscription-actions');
 
-    if (subscription && subscription.status === 'ACTIVE') {
+    // Client-side expiry guard — treat as expired if endDate is in the past
+    const isExpiredByDate = subscription && subscription.endDate
+      && new Date(subscription.endDate) < new Date();
+
+    if (subscription && subscription.status === 'ACTIVE' && !isExpiredByDate) {
+      // Genuinely active
       statusEl.innerHTML   = '<span class="subscription-badge subscription-active">Active Subscription</span>';
       planEl.textContent   = subscription.planName || 'Premium';
-      const expiry = subscription.endDate
-        ? new Date(subscription.endDate).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })
-        : 'N/A';
+      const expiry = new Date(subscription.endDate).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
       expiryEl.textContent = expiry;
+      // Show Refund / Cancel only for active, non-expired subscriptions
+      actionsEl.style.display = 'block';
+      loadRefundStatus(subscription.id);
+    } else if (subscription && isExpiredByDate) {
+      // Has a subscription but it's past its end date
+      statusEl.innerHTML   = '<span class="subscription-badge subscription-inactive">Expired</span>';
+      planEl.textContent   = subscription.planName || 'Plan';
+      const expiry = new Date(subscription.endDate).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+      expiryEl.textContent = `Expired on ${expiry}`;
+      // Hide Refund / Cancel — nothing to act on for an expired subscription
+      actionsEl.style.display = 'none';
     } else {
+      // No subscription at all
       statusEl.innerHTML   = '<span class="subscription-badge subscription-inactive">No Active Subscription</span>';
       planEl.textContent   = 'No plan selected';
       expiryEl.textContent = '-';
+      actionsEl.style.display = 'none';
     }
   }
 
@@ -585,20 +602,6 @@
       }
     });
   }
-
-  // Update loadProfile to handle subscription actions
-  const originalUpdateSubscription = updateSubscription;
-  updateSubscription = function(subscription) {
-    originalUpdateSubscription(subscription);
-    
-    const actionsEl = document.getElementById('subscription-actions');
-    if (subscription && subscription.status === 'ACTIVE') {
-      actionsEl.style.display = 'block';
-      loadRefundStatus(subscription.id);
-    } else {
-      actionsEl.style.display = 'none';
-    }
-  };
 
   loadProfile();
 </script>

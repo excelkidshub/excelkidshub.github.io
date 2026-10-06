@@ -10,7 +10,17 @@ export const APP_CONFIG = {
     // Production: use remote API directly
     return 'https://api.excelkidshub.in/api';
   })(),
-  READ_BASE_URL: 'https://read.excelkidshub.in',
+  READ_BASE_URL: (() => {
+    if (typeof window !== 'undefined') {
+      const host = window.location.hostname || '';
+      // Use local reading studio for localhost development
+      if (host.includes('localhost') || host.includes('127.0.0.1')) {
+        return 'http://localhost:3001';
+      }
+    }
+    // Production: use remote reading studio
+    return 'https://read.excelkidshub.in';
+  })(),
   REDIRECT_AFTER_LOGIN: 'dashboard/index.html',
 };
 

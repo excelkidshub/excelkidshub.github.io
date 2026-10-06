@@ -205,7 +205,18 @@
       }
 
     } catch (err) {
-      alertEl.textContent   = '⚠ Failed to load stats: ' + err.message + ' — please ensure you are logged in as an Admin and refresh.';
+      const msg = err.message || '';
+      // Network / server-down — redirect to login with error param
+      const isNetworkError = msg.includes('Failed to fetch') ||
+                             msg.includes('NetworkError') ||
+                             msg.includes('fetch') ||
+                             msg.includes('network') ||
+                             msg.includes('Server error');
+      if (isNetworkError) {
+        window.location.replace('/login?error=server_down');
+        return;
+      }
+      alertEl.textContent   = '⚠ Failed to load stats: ' + msg + ' — please ensure you are logged in as an Admin and refresh.';
       alertEl.style.display = 'block';
       alertEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }

@@ -266,13 +266,22 @@
   import { auth } from './js/auth.js';
   import { api } from './js/api.js';
 
-  // Capture redirect target BEFORE clearing URL params
-  const _redirectParam = new URLSearchParams(window.location.search).get('redirect');
+  // Capture redirect target and error param BEFORE clearing URL params
+  const _searchParams   = new URLSearchParams(window.location.search);
+  const _redirectParam  = _searchParams.get('redirect');
+  const _errorParam     = _searchParams.get('error');
   const AFTER_LOGIN_URL = _redirectParam ? decodeURIComponent(_redirectParam) : 'dashboard/index.html';
 
   // Check if already logged in
   if (auth.isLoggedIn()) {
     window.location.href = AFTER_LOGIN_URL;
+  }
+
+  // Show a banner if redirected here due to a specific error
+  if (_errorParam === 'server_down') {
+    const errorMessage = document.getElementById('error-message');
+    errorMessage.textContent = 'The server is temporarily unavailable. Please try logging in again in a few minutes.';
+    errorMessage.style.display = 'block';
   }
 
   // Clear URL parameters to prevent form pre-filling with invalid data

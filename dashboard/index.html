@@ -551,15 +551,27 @@
     const expiryEl = document.getElementById('subscription-expiry');
     const ctaEl    = document.getElementById('subscription-cta');
 
-    if (subscription && subscription.status === 'ACTIVE') {
+    // Client-side expiry guard: treat as expired if endDate is in the past,
+    // regardless of what the server returned (handles stale cached data or
+    // a server that hasn't flipped the status yet).
+    const isExpiredByDate = subscription && subscription.endDate
+      && new Date(subscription.endDate) < new Date();
+
+    if (subscription && subscription.status === 'ACTIVE' && !isExpiredByDate) {
       statusEl.innerHTML = '<span class="status-badge status-active">● Active</span>';
       planEl.textContent   = subscription.planName || 'Premium';
-      // Use endDate from SubscriptionDto
       const expiry = subscription.endDate
         ? new Date(subscription.endDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
         : 'N/A';
       expiryEl.textContent = `Valid until ${expiry}`;
       ctaEl.style.display  = 'none';
+    } else if (subscription && isExpiredByDate) {
+      // Subscription exists but is past its end date — show expired state
+      statusEl.innerHTML = '<span class="status-badge status-inactive">● Expired</span>';
+      planEl.textContent   = subscription.planName || 'Plan';
+      const expiry = new Date(subscription.endDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+      expiryEl.textContent = `Expired on ${expiry}`;
+      ctaEl.style.display  = 'block';
     } else {
       statusEl.innerHTML   = '<span class="status-badge status-inactive">No Active Subscription</span>';
       planEl.textContent   = 'No plan selected';
@@ -831,20 +843,31 @@
 
       showDashboard();
     } catch (err) {
-      // Check if this is an authentication error
       const errorMessage = err.message || '';
-      const isAuthError = errorMessage.includes('Session expired') || 
+      // Auth errors — token expired, invalid, or explicitly rejected by server
+      const isAuthError = errorMessage.includes('Session expired') ||
                          errorMessage.includes('Unauthorized') ||
                          errorMessage.includes('authentication') ||
                          errorMessage.includes('login');
-      
+      // Network / server-down errors — fetch throws TypeError or we get no response
+      const isNetworkError = errorMessage.includes('Failed to fetch') ||
+                            errorMessage.includes('NetworkError') ||
+                            errorMessage.includes('Network request failed') ||
+                            errorMessage.includes('fetch') ||
+                            errorMessage.includes('network') ||
+                            errorMessage.includes('Server error');
+
       if (isAuthError || !auth.isLoggedIn()) {
-        // Clear invalid token and redirect to login
+        // Invalid/missing token — clear and go to login
         storage.clearToken();
         storage.clearUser();
         window.location.href = '../login.html';
+      } else if (isNetworkError) {
+        // Server is down or unreachable — redirect to login with a clear message
+        // so the user doesn't see a broken, half-loaded dashboard
+        window.location.href = '../login.html?error=server_down';
       } else {
-        // For other errors (network, server, etc.), show error message
+        // Unexpected error — show inline message
         console.error('Dashboard load error:', err);
         showError('Failed to load dashboard. Please refresh the page.');
       }

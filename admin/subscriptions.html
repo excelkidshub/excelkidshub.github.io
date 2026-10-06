@@ -36,6 +36,7 @@
     </select>
     <button class="btn btn-primary" id="filter-btn">Filter</button>
     <span id="result-count" style="color:#888;font-size:12px;margin-left:4px;"></span>
+    <button class="btn btn-success" id="grant-btn" style="margin-left:auto;">＋ Grant Subscription</button>
   </div>
 
   <div class="table-wrap">
@@ -61,10 +62,79 @@
   <div class="pagination" id="pagination"></div>
 </main>
 
+<!-- ── Grant Subscription Modal ─────────────────────────────────────── -->
+<div id="grant-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:100%;max-width:480px;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+    <h3 style="margin:0 0 20px;font-size:18px;">Grant Subscription</h3>
+    <div id="grant-error" class="alert alert-error" style="display:none;margin-bottom:16px;"></div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <label style="font-size:13px;font-weight:600;color:#444;">
+        User ID <span style="color:#e74c3c;">*</span>
+        <input id="grant-userId" type="number" min="1" placeholder="e.g. 42"
+          style="margin-top:4px;width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:14px;box-sizing:border-box;">
+        <span style="font-size:11px;color:#888;margin-top:2px;display:block;">Find the User ID on the Users page.</span>
+      </label>
+
+      <label style="font-size:13px;font-weight:600;color:#444;">
+        Plan <span style="color:#e74c3c;">*</span>
+        <select id="grant-planId"
+          style="margin-top:4px;width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:14px;box-sizing:border-box;">
+          <option value="">Loading plans…</option>
+        </select>
+      </label>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <label style="font-size:13px;font-weight:600;color:#444;">
+          Start Date <span style="color:#e74c3c;">*</span>
+          <input id="grant-startDate" type="date"
+            style="margin-top:4px;width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:14px;box-sizing:border-box;">
+        </label>
+        <label style="font-size:13px;font-weight:600;color:#444;">
+          End Date <span style="color:#e74c3c;">*</span>
+          <input id="grant-endDate" type="date"
+            style="margin-top:4px;width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:14px;box-sizing:border-box;">
+        </label>
+      </div>
+
+      <label style="font-size:13px;font-weight:600;color:#444;">
+        Note (optional)
+        <input id="grant-note" type="text" placeholder="e.g. Compensation for downtime"
+          style="margin-top:4px;width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:14px;box-sizing:border-box;">
+      </label>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:24px;">
+      <button class="btn btn-ghost" id="grant-cancel">Cancel</button>
+      <button class="btn btn-success" id="grant-submit">Grant Subscription</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Extend Subscription Modal ─────────────────────────────────────── -->
+<div id="extend-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:32px;width:100%;max-width:400px;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+    <h3 style="margin:0 0 8px;font-size:18px;">Extend Subscription</h3>
+    <p id="extend-info" style="margin:0 0 20px;font-size:13px;color:#666;"></p>
+    <div id="extend-error" class="alert alert-error" style="display:none;margin-bottom:16px;"></div>
+
+    <label style="font-size:13px;font-weight:600;color:#444;display:block;">
+      New End Date <span style="color:#e74c3c;">*</span>
+      <input id="extend-endDate" type="date"
+        style="margin-top:4px;width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:14px;box-sizing:border-box;">
+    </label>
+
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:24px;">
+      <button class="btn btn-ghost" id="extend-cancel">Cancel</button>
+      <button class="btn btn-primary" id="extend-submit">Extend</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
   import { requireAdmin } from './js/admin-guard.js';
   import { renderAdminNav } from './js/admin-nav.js';
-  import { adminGetSubs, adminSetSubStatus } from './js/admin-api.js';
+  import { adminGetSubs, adminSetSubStatus, adminGrantSubscription, adminExtendSubscription, adminGetPlans } from './js/admin-api.js';
 
   requireAdmin();
   renderAdminNav();
@@ -127,6 +197,7 @@
             ${s.status !== 'EXPIRED'
               ? `<button class="btn btn-sm btn-danger" onclick="setStatus(${s.id},'EXPIRED')">Expire</button>`
               : ''}
+            <button class="btn btn-sm btn-primary" onclick="openExtend(${s.id},'${s.userEmail}','${s.endDate}')">Extend</button>
           </td>
         </tr>`).join('');
 
@@ -162,6 +233,126 @@
     currentStatus = document.getElementById('status-filter').value;
     currentPage = 0;
     load();
+  });
+
+  // ── Grant Modal ───────────────────────────────────────────────────────────
+  const grantModal   = document.getElementById('grant-modal');
+  const grantError   = document.getElementById('grant-error');
+  const grantPlanSel = document.getElementById('grant-planId');
+
+  // Pre-fill today as default start date
+  function todayStr() {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  async function openGrantModal() {
+    grantError.style.display = 'none';
+    document.getElementById('grant-userId').value    = '';
+    document.getElementById('grant-startDate').value = todayStr();
+    document.getElementById('grant-endDate').value   = '';
+    document.getElementById('grant-note').value      = '';
+
+    // Load plans into select if not already loaded
+    if (grantPlanSel.options.length <= 1) {
+      grantPlanSel.innerHTML = '<option value="">Loading…</option>';
+      try {
+        const res   = await adminGetPlans();
+        const plans = (res.data || res).content || res.data || [];
+        grantPlanSel.innerHTML = '<option value="">— Select plan —</option>'
+          + plans.map(p => `<option value="${p.id}">${p.name} (${p.durationMonths}mo)</option>`).join('');
+      } catch {
+        grantPlanSel.innerHTML = '<option value="">Failed to load plans</option>';
+      }
+    }
+
+    grantModal.style.display = 'flex';
+  }
+
+  document.getElementById('grant-btn').addEventListener('click', openGrantModal);
+  document.getElementById('grant-cancel').addEventListener('click', () => { grantModal.style.display = 'none'; });
+  grantModal.addEventListener('click', e => { if (e.target === grantModal) grantModal.style.display = 'none'; });
+
+  document.getElementById('grant-submit').addEventListener('click', async () => {
+    grantError.style.display = 'none';
+    const userId    = parseInt(document.getElementById('grant-userId').value, 10);
+    const planId    = parseInt(document.getElementById('grant-planId').value, 10);
+    const startDate = document.getElementById('grant-startDate').value;
+    const endDate   = document.getElementById('grant-endDate').value;
+    const note      = document.getElementById('grant-note').value.trim();
+
+    if (!userId || !planId || !startDate || !endDate) {
+      grantError.textContent = 'Please fill in all required fields.';
+      grantError.style.display = 'block';
+      return;
+    }
+    if (endDate <= startDate) {
+      grantError.textContent = 'End date must be after start date.';
+      grantError.style.display = 'block';
+      return;
+    }
+
+    const btn = document.getElementById('grant-submit');
+    btn.disabled = true;
+    btn.textContent = 'Granting…';
+    try {
+      await adminGrantSubscription({ userId, planId, startDate, endDate, note: note || null });
+      grantModal.style.display = 'none';
+      showAlert('success', `Subscription granted to user ${userId} until ${endDate}.`);
+      load();
+    } catch (err) {
+      grantError.textContent = err.message;
+      grantError.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Grant Subscription';
+    }
+  });
+
+  // ── Extend Modal ──────────────────────────────────────────────────────────
+  const extendModal = document.getElementById('extend-modal');
+  const extendError = document.getElementById('extend-error');
+  let extendTargetId = null;
+
+  window.openExtend = function(id, email, currentEndDate) {
+    extendTargetId = id;
+    extendError.style.display = 'none';
+    document.getElementById('extend-info').textContent =
+      `Subscription #${id} · ${email} · current end: ${formatDate(currentEndDate)}`;
+    // Default to current end date + 30 days
+    const suggested = currentEndDate
+      ? new Date(new Date(currentEndDate).getTime() + 30 * 86400000).toISOString().split('T')[0]
+      : todayStr();
+    document.getElementById('extend-endDate').value = suggested;
+    extendModal.style.display = 'flex';
+  };
+
+  document.getElementById('extend-cancel').addEventListener('click', () => { extendModal.style.display = 'none'; });
+  extendModal.addEventListener('click', e => { if (e.target === extendModal) extendModal.style.display = 'none'; });
+
+  document.getElementById('extend-submit').addEventListener('click', async () => {
+    extendError.style.display = 'none';
+    const newEndDate = document.getElementById('extend-endDate').value;
+    if (!newEndDate) {
+      extendError.textContent = 'Please select a new end date.';
+      extendError.style.display = 'block';
+      return;
+    }
+
+    const btn = document.getElementById('extend-submit');
+    btn.disabled = true;
+    btn.textContent = 'Extending…';
+    try {
+      await adminExtendSubscription(extendTargetId, newEndDate);
+      extendModal.style.display = 'none';
+      showAlert('success', `Subscription #${extendTargetId} extended to ${newEndDate}.`);
+      load();
+    } catch (err) {
+      extendError.textContent = err.message;
+      extendError.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Extend';
+    }
   });
 
   load();
