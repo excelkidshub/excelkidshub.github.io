@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- ── Core pages ──────────────────────────────────────────────── -->
   <url>
     <loc>https://excelkidshub.in/</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <priority>1.0</priority>
   </url>
 
@@ -14,7 +15,7 @@
   </url>
 
   <url>
-    <loc>https://excelkidshub.in/phonics-classes-dhanori-pune</loc>
+    <loc>https://excelkidshub.in/contact</loc>
     <lastmod>2026-03-06</lastmod>
     <priority>0.9</priority>
   </url>
@@ -26,25 +27,19 @@
   </url>
 
   <url>
-    <loc>https://excelkidshub.in/teacher-training-admission</loc>
-    <lastmod>2026-05-25</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://excelkidshub.in/contact</loc>
+    <loc>https://excelkidshub.in/courses</loc>
     <lastmod>2026-03-06</lastmod>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://excelkidshub.in/schedule</loc>
-    <lastmod>2026-03-06</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://excelkidshub.in/courses</loc>
+    <loc>https://excelkidshub.in/pricing</loc>
     <lastmod>2026-03-06</lastmod>
     <priority>0.8</priority>
   </url>
@@ -52,12 +47,142 @@
   <url>
     <loc>https://excelkidshub.in/gallery</loc>
     <lastmod>2026-03-06</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ── Local area pages ────────────────────────────────────────── -->
+  <url>
+    <loc>https://excelkidshub.in/phonics-classes-dhanori-pune</loc>
+    <lastmod>2026-03-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/phonics-classes-vishrantwadi</loc>
+    <lastmod>2026-03-06</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/phonics-classes-lohegaon</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/phonics-classes-wagholi</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/phonics-classes-porwal-road</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/english-grammar-classes-dhanori</loc>
+    <lastmod>2026-03-06</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
+    <loc>https://excelkidshub.in/other-areas</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── Specialty landing pages ─────────────────────────────────── -->
+  <url>
+    <loc>https://excelkidshub.in/jolly-phonics-classes-pune</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/online-phonics-classes-pune</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/reading-program-for-kids-pune</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/phonics-for-kindergarten</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/phonics-classes-for-age-6-9</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── Teacher training ─────────────────────────────────────────── -->
+  <url>
+    <loc>https://excelkidshub.in/phonics-teacher-training-pune</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/teacher-training-admission</loc>
+    <lastmod>2026-05-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── Blog articles ────────────────────────────────────────────── -->
+  <url>
     <loc>https://excelkidshub.in/blog</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/what-is-jolly-phonics</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/best-age-to-start-phonics</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/phonics-vs-whole-language</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/how-to-choose-phonics-class-pune</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/why-my-child-cant-read</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/phonics-activities-for-kids-at-home</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://excelkidshub.in/what-to-expect-in-level-1-phonics</loc>
+    <lastmod>2026-10-07</lastmod>
     <priority>0.7</priority>
   </url>
 
@@ -79,22 +204,23 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- ── Legal / policy ───────────────────────────────────────────── -->
   <url>
-    <loc>https://excelkidshub.in/english-grammar-classes-dhanori</loc>
+    <loc>https://excelkidshub.in/privacy-policy</loc>
     <lastmod>2026-03-06</lastmod>
-    <priority>0.6</priority>
+    <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://excelkidshub.in/other-areas</loc>
+    <loc>https://excelkidshub.in/terms-and-conditions</loc>
     <lastmod>2026-03-06</lastmod>
-    <priority>0.6</priority>
+    <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://excelkidshub.in/phonics-classes-vishrantwadi</loc>
+    <loc>https://excelkidshub.in/refund-policy</loc>
     <lastmod>2026-03-06</lastmod>
-    <priority>0.6</priority>
+    <priority>0.3</priority>
   </url>
 
 </urlset>
