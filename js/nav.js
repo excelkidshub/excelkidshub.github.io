@@ -112,10 +112,32 @@ const footerHTML = `
         <nav class="ekh-footer__col" aria-label="Programs">
             <h2>Programs</h2>
             <a href="/courses.html">Phonics Courses</a>
+            <a href="/phonics-for-kindergarten.html">Phonics for Ages 3–6</a>
+            <a href="/phonics-classes-for-age-6-9.html">Phonics for Ages 6–9</a>
+            <a href="/jolly-phonics-classes-pune.html">Jolly Phonics Pune</a>
+            <a href="/online-phonics-classes-pune.html">Online Phonics Classes</a>
+            <a href="/reading-program-for-kids-pune.html">Reading Program</a>
             <a href="/teacher-training-admission.html">Teacher Training</a>
-            <a href="/english-grammar-classes-dhanori.html">English Grammar</a>
-            <a href="/phonics-classes-dhanori-pune.html">Dhanori Classes</a>
-            <a href="/phonics-classes-vishrantwadi.html">Vishrantwadi Classes</a>
+        </nav>
+
+        <nav class="ekh-footer__col" aria-label="Areas we serve">
+            <h2>Areas We Serve</h2>
+            <a href="/phonics-classes-dhanori-pune.html">Dhanori</a>
+            <a href="/phonics-classes-vishrantwadi.html">Vishrantwadi</a>
+            <a href="/phonics-classes-lohegaon.html">Lohegaon</a>
+            <a href="/phonics-classes-wagholi.html">Wagholi</a>
+            <a href="/phonics-classes-porwal-road.html">Porwal Road</a>
+            <a href="/other-areas.html">All Pune Areas</a>
+        </nav>
+
+        <nav class="ekh-footer__col" aria-label="Blog and resources">
+            <h2>Resources</h2>
+            <a href="/blog.html">Phonics Blog</a>
+            <a href="/what-is-jolly-phonics.html">What is Jolly Phonics?</a>
+            <a href="/best-age-to-start-phonics.html">Best Age for Phonics</a>
+            <a href="/why-my-child-cant-read.html">Why Can't My Child Read?</a>
+            <a href="/phonics-activities-for-kids-at-home.html">Activities at Home</a>
+            <a href="/why-phonics-is-important.html">Why Phonics Matters</a>
         </nav>
 
         <nav class="ekh-footer__col" aria-label="Legal">
