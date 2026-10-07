@@ -14,8 +14,320 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="stylesheet" href="css/style.css?v=20260706">
 
+<style>
+/* ── Status badges ─────────────────────────────────────────────── */
+.badge-ongoing {
+  display: inline-block;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.badge-completed {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── "Next batch" notify row ───────────────────────────────────── */
+.notify-row td {
+  background: #fffbeb;
+  border-top: 2px dashed #fbbf24;
+}
+.notify-row td:first-child {
+  font-weight: 700;
+  color: #92400e;
+}
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #25d366;
+  color: #fff !important;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.btn-whatsapp:hover { background: #1ebe5d; }
+.btn-whatsapp svg { flex-shrink: 0; }
+
+/* ── Ongoing row highlight ─────────────────────────────────────── */
+.ongoing-row td {
+  background: #f0fdf4;
+}
+</style>
 
 </head>
+
+<body>
+
+<!-- Header -->
+<header>
+  <div id="nav-placeholder"></div>
+</header>
+
+<div class="container">
+
+<div class="page-header">
+<h1>Phonics Class Schedule 2026 – Dhanori Pune</h1>
+<p>
+Explore upcoming <strong>Online and Offline Phonics Batches</strong> at ExcelKidsHub Phonics Academy in Dhanori, Pune.  
+Our structured programs help children improve reading fluency, spelling skills and comprehension.
+</p>
+</div>
+
+<!-- LEVEL 1 -->
+<div class="schedule-section">
+<h2>🌱 Level 1 – Basic Phonics</h2>
+<p>Focus: Letter Sounds, Blending &amp; Early Reading Foundation</p>
+
+<div class="table-wrapper">
+<table>
+<tr>
+<th>Batch</th>
+<th>Starts</th>
+<th>Time</th>
+<th>Days</th>
+<th>Sessions</th>
+<th>Mode</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td><strong>Offline L1-B22 Oct'26</strong></td>
+<td>7th October</td>
+<td>7:30 PM – 8:30 PM</td>
+<td>Tue/Thu/Sat</td>
+<td>20–24</td>
+<td><span class="badge-offline">Offline</span></td>
+<td><span class="badge-ongoing">🟢 Ongoing</span></td>
+</tr>
+
+<tr>
+<td><strong>Online L1-B23 Oct'26</strong></td>
+<td>12th October</td>
+<td>6:00 PM – 7:00 PM</td>
+<td>Mon/Wed/Fri</td>
+<td>20–24</td>
+<td><span class="badge-online">Online</span></td>
+<td><span class="badge-ongoing">🟢 Ongoing</span></td>
+</tr>
+
+<tr class="notify-row">
+<td>📣 Next Batch – Nov/Dec'26</td>
+<td colspan="5" style="color:#92400e;font-size:13px;">Batch dates being finalised. Click to get notified on WhatsApp when seats open.</td>
+<td>
+  <a class="btn-whatsapp"
+     href="https://wa.me/918793135679?text=Hi%2C+I%27m+interested+in+the+next+Level+1+Phonics+batch.+Please+notify+me+when+seats+open+%F0%9F%99%8F"
+     target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Notify Me
+  </a>
+</td>
+</tr>
+
+</table>
+</div>
+</div>
+
+<!-- LEVEL 2 -->
+<div class="schedule-section">
+<h2>🚀 Level 2 – Advanced Phonics</h2>
+<p>Focus: Digraphs, Diphthongs &amp; Reading Fluency</p>
+
+<div class="table-wrapper">
+<table>
+<tr>
+<th>Batch</th>
+<th>Starts</th>
+<th>Time</th>
+<th>Days</th>
+<th>Sessions</th>
+<th>Mode</th>
+<th>Status</th>
+</tr>
+
+<tr class="ongoing-row">
+<td><strong>Offline L2-B20 Sep'26</strong></td>
+<td>1st Sep</td>
+<td>6:00 PM – 7:00 PM</td>
+<td>Tue/Thu/Fri</td>
+<td>30–35</td>
+<td><span class="badge-offline">Offline</span></td>
+<td><span class="badge-ongoing">🟢 Ongoing</span></td>
+</tr>
+
+<tr class="ongoing-row">
+<td><strong>Online L2-B21 Sep'26</strong></td>
+<td>1st Sep</td>
+<td>7:30 PM – 8:30 PM</td>
+<td>Tue/Thu/Fri</td>
+<td>30–35</td>
+<td><span class="badge-online">Online</span></td>
+<td><span class="badge-ongoing">🟢 Ongoing</span></td>
+</tr>
+
+<tr class="notify-row">
+<td>📣 Next Batch – Dec'26 / Jan'27</td>
+<td colspan="5" style="color:#92400e;font-size:13px;">Next batch dates coming soon. Get notified on WhatsApp when seats open.</td>
+<td>
+  <a class="btn-whatsapp"
+     href="https://wa.me/918793135679?text=Hi%2C+I%27m+interested+in+the+next+Level+2+Advanced+Phonics+batch.+Please+notify+me+when+seats+open+%F0%9F%99%8F"
+     target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Notify Me
+  </a>
+</td>
+</tr>
+
+</table>
+</div>
+</div>
+
+<!-- READING -->
+<div class="schedule-section">
+<h2>📖 Reading Excellence Program</h2>
+<p>Focus: Fluency, Comprehension &amp; Critical Reading Skills</p>
+
+<div class="table-wrapper">
+<table>
+<tr>
+<th>Batch</th>
+<th>Starts</th>
+<th>Time</th>
+<th>Days</th>
+<th>Sessions</th>
+<th>Mode</th>
+<th>Status</th>
+</tr>
+
+<tr class="notify-row">
+<td>📣 Next Batch – Coming Soon</td>
+<td colspan="5" style="color:#92400e;font-size:13px;">New Reading Excellence batch being planned. Get notified on WhatsApp when announced.</td>
+<td>
+  <a class="btn-whatsapp"
+     href="https://wa.me/918793135679?text=Hi%2C+I%27m+interested+in+the+Reading+Excellence+Program.+Please+notify+me+when+the+next+batch+is+announced+%F0%9F%99%8F"
+     target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Notify Me
+  </a>
+</td>
+</tr>
+
+</table>
+</div>
+</div>
+
+<!-- TEACHERS TRAINING -->
+<div class="schedule-section">
+<h2>👨‍🏫 Professional Teachers Training</h2>
+<p>Focus: Phonics Methodology, Classroom Techniques &amp; Certification</p>
+
+<div class="table-wrapper">
+<table>
+<tr>
+<th>Batch</th>
+<th>Starts</th>
+<th>Time</th>
+<th>Days</th>
+<th>Sessions</th>
+<th>Mode</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td><strong>Online Teachers June'26</strong></td>
+<td>9th June</td>
+<td>11:30 AM – 1:30 PM</td>
+<td>Tue–Sat</td>
+<td>5</td>
+<td><span class="badge-online">Online</span></td>
+<td><span class="badge-completed">✓ Completed</span></td>
+</tr>
+
+<tr>
+<td><strong>Online Teachers Aug'26</strong></td>
+<td>7th August</td>
+<td>10:00 AM – 12:00 PM</td>
+<td>Fri–Wed</td>
+<td>5</td>
+<td><span class="badge-online">Online</span></td>
+<td><span class="badge-completed">✓ Completed</span></td>
+</tr>
+
+<tr class="notify-row">
+<td>📣 Next Batch – Nov/Dec'26</td>
+<td colspan="5" style="color:#92400e;font-size:13px;">Next Teachers Training batch coming soon. Get notified on WhatsApp when announced.</td>
+<td>
+  <a class="btn-whatsapp"
+     href="https://wa.me/918793135679?text=Hi%2C+I%27m+interested+in+the+next+Teachers+Training+batch.+Please+notify+me+when+it+is+announced+%F0%9F%99%8F"
+     target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Notify Me
+  </a>
+</td>
+</tr>
+
+</table>
+</div>
+</div>
+
+<!-- Modern CTA Section -->
+<section class="cta-modern">
+  <div class="cta-card">
+    <div class="cta-icon">
+      <img width="48" height="48" loading="lazy" decoding="async" src="images/icon/users.svg" alt="Admissions" style="width:48px;height:48px;">
+    </div>
+    <div class="cta-content">
+      <h2>Admissions Open – Limited Seats</h2>
+      <p>Secure your child's seat in our upcoming phonics batches in Dhanori, Pune.</p>
+      <a href="contact" class="btn cta-btn">Book Free Demo</a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<script src="js/nav.js?v=20260706"></script>
+<script src="js/script.js?v=20260706"></script>
+
+<!-- Local SEO Schema -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "EducationalOrganization",
+ "name": "ExcelKidsHub Phonics Academy",
+ "url": "https://excelkidshub.in",
+ "logo": "https://excelkidshub.in/images/logo.svg",
+ "telephone": "+918793135679",
+ "address": {
+   "@type": "PostalAddress",
+   "streetAddress": "Inside Lakewood Preschool, Dhanori",
+   "addressLocality": "Pune",
+   "addressRegion": "Maharashtra",
+   "postalCode": "411015",
+   "addressCountry": "IN"
+ }
+}
+</script>
+
+</body>
+</html>
 
 <body>
 
