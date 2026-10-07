@@ -124,9 +124,102 @@
 <link rel="preload" as="image" href="images/hero.webp" fetchpriority="high">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="css/style.css?v=20260809c">
+<style>
+/* ── Announcement bar ───────────────────────────────────────────── */
+.announcement-bar {
+  background: linear-gradient(90deg, #1d4ed8 0%, #7c3aed 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 48px 10px 16px;
+  position: relative;
+  z-index: 9999;
+  line-height: 1.5;
+}
+.announcement-bar a {
+  color: #fde68a;
+  text-decoration: underline;
+  font-weight: 700;
+  margin-left: 6px;
+}
+.announcement-bar .ann-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 10px;
+  vertical-align: middle;
+  transition: background .2s;
+}
+.announcement-bar .ann-wa:hover { background: #1ebe5d; }
+.ann-close {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.7);
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 6px;
+}
+.ann-close:hover { color: #fff; }
+
+/* ── Batch cards inside program cards ──────────────────────────── */
+.batch-cards { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.batch-card {
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.batch-card.ongoing { background: #f0fdf4; border-color: #86efac; }
+.batch-card.notify  { background: #fffbeb; border-color: #fde68a; }
+.batch-card-info { font-size: 12px; color: #374151; line-height: 1.5; }
+.batch-card-info strong { display: block; font-size: 13px; color: #166534; }
+.batch-card.notify .batch-card-info strong { color: #92400e; }
+.batch-badge-on {
+  font-size: 11px; font-weight: 700; color: #15803d;
+  background: #dcfce7; padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+}
+.btn-wa-sm {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #25d366; color: #fff; text-decoration: none;
+  font-size: 11px; font-weight: 700; padding: 4px 10px;
+  border-radius: 20px; white-space: nowrap; transition: background .2s;
+}
+.btn-wa-sm:hover { background: #1ebe5d; }
+</style>
 </head>
 
 <body>
+<!-- ── Announcement bar ───────────────────────────────────────── -->
+<div class="announcement-bar" id="ann-bar">
+  🎓 <strong>New Batches Starting Oct 2026!</strong>
+  &nbsp;Offline L1 — 7 Oct | 7:30 PM &nbsp;·&nbsp; Online L1 — 12 Oct | 6 PM
+  <a href="/schedule">View Full Schedule</a>
+  <a class="ann-wa"
+     href="https://wa.me/918793135679?text=Hi%2C+I%27m+interested+in+the+upcoming+phonics+batch.+Please+share+details+%F0%9F%99%8F"
+     target="_blank" rel="noopener">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Notify Me
+  </a>
+  <button class="ann-close" onclick="document.getElementById('ann-bar').style.display='none'" aria-label="Close">✕</button>
+</div>
 <header>
   <div id="nav-placeholder"></div>
 </header>
@@ -335,9 +428,33 @@
   <li>First words &amp; simple sentences</li>
   <li>Reading confidence</li>
 </ul>
-<div class="mini-schedule">
-  Offline: 7th Oct | 7:30–8:30 PM | Tue/Thu/Sat<br>
-  Online: 12th Oct | 6–7 PM | Mon/Wed/Fri
+<div class="batch-cards">
+  <div class="batch-card ongoing">
+    <div class="batch-card-info">
+      <strong>🟢 Offline L1-B22 — Ongoing</strong>
+      7th Oct · 7:30–8:30 PM · Tue/Thu/Sat
+    </div>
+    <span class="batch-badge-on">Seats available</span>
+  </div>
+  <div class="batch-card ongoing">
+    <div class="batch-card-info">
+      <strong>🟢 Online L1-B23 — Ongoing</strong>
+      12th Oct · 6–7 PM · Mon/Wed/Fri
+    </div>
+    <span class="batch-badge-on">Seats available</span>
+  </div>
+  <div class="batch-card notify">
+    <div class="batch-card-info">
+      <strong>📣 Next Batch — Nov/Dec'26</strong>
+      Dates being finalised
+    </div>
+    <a class="btn-wa-sm"
+       href="https://wa.me/918793135679?text=Hi%2C+I%27m+interested+in+the+next+Level+1+Phonics+batch.+Please+notify+me+when+seats+open+%F0%9F%99%8F"
+       target="_blank" rel="noopener">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Notify Me
+    </a>
+  </div>
 </div>
 </div>
 
@@ -350,9 +467,26 @@
   <li>Reading fluency</li>
   <li>Spelling patterns</li>
 </ul>
-<div class="mini-schedule">
-  Offline: 1st Sep | 6–7 PM | Tue/Thu/Fri<br>
-  Online: 1st Sep | 7:30–8:30 PM | Tue/Thu/Fri
+<div class="batch-cards">
+  <div class="batch-card ongoing">
+    <div class="batch-card-info">
+      <strong>🟢 L2-B20 &amp; B21 — Ongoing</strong>
+      Sep batches currently running
+    </div>
+    <span class="batch-badge-on">In progress</span>
+  </div>
+  <div class="batch-card notify">
+    <div class="batch-card-info">
+      <strong>📣 Next Batch — Dec'26/Jan'27</strong>
+      Get notified when seats open
+    </div>
+    <a class="btn-wa-sm"
+       href="https://wa.me/918793135679?text=Hi%2C+I%27m+interested+in+the+next+Level+2+Advanced+Phonics+batch.+Please+notify+me+when+seats+open+%F0%9F%99%8F"
+       target="_blank" rel="noopener">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Notify Me
+    </a>
+  </div>
 </div>
 </div>
 
@@ -365,8 +499,19 @@
   <li>Comprehension</li>
   <li>Independent reading</li>
 </ul>
-<div class="mini-schedule">
-  Next Batch Starting Soon &nbsp;|&nbsp; Mon/Wed/Fri
+<div class="batch-cards">
+  <div class="batch-card notify">
+    <div class="batch-card-info">
+      <strong>📣 Next Batch — Coming Soon</strong>
+      Mon/Wed/Fri · Dates being finalised
+    </div>
+    <a class="btn-wa-sm"
+       href="https://wa.me/918793135679?text=Hi%2C+I%27m+interested+in+the+Reading+Excellence+Program.+Please+notify+me+when+the+next+batch+is+announced+%F0%9F%99%8F"
+       target="_blank" rel="noopener">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Notify Me
+    </a>
+  </div>
 </div>
 </div>
 
